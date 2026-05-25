@@ -14,30 +14,41 @@ h1{color:#f59e0b;font-size:2em;padding:20px}
 button.haupt{background:#f59e0b;color:white;border:none;padding:12px 24px;border-radius:12px;font-size:1.1em;cursor:pointer;margin:5px}
 button.klein{background:white;color:#f59e0b;border:2px solid #f59e0b;padding:8px 16px;border-radius:10px;font-size:1em;cursor:pointer;margin:5px}
 button.grau{background:#ddd;color:#555;border:none;padding:8px 16px;border-radius:10px;font-size:0.9em;cursor:pointer;margin:5px}
-input{font-size:1.2em;padding:10px;border-radius:10px;border:2px solid #f59e0b;width:60%;text-align:center}
-.box{background:white;padding:20px;border-radius:20px;margin:20px auto;max-width:400px;box-shadow:0 4px 10px #f59e0b44}
+button.antwort-btn{background:white;border:3px solid #f59e0b;border-radius:15px;padding:15px;font-size:1.5em;cursor:pointer;margin:8px;width:120px;transition:all 0.2s}
+button.antwort-btn:hover{background:#fff9e6;transform:scale(1.05)}
+button.antwort-btn.richtig{background:#d1fae5;border-color:#10b981}
+button.antwort-btn.falsch{background:#fee2e2;border-color:#ef4444}
+.box{background:white;padding:20px;border-radius:20px;margin:20px auto;max-width:420px;box-shadow:0 4px 15px #f59e0b33}
 .hidden{display:none}
-.erklaer-box{background:#fff9e6;border:2px solid #f59e0b;border-radius:15px;padding:15px;margin:10px auto;max-width:400px;text-align:left;font-size:1.05em;line-height:1.6}
 .seite{padding:10px;display:none}
 .seite.aktiv{display:block}
 .fortschritt{background:#eee;border-radius:10px;height:14px;margin:10px auto;max-width:300px}
-.fortschritt-bar{background:#f59e0b;height:14px;border-radius:10px;transition:width 0.3s}
+.fortschritt-bar{background:#f59e0b;height:14px;border-radius:10px;transition:width 0.4s}
 .level-badge{background:#f59e0b;color:white;border-radius:20px;padding:5px 15px;font-size:1em;display:inline-block;margin:5px}
-.streak{color:#f59e0b;font-size:1.1em;margin:5px}
-.aufmunterung{font-size:1.3em;color:#f59e0b;min-height:30px;margin:5px}
-.konfetti{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:100}
-.avatar-btn{font-size:2em;background:white;border:3px solid #eee;border-radius:15px;padding:10px;cursor:pointer;margin:5px}
+.spiel-box{background:white;border-radius:20px;margin:10px auto;max-width:420px;padding:20px;box-shadow:0 4px 15px #f59e0b33}
+.objekte{display:flex;flex-wrap:wrap;justify-content:center;font-size:2.5em;margin:15px 0;min-height:60px;gap:5px}
+.objekt{display:inline-block;animation:pop 0.3s ease}
+@keyframes pop{0%{transform:scale(0)}100%{transform:scale(1)}}
+.frage-text{font-size:1.5em;font-weight:bold;color:#333;margin:10px 0}
+.feedback-gross{font-size:2em;margin:10px 0;min-height:50px}
+.erklaer-box{background:#fff9e6;border:2px solid #f59e0b;border-radius:15px;padding:15px;margin:10px auto;max-width:400px;text-align:left;font-size:1.05em;line-height:1.8}
+.statistik-box{background:#fff9e6;border-radius:15px;padding:15px;margin:10px}
+.avatar-btn{font-size:2em;background:white;border:3px solid #eee;border-radius:15px;padding:10px;cursor:pointer;margin:5px;display:inline-block}
 .avatar-btn.gewaehlt{border-color:#f59e0b}
-.statistik-box{background:#fff9e6;border-radius:15px;padding:15px;margin:10px;text-align:left}
+.spiel-karte{background:white;border:3px solid #f59e0b;border-radius:20px;padding:20px;margin:10px;cursor:pointer;transition:all 0.2s;display:inline-block;width:150px;vertical-align:top}
+.spiel-karte:hover{transform:scale(1.05);background:#fff9e6}
+.spiel-karte .icon{font-size:3em}
+.spiel-karte .titel{font-size:1em;font-weight:bold;margin-top:8px}
+canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:100}
 </style>
 </head>
 <body>
 
 <nav>
-  <button id="nav-home" class="aktiv" onclick="zeigSeite('home')">🏠 Start</button>
-  <button id="nav-lernen" onclick="zeigSeite('lernen')">📚 Lernen</button>
-  <button id="nav-ueben" onclick="zeigSeite('ueben')">✏️ Üben</button>
-  <button id="nav-profil" onclick="zeigSeite('profil')">🏆 Profil</button>
+  <button id="nav-home" class="aktiv" onclick="zeigSeite('home')">🏠</button>
+  <button id="nav-lernen" onclick="zeigSeite('lernen')">📚</button>
+  <button id="nav-spiele" onclick="zeigSeite('spiele')">🎮</button>
+  <button id="nav-profil" onclick="zeigSeite('profil')">🏆</button>
 </nav>
 
 <h1>⭐ Mathe Star</h1>
@@ -45,21 +56,39 @@ input{font-size:1.2em;padding:10px;border-radius:10px;border:2px solid #f59e0b;w
 <!-- HOME -->
 <div id="seite-home" class="seite aktiv">
   <div class="box">
-    <div id="home-avatar" style="font-size:4em">🦁</div>
-    <p style="font-size:1.3em">Hallo <b id="home-name">Freund</b>! 👋</p>
-    <div class="level-badge">⭐ <span id="home-level">Level 1: Anfänger</span></div>
-    <div class="streak">🔥 Streak: <span id="home-streak">0</span> Tage</div>
-    <div class="streak">🏅 Punkte: <span id="home-punkte">0</span></div>
+    <div id="home-avatar" style="font-size:5em">🦁</div>
+    <p style="font-size:1.4em">Hallo <b id="home-name">Freund</b>! 👋</p>
+    <div class="level-badge">⭐ <span id="home-level">Anfänger</span></div>
+    <p style="margin:10px;color:#f59e0b">🏅 <b id="home-punkte">0</b> Punkte &nbsp; 🔥 <b id="home-streak">0</b> Tage</p>
     <br>
+    <button class="haupt" onclick="zeigSeite('spiele')">🎮 Spielen!</button>
     <button class="haupt" onclick="zeigSeite('lernen')">📚 Lernen</button>
-    <button class="haupt" onclick="zeigSeite('ueben')">✏️ Üben</button>
+  </div>
+  <div class="box" style="font-size:0.95em;color:#666">
+    <b>Gib deinen Namen ein:</b><br><br>
+    <input id="homeNameInput" placeholder="Dein Name" style="font-size:1.1em;padding:8px;border-radius:10px;border:2px solid #f59e0b;width:70%;text-align:center"/><br><br>
+    <p>Wähle deinen Avatar:</p><br>
+    <span class="avatar-btn gewaehlt" onclick="waehleAvatar('🦁',this)">🦁</span>
+    <span class="avatar-btn" onclick="waehleAvatar('🐯',this)">🐯</span>
+    <span class="avatar-btn" onclick="waehleAvatar('🦊',this)">🦊</span>
+    <span class="avatar-btn" onclick="waehleAvatar('🐸',this)">🐸</span>
+    <span class="avatar-btn" onclick="waehleAvatar('🦋',this)">🦋</span>
+    <span class="avatar-btn" onclick="waehleAvatar('🚀',this)">🚀</span>
+    <br><br>
+    <p>Klasse:</p><br>
+    <button class="klein" onclick="setKlasse(1)">1</button>
+    <button class="klein" onclick="setKlasse(2)">2</button>
+    <button class="klein" onclick="setKlasse(3)">3</button>
+    <button class="klein" onclick="setKlasse(4)">4</button>
+    <p id="klasseText" style="margin:8px;color:#f59e0b">Klasse: 1</p>
+    <button class="haupt" onclick="speicherProfil()">💾 Speichern</button>
   </div>
 </div>
 
 <!-- LERNEN -->
 <div id="seite-lernen" class="seite">
   <div class="box">
-    <p><b>Was möchtest du lernen?</b></p>
+    <p><b>Was möchtest du lernen?</b></p><br>
     <button class="klein" onclick="zeigErklaerung('plus')">➕ Addition</button>
     <button class="klein" onclick="zeigErklaerung('minus')">➖ Subtraktion</button>
     <button class="klein" onclick="zeigErklaerung('mal')">✖️ Multiplikation</button>
@@ -68,108 +97,138 @@ input{font-size:1.2em;padding:10px;border-radius:10px;border:2px solid #f59e0b;w
   <div id="erklaerung" class="hidden erklaer-box"></div>
 </div>
 
-<!-- ÜBEN -->
-<div id="seite-ueben" class="seite">
-  <div id="ueben-start" class="box">
-    <p>Wie heißt du?</p>
-    <input id="nameInput" placeholder="Dein Name" /><br><br>
-    <p>Wähle deinen Avatar:</p>
-    <div>
-      <span class="avatar-btn gewaehlt" onclick="waehleAvatar('🦁',this)">🦁</span>
-      <span class="avatar-btn" onclick="waehleAvatar('🐯',this)">🐯</span>
-      <span class="avatar-btn" onclick="waehleAvatar('🦊',this)">🦊</span>
-      <span class="avatar-btn" onclick="waehleAvatar('🐸',this)">🐸</span>
-      <span class="avatar-btn" onclick="waehleAvatar('🦋',this)">🦋</span>
-      <span class="avatar-btn" onclick="waehleAvatar('🚀',this)">🚀</span>
+<!-- SPIELE -->
+<div id="seite-spiele" class="seite">
+  <div id="spiel-auswahl">
+    <p style="padding:10px;font-size:1.1em"><b>Wähle ein Spiel:</b></p>
+    <div class="spiel-karte" onclick="startSpiel('zaehlen')">
+      <div class="icon">🍎</div>
+      <div class="titel">Zählen & Tippen</div>
     </div>
-    <br>
-    <p>Welche Klasse?</p>
-    <button class="klein" onclick="setKlasse(1)">1</button>
-    <button class="klein" onclick="setKlasse(2)">2</button>
-    <button class="klein" onclick="setKlasse(3)">3</button>
-    <button class="klein" onclick="setKlasse(4)">4</button>
-    <p id="klasseText" style="margin:10px 0">Klasse: 1</p>
-    <button class="haupt" onclick="startQuiz()">Los geht's! 🚀</button>
+    <div class="spiel-karte" onclick="startSpiel('rechnen')">
+      <div class="icon">🔢</div>
+      <div class="titel">Rechnen mit Bildern</div>
+    </div>
+    <div class="spiel-karte" onclick="startSpiel('vergleich')">
+      <div class="icon">⚖️</div>
+      <div class="titel">Größer oder Kleiner?</div>
+    </div>
+    <div class="spiel-karte" onclick="startSpiel('luecke')">
+      <div class="icon">❓</div>
+      <div class="titel">Lücken füllen</div>
+    </div>
   </div>
 
-  <div id="quiz" class="box hidden">
-    <div style="font-size:2.5em" id="quiz-avatar">🦁</div>
-    <p id="aufgabe"></p>
-    <div class="fortschritt"><div class="fortschritt-bar" id="fortschritt-bar" style="width:0%"></div></div>
-    <div id="frage" style="font-size:2.2em;margin:20px;font-weight:bold"></div>
-    <div class="aufmunterung" id="aufmunterung"></div>
-    <input type="number" id="antwort" placeholder="?" /><br><br>
-    <button class="haupt" onclick="pruefen()">Antworten ✓</button>
-    <button class="klein" onclick="hilfe()">Hilfe 💡</button>
-    <button class="grau" onclick="zurueck()">⬅️ Abbrechen</button>
-    <p id="tipp" style="display:none;color:#666;margin-top:10px;font-size:1em"></p>
-    <p id="feedback" style="font-size:1.4em;margin-top:10px;font-weight:bold"></p>
+  <div id="spiel-aktiv" class="hidden">
+    <div class="spiel-box">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <button class="grau" onclick="beendeSpiel()">⬅️</button>
+        <span style="color:#f59e0b;font-weight:bold">Aufgabe <span id="spiel-nr">1</span>/10</span>
+        <span style="color:#f59e0b;font-weight:bold">🏅 <span id="spiel-punkte-lauf">0</span></span>
+      </div>
+      <div class="fortschritt"><div class="fortschritt-bar" id="spiel-bar" style="width:0%"></div></div>
+      <div class="frage-text" id="spiel-frage"></div>
+      <div class="objekte" id="spiel-objekte"></div>
+      <div id="spiel-antworten"></div>
+      <div class="feedback-gross" id="spiel-feedback"></div>
+    </div>
   </div>
 
-  <div id="belohnung" class="box hidden">
-    <div style="font-size:3em" id="belon-avatar">🦁</div>
-    <h2>🏆 Geschafft!</h2>
-    <p id="ergebnis" style="margin:15px 0;font-size:1.1em"></p>
-    <div id="sterne" style="font-size:2em;margin:10px"></div>
-    <p id="punkte-gewonnen" style="color:#f59e0b;font-size:1.2em;font-weight:bold"></p>
-    <button class="haupt" onclick="nochmal()">Nochmal 🔄</button>
-    <button class="grau" onclick="zurueck()">⬅️ Zurück</button>
+  <div id="spiel-ende" class="hidden">
+    <div class="spiel-box">
+      <div style="font-size:3em" id="ende-avatar">🦁</div>
+      <h2>🏆 Super gemacht!</h2>
+      <p id="ende-ergebnis" style="font-size:1.1em;margin:15px 0"></p>
+      <div id="ende-sterne" style="font-size:2em;margin:10px"></div>
+      <p id="ende-punkte" style="color:#f59e0b;font-weight:bold;font-size:1.1em"></p>
+      <button class="haupt" onclick="startSpiel(letzteSpiel)">Nochmal 🔄</button>
+      <button class="klein" onclick="beendeSpiel()">Andere Spiele 🎮</button>
+    </div>
   </div>
 </div>
 
 <!-- PROFIL -->
 <div id="seite-profil" class="seite">
   <div class="box">
-    <div id="profil-avatar" style="font-size:4em">🦁</div>
+    <div id="profil-avatar" style="font-size:5em">🦁</div>
     <p style="font-size:1.3em"><b id="profil-name">Freund</b></p>
-    <div class="level-badge">⭐ <span id="profil-level">Level 1: Anfänger</span></div>
-    <div class="streak" style="margin:10px">🔥 Streak: <span id="profil-streak">0</span> Tage</div>
-    <div class="streak">🏅 Gesamtpunkte: <span id="profil-punkte">0</span></div>
+    <div class="level-badge">⭐ <span id="profil-level">Anfänger</span></div>
+    <p style="margin:10px;color:#f59e0b">🏅 <b id="profil-punkte">0</b> Punkte &nbsp; 🔥 <b id="profil-streak">0</b> Tage</p>
   </div>
-  <div class="box statistik-box">
-    <b>📊 Meine Statistik:</b><br><br>
-    <p>✅ Richtige Antworten: <b id="stat-richtig">0</b></p>
-    <p>❌ Falsche Antworten: <b id="stat-falsch">0</b></p>
-    <p>🎮 Spiele gespielt: <b id="stat-spiele">0</b></p>
+  <div class="statistik-box box">
+    <b>📊 Statistik:</b><br><br>
+    <p>✅ Richtig: <b id="stat-richtig">0</b></p>
+    <p>❌ Falsch: <b id="stat-falsch">0</b></p>
+    <p>🎮 Spiele: <b id="stat-spiele">0</b></p>
     <p>🏆 Bestes Ergebnis: <b id="stat-best">0</b>/10</p>
   </div>
   <div class="box">
     <b>🏅 Abzeichen:</b><br><br>
-    <div id="abzeichen" style="font-size:2em"></div>
+    <div id="abzeichen" style="font-size:2.5em;line-height:1.5"></div>
   </div>
 </div>
 
-<canvas id="konfetti-canvas" class="konfetti"></canvas>
+<canvas id="konfetti-canvas"></canvas>
 
 <script>
-let name='',klasse=1,index=0,richtig=0,aktFrage=null,avatar='🦁';
+let name='Freund',klasse=1,avatar='🦁';
 let punkte=0,streak=0,gesamtRichtig=0,gesamtFalsch=0,spiele=0,bestErgebnis=0;
+let spielIndex=0,spielRichtig=0,spielPunkteLauf=0,aktFrage=null,letzteSpiel='zaehlen';
+let beantwortet=false;
 
-const aufmunterungen=['Du schaffst das! 💪','Super gemacht! 🌟','Weiter so! 🚀','Toll! 😊','Fantastisch! 🎉','Klasse! ⭐','Bravo! 👏'];
-const level=[
+const emojis={
+  essen:['🍎','🍊','🍋','🍇','🍓','🍒','🍕','🍔','🌮','🍩'],
+  tiere:['🐱','🐶','🐰','🐻','🦁','🐯','🐸','🐧','🦊','🐮'],
+  objekte:['⭐','🌸','🎈','🎯','🏆','💎','🚀','🌈','🎵','🎨']
+};
+
+function zufallEmoji(){
+  let alle=[...emojis.essen,...emojis.tiere,...emojis.objekte];
+  return alle[Math.floor(Math.random()*alle.length)];
+}
+
+function rnd(n){return Math.floor(Math.random()*n)+1}
+
+const levels=[
   {min:0,name:'Anfänger'},
-  {min:50,name:'Lernender'},
-  {min:150,name:'Rechenkünstler'},
-  {min:300,name:'Mathe-Profi'},
-  {min:500,name:'Mathe-Star ⭐'}
+  {min:50,name:'Lernender ⭐'},
+  {min:150,name:'Rechenkünstler ⭐⭐'},
+  {min:300,name:'Mathe-Profi ⭐⭐⭐'},
+  {min:500,name:'Mathe-Star 🌟'}
 ];
 
 function getLevel(){
-  let l='Anfänger';
-  for(let i=0;i<level.length;i++){if(punkte>=level[i].min)l=level[i].name;}
+  let l=levels[0].name;
+  for(let i=0;i<levels.length;i++){if(punkte>=levels[i].min)l=levels[i].name;}
   return l;
 }
 
+function speicherProfil(){
+  name=document.getElementById('homeNameInput').value||'Freund';
+  updateProfil();
+  alert('Gespeichert! Viel Spaß '+name+'! 🌟');
+}
+
+function waehleAvatar(a,el){
+  avatar=a;
+  document.querySelectorAll('.avatar-btn').forEach(b=>b.classList.remove('gewaehlt'));
+  el.classList.add('gewaehlt');
+  updateProfil();
+}
+
+function setKlasse(k){
+  klasse=k;
+  document.getElementById('klasseText').textContent='Klasse: '+k;
+}
+
 function updateProfil(){
-  let n=name||'Freund';
-  let lv='Level: '+getLevel();
-  document.getElementById('home-name').textContent=n;
-  document.getElementById('home-level').textContent=lv;
+  document.getElementById('home-name').textContent=name;
+  document.getElementById('home-level').textContent=getLevel();
   document.getElementById('home-streak').textContent=streak;
   document.getElementById('home-punkte').textContent=punkte;
   document.getElementById('home-avatar').textContent=avatar;
-  document.getElementById('profil-name').textContent=n;
-  document.getElementById('profil-level').textContent=lv;
+  document.getElementById('profil-name').textContent=name;
+  document.getElementById('profil-level').textContent=getLevel();
   document.getElementById('profil-streak').textContent=streak;
   document.getElementById('profil-punkte').textContent=punkte;
   document.getElementById('profil-avatar').textContent=avatar;
@@ -178,13 +237,13 @@ function updateProfil(){
   document.getElementById('stat-spiele').textContent=spiele;
   document.getElementById('stat-best').textContent=bestErgebnis;
   let abz='';
-  if(spiele>=1)abz+='🎮';
-  if(gesamtRichtig>=10)abz+='✅';
-  if(bestErgebnis===10)abz+='🏆';
-  if(punkte>=100)abz+='💯';
-  if(streak>=3)abz+='🔥';
-  if(punkte>=500)abz+='⭐';
-  document.getElementById('abzeichen').textContent=abz||'Noch keine – fang an zu üben!';
+  if(spiele>=1)abz+='🎮 ';
+  if(gesamtRichtig>=10)abz+='✅ ';
+  if(bestErgebnis===10)abz+='🏆 ';
+  if(punkte>=100)abz+='💯 ';
+  if(streak>=3)abz+='🔥 ';
+  if(punkte>=500)abz+='🌟 ';
+  document.getElementById('abzeichen').textContent=abz||'Noch keine – fang an!';
 }
 
 function zeigSeite(s){
@@ -195,17 +254,11 @@ function zeigSeite(s){
   updateProfil();
 }
 
-function waehleAvatar(a,el){
-  avatar=a;
-  document.querySelectorAll('.avatar-btn').forEach(b=>b.classList.remove('gewaehlt'));
-  el.classList.add('gewaehlt');
-}
-
 const erklaerungen={
-  plus:{titel:'➕ Addition – Zusammenzählen',text:'Bei der Addition zählst du zwei Zahlen zusammen.<br><br>🍎🍎🍎 + 🍎🍎 = 🍎🍎🍎🍎🍎<br><b>3 + 2 = 5</b><br><br>Stell dir vor: Du hast 3 Äpfel und bekommst noch 2 dazu. Jetzt hast du 5 Äpfel!<br><br>📝 Beispiele:<br>4 + 3 = 7<br>10 + 5 = 15'},
-  minus:{titel:'➖ Subtraktion – Wegnehmen',text:'Bei der Subtraktion nimmst du eine Zahl weg.<br><br>🍎🍎🍎🍎🍎 – 🍎🍎 = 🍎🍎🍎<br><b>5 – 2 = 3</b><br><br>Du hast 5 Bonbons und isst 2. Es bleiben 3 übrig!<br><br>📝 Beispiele:<br>8 – 3 = 5<br>10 – 4 = 6'},
-  mal:{titel:'✖️ Multiplikation – Mehrmals addieren',text:'Bei der Multiplikation addierst du eine Zahl mehrmals.<br><br><b>3 × 4</b> = 4 + 4 + 4 = 12<br><br>3 Kinder haben je 4 Bonbons = 12 Bonbons!<br><br>📝 Beispiele:<br>2 × 5 = 10<br>3 × 3 = 9'},
-  geteilt:{titel:'➗ Division – Aufteilen',text:'Bei der Division teilst du in gleiche Gruppen.<br><br><b>12 ÷ 3 = 4</b><br>🍬🍬🍬🍬 | 🍬🍬🍬🍬 | 🍬🍬🍬🍬<br><br>12 Bonbons für 3 Kinder – jedes bekommt 4!<br><br>📝 Beispiele:<br>10 ÷ 2 = 5<br>9 ÷ 3 = 3'}
+  plus:{titel:'➕ Addition – Zusammenzählen',text:'🍎🍎🍎 + 🍎🍎 = 🍎🍎🍎🍎🍎<br><b>3 + 2 = 5</b><br><br>Du hast 3 Äpfel und bekommst 2 dazu = 5 Äpfel!<br><br>📝 Beispiele:<br>4 + 3 = 7 &nbsp; 10 + 5 = 15'},
+  minus:{titel:'➖ Subtraktion – Wegnehmen',text:'🍎🍎🍎🍎🍎 – 🍎🍎 = 🍎🍎🍎<br><b>5 – 2 = 3</b><br><br>Du hast 5 Bonbons und isst 2 = 3 übrig!<br><br>📝 Beispiele:<br>8 – 3 = 5 &nbsp; 10 – 4 = 6'},
+  mal:{titel:'✖️ Multiplikation – Mehrmals addieren',text:'<b>3 × 4</b> = 4 + 4 + 4 = 12<br><br>3 Kinder × 4 Bonbons = 12 Bonbons!<br><br>📝 Beispiele:<br>2 × 5 = 10 &nbsp; 3 × 3 = 9'},
+  geteilt:{titel:'➗ Division – Aufteilen',text:'<b>12 ÷ 3 = 4</b><br>🍬🍬🍬🍬|🍬🍬🍬🍬|🍬🍬🍬🍬<br><br>12 Bonbons ÷ 3 Kinder = 4 pro Kind!<br><br>📝 Beispiele:<br>10 ÷ 2 = 5 &nbsp; 9 ÷ 3 = 3'}
 };
 
 function zeigErklaerung(typ){
@@ -215,124 +268,180 @@ function zeigErklaerung(typ){
   div.classList.remove('hidden');
 }
 
-function setKlasse(k){klasse=k;document.getElementById('klasseText').textContent='Klasse: '+k}
-
-function startQuiz(){
-  name=document.getElementById('nameInput').value||'Freund';
-  index=0;richtig=0;
-  document.getElementById('ueben-start').classList.add('hidden');
-  document.getElementById('quiz').classList.remove('hidden');
-  document.getElementById('quiz-avatar').textContent=avatar;
-  naechste();
+// SPIELE
+function startSpiel(typ){
+  letzteSpiel=typ;
+  spielIndex=0;spielRichtig=0;spielPunkteLauf=0;
+  document.getElementById('spiel-auswahl').classList.add('hidden');
+  document.getElementById('spiel-ende').classList.add('hidden');
+  document.getElementById('spiel-aktiv').classList.remove('hidden');
+  document.getElementById('spiel-punkte-lauf').textContent=0;
+  naechsteAufgabe(typ);
 }
 
-function naechste(){
-  if(index>=10){zeigeBelohnung();return}
-  let pct=((index)/10*100)+'%';
-  document.getElementById('fortschritt-bar').style.width=pct;
-  document.getElementById('aufgabe').textContent='Aufgabe '+(index+1)+' von 10';
-  document.getElementById('antwort').value='';
-  document.getElementById('feedback').textContent='';
-  document.getElementById('tipp').style.display='none';
-  document.getElementById('aufmunterung').textContent=aufmunterungen[Math.floor(Math.random()*aufmunterungen.length)];
-  aktFrage=genFrage();
-  let op=aktFrage.op==='*'?'×':aktFrage.op==='/'?'÷':aktFrage.op;
-  document.getElementById('frage').textContent=aktFrage.a+' '+op+' '+aktFrage.b+' = ?';
+function naechsteAufgabe(typ){
+  if(spielIndex>=10){endeSpiel();return}
+  beantwortet=false;
+  document.getElementById('spiel-nr').textContent=spielIndex+1;
+  document.getElementById('spiel-bar').style.width=(spielIndex/10*100)+'%';
+  document.getElementById('spiel-feedback').textContent='';
+  document.getElementById('spiel-objekte').innerHTML='';
+  document.getElementById('spiel-antworten').innerHTML='';
+
+  if(typ==='zaehlen') aufgabeZaehlen();
+  else if(typ==='rechnen') aufgabeRechnen();
+  else if(typ==='vergleich') aufgabeVergleich();
+  else if(typ==='luecke') aufgabeLuecke();
 }
 
-function genFrage(){
+function aufgabeZaehlen(){
+  let anzahl=klasse<=2?rnd(10):rnd(20);
+  let emoji=zufallEmoji();
+  aktFrage={antwort:anzahl};
+  document.getElementById('spiel-frage').textContent='Wie viele '+emoji+' siehst du?';
+  let obj='';
+  for(let i=0;i<anzahl;i++){obj+='<span class="objekt">'+emoji+'</span> ';}
+  document.getElementById('spiel-objekte').innerHTML=obj;
+  let optionen=genOptionen(anzahl,4,1,20);
+  zeigAntwortButtons(optionen,anzahl);
+}
+
+function aufgabeRechnen(){
+  let emoji=zufallEmoji();
+  let ops=klasse<=2?['+','-']:['+','-','*'];
+  let op=ops[Math.floor(Math.random()*ops.length)];
+  let a,b,antwort;
+  if(op==='+'){a=rnd(klasse<=2?10:15);b=rnd(klasse<=2?10:15);antwort=a+b;}
+  else if(op==='-'){a=rnd(10)+5;b=rnd(a);antwort=a-b;}
+  else{a=rnd(5);b=rnd(5);antwort=a*b;}
+  aktFrage={antwort};
+  let opSym=op==='*'?'×':op;
+  document.getElementById('spiel-frage').textContent=a+' '+opSym+' '+b+' = ?';
+  let obj1='',obj2='';
+  for(let i=0;i<Math.min(a,10);i++)obj1+='<span class="objekt">'+emoji+'</span>';
+  if(op==='+'){
+    let emoji2=zufallEmoji();
+    for(let i=0;i<Math.min(b,10);i++)obj2+='<span class="objekt">'+emoji2+'</span>';
+    document.getElementById('spiel-objekte').innerHTML=obj1+'<span style="font-size:1.5em"> + </span>'+obj2;
+  } else {
+    document.getElementById('spiel-objekte').innerHTML=obj1;
+  }
+  let optionen=genOptionen(antwort,4,0,50);
+  zeigAntwortButtons(optionen,antwort);
+}
+
+function aufgabeVergleich(){
+  let a=rnd(20),b=rnd(20);
+  while(a===b){b=rnd(20);}
+  let emoji1=zufallEmoji(),emoji2=zufallEmoji();
+  aktFrage={antwort:a>b?'links':'rechts'};
+  let obj1='',obj2='';
+  for(let i=0;i<Math.min(a,10);i++)obj1+='<span class="objekt">'+emoji1+'</span>';
+  for(let i=0;i<Math.min(b,10);i++)obj2+='<span class="objekt">'+emoji2+'</span>';
+  document.getElementById('spiel-frage').textContent='Welche Seite hat MEHR?';
+  document.getElementById('spiel-objekte').innerHTML=
+    '<div style="display:flex;gap:20px;justify-content:center">'+
+    '<div style="background:#fff9e6;padding:10px;border-radius:15px;border:2px solid #f59e0b">'+obj1+'<br><b>'+a+'</b></div>'+
+    '<div style="font-size:2em;padding-top:20px">⚖️</div>'+
+    '<div style="background:#fff9e6;padding:10px;border-radius:15px;border:2px solid #f59e0b">'+obj2+'<br><b>'+b+'</b></div>'+
+    '</div>';
+  let btns=document.getElementById('spiel-antworten');
+  btns.innerHTML=
+    '<button class="antwort-btn" onclick="pruefeAntwort(\'links\',this)" style="width:140px">⬅️ Links<br>('+a+')</button>'+
+    '<button class="antwort-btn" onclick="pruefeAntwort(\'rechts\',this)" style="width:140px">Rechts ➡<br>('+b+')</button>';
+}
+
+function aufgabeLuecke(){
   let ops=klasse<=2?['+','-']:['+','-','*','/'];
   let op=ops[Math.floor(Math.random()*ops.length)];
-  let a,b;
-  if(op==='+'){a=rnd(20);b=rnd(20)}
-  if(op==='-'){a=rnd(20)+1;b=rnd(a)}
-  if(op==='*'){a=rnd(10);b=rnd(10)}
-  if(op==='/'){b=rnd(10)+1;a=b*(rnd(10)+1)}
-  let ans=op==='+'?a+b:op==='-'?a-b:op==='*'?a*b:a/b;
-  return{a,b,op,answer:ans};
+  let a,b,antwort;
+  if(op==='+'){a=rnd(10);b=rnd(10);antwort=a+b;}
+  else if(op==='-'){a=rnd(10)+5;b=rnd(a);antwort=a-b;}
+  else if(op==='*'){a=rnd(5);b=rnd(5);antwort=a*b;}
+  else{b=rnd(5)+1;antwort=rnd(5);a=antwort*b;}
+  aktFrage={antwort};
+  let opSym=op==='*'?'×':op==='/'?'÷':op;
+  document.getElementById('spiel-frage').textContent=a+' '+opSym+' '+b+' = ___';
+  document.getElementById('spiel-objekte').innerHTML='<span style="font-size:3em">🤔</span>';
+  let optionen=genOptionen(antwort,4,0,50);
+  zeigAntwortButtons(optionen,antwort);
 }
 
-function rnd(n){return Math.floor(Math.random()*n)+1}
+function genOptionen(richtig,anz,min,max){
+  let opts=new Set([richtig]);
+  while(opts.size<anz){
+    let v=richtig+Math.floor(Math.random()*10)-5;
+    if(v>=min&&v<=max&&v!==richtig)opts.add(v);
+  }
+  return [...opts].sort(()=>Math.random()-0.5);
+}
 
-function pruefen(){
-  let val=parseInt(document.getElementById('antwort').value);
-  if(isNaN(val))return;
-  if(val===aktFrage.answer){
-    richtig++;
-    gesamtRichtig++;
-    punkte+=10;
-    document.getElementById('feedback').textContent='✅ Richtig! +10 Punkte!';
+function zeigAntwortButtons(optionen,richtig){
+  let btns=document.getElementById('spiel-antworten');
+  btns.innerHTML='';
+  optionen.forEach(o=>{
+    let b=document.createElement('button');
+    b.className='antwort-btn';
+    b.textContent=o;
+    b.onclick=function(){pruefeAntwort(o,this)};
+    btns.appendChild(b);
+  });
+}
+
+function pruefeAntwort(val,el){
+  if(beantwortet)return;
+  beantwortet=true;
+  let richtig=val===aktFrage.antwort||val==aktFrage.antwort;
+  if(richtig){
+    spielRichtig++;gesamtRichtig++;spielPunkteLauf+=10;punkte+=10;
+    document.getElementById('spiel-feedback').textContent='✅ Richtig! Super! 🎉';
+    el.classList.add('richtig');
     konfetti();
   } else {
     gesamtFalsch++;
-    document.getElementById('feedback').textContent='❌ Antwort war '+aktFrage.answer+'. Nicht aufgeben!';
+    document.getElementById('spiel-feedback').textContent='❌ Fast! Die Antwort war '+aktFrage.antwort;
+    el.classList.add('falsch');
   }
-  index++;
-  setTimeout(naechste,1500);
+  document.getElementById('spiel-punkte-lauf').textContent=spielPunkteLauf;
+  spielIndex++;
+  setTimeout(()=>naechsteAufgabe(letzteSpiel),1800);
 }
 
-function hilfe(){
-  let t=document.getElementById('tipp');
-  let{a,b,op}=aktFrage;
-  let txt='';
-  if(op==='+')txt='Tipp: Zähle '+a+' und '+b+' zusammen!';
-  if(op==='-')txt='Tipp: Nimm von '+a+' genau '+b+' weg!';
-  if(op==='*')txt='Tipp: Addiere '+a+' mal die Zahl '+b+'!';
-  if(op==='/')txt='Tipp: Teile '+a+' in '+b+' gleiche Gruppen!';
-  t.textContent=txt;t.style.display='block';
-}
-
-function zeigeBelohnung(){
-  spiele++;
-  streak++;
-  if(richtig>bestErgebnis)bestErgebnis=richtig;
-  document.getElementById('fortschritt-bar').style.width='100%';
-  document.getElementById('quiz').classList.add('hidden');
-  document.getElementById('belohnung').classList.remove('hidden');
-  document.getElementById('belon-avatar').textContent=avatar;
-  let msg=richtig===10?'🎉 Perfekt! Du bist ein echter Mathe-Star!':richtig>=7?'😊 Sehr gut! Weiter so!':'💪 Nicht aufgeben! Du schaffst das!';
-  document.getElementById('ergebnis').innerHTML='<b>'+name+'</b> hat <b>'+richtig+' von 10</b> richtig!<br><br>'+msg;
-  document.getElementById('sterne').textContent='⭐'.repeat(Math.round(richtig/2));
-  document.getElementById('punkte-gewonnen').textContent='🏅 Gesamtpunkte: '+punkte+' | Level: '+getLevel();
-  if(richtig===10)konfetti();
+function endeSpiel(){
+  spiele++;streak++;
+  if(spielRichtig>bestErgebnis)bestErgebnis=spielRichtig;
+  document.getElementById('spiel-aktiv').classList.add('hidden');
+  document.getElementById('spiel-ende').classList.remove('hidden');
+  document.getElementById('ende-avatar').textContent=avatar;
+  let msg=spielRichtig===10?'🎉 Perfekt! Du bist ein Mathe-Star!':spielRichtig>=7?'😊 Sehr gut!':'💪 Weiter üben!';
+  document.getElementById('ende-ergebnis').innerHTML='<b>'+name+'</b>: <b>'+spielRichtig+'/10</b> richtig!<br>'+msg;
+  document.getElementById('ende-sterne').textContent='⭐'.repeat(Math.round(spielRichtig/2));
+  document.getElementById('ende-punkte').textContent='🏅 Punkte: +'+spielPunkteLauf+' | Gesamt: '+punkte;
+  if(spielRichtig>=8)konfetti();
   updateProfil();
 }
 
-function zurueck(){
-  document.getElementById('quiz').classList.add('hidden');
-  document.getElementById('belohnung').classList.add('hidden');
-  document.getElementById('ueben-start').classList.remove('hidden');
-  index=0;richtig=0;
-}
-
-function nochmal(){
-  document.getElementById('belohnung').classList.add('hidden');
-  document.getElementById('ueben-start').classList.remove('hidden');
-  index=0;richtig=0;
+function beendeSpiel(){
+  document.getElementById('spiel-aktiv').classList.add('hidden');
+  document.getElementById('spiel-ende').classList.add('hidden');
+  document.getElementById('spiel-auswahl').classList.remove('hidden');
 }
 
 function konfetti(){
   let canvas=document.getElementById('konfetti-canvas');
   let ctx=canvas.getContext('2d');
-  canvas.width=window.innerWidth;
-  canvas.height=window.innerHeight;
+  canvas.width=window.innerWidth;canvas.height=window.innerHeight;
   let particles=[];
-  let colors=['#f59e0b','#ef4444','#3b82f6','#10b981','#8b5cf6'];
-  for(let i=0;i<80;i++){
-    particles.push({x:Math.random()*canvas.width,y:-10,w:Math.random()*10+5,h:Math.random()*10+5,color:colors[Math.floor(Math.random()*colors.length)],speed:Math.random()*3+2,angle:Math.random()*360});
+  let colors=['#f59e0b','#ef4444','#3b82f6','#10b981','#8b5cf6','#ec4899'];
+  for(let i=0;i<100;i++){
+    particles.push({x:Math.random()*canvas.width,y:-10,w:Math.random()*12+4,h:Math.random()*12+4,color:colors[Math.floor(Math.random()*colors.length)],speed:Math.random()*4+2,angle:Math.random()*360});
   }
   let frame=0;
   function draw(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
-    particles.forEach(p=>{
-      ctx.fillStyle=p.color;
-      ctx.fillRect(p.x,p.y,p.w,p.h);
-      p.y+=p.speed;
-      p.x+=Math.sin(p.angle)*2;
-      p.angle+=0.1;
-    });
+    particles.forEach(p=>{ctx.fillStyle=p.color;ctx.fillRect(p.x,p.y,p.w,p.h);p.y+=p.speed;p.x+=Math.sin(p.angle)*2;p.angle+=0.1;});
     frame++;
-    if(frame<80)requestAnimationFrame(draw);
+    if(frame<90)requestAnimationFrame(draw);
     else ctx.clearRect(0,0,canvas.width,canvas.height);
   }
   draw();
