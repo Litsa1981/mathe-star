@@ -5,110 +5,122 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mathe Star</title>
 <style>
-body{font-family:sans-serif;background:#fffbe6;text-align:center;padding:20px}
-h1{color:#f59e0b;font-size:2em}
-button{background:#f59e0b;color:white;border:none;padding:12px 24px;border-radius:12px;font-size:1.1em;cursor:pointer;margin:5px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:sans-serif;background:#fffbe6;text-align:center}
+nav{background:#f59e0b;padding:15px;display:flex;justify-content:space-around;position:sticky;top:0;z-index:10}
+nav button{background:transparent;color:white;border:2px solid white;padding:8px 14px;border-radius:10px;font-size:1em;cursor:pointer}
+nav button.aktiv{background:white;color:#f59e0b}
+h1{color:#f59e0b;font-size:2em;padding:20px}
+button.haupt{background:#f59e0b;color:white;border:none;padding:12px 24px;border-radius:12px;font-size:1.1em;cursor:pointer;margin:5px}
+button.klein{background:white;color:#f59e0b;border:2px solid #f59e0b;padding:8px 16px;border-radius:10px;font-size:1em;cursor:pointer;margin:5px}
+button.grau{background:#ddd;color:#555;border:none;padding:8px 16px;border-radius:10px;font-size:0.9em;cursor:pointer;margin:5px}
 input{font-size:1.2em;padding:10px;border-radius:10px;border:2px solid #f59e0b;width:60%;text-align:center}
 .box{background:white;padding:20px;border-radius:20px;margin:20px auto;max-width:400px;box-shadow:0 4px 10px #f59e0b44}
 .hidden{display:none}
-.erklaer-btn{background:white;color:#f59e0b;border:2px solid #f59e0b;margin:5px}
-.erklaer-box{background:#fff9e6;border:2px solid #f59e0b;border-radius:15px;padding:15px;margin:10px auto;max-width:400px;text-align:left;font-size:1.1em}
-.zurueck-btn{background:#ddd;color:#555;border:none;font-size:0.9em;padding:8px 16px}
+.erklaer-box{background:#fff9e6;border:2px solid #f59e0b;border-radius:15px;padding:15px;margin:10px auto;max-width:400px;text-align:left;font-size:1.05em;line-height:1.6}
+.seite{padding:10px;display:none}
+.seite.aktiv{display:block}
 </style>
 </head>
 <body>
+
+<nav>
+  <button id="nav-home" class="aktiv" onclick="zeigSeite('home')">🏠 Start</button>
+  <button id="nav-lernen" onclick="zeigSeite('lernen')">📚 Lernen</button>
+  <button id="nav-ueben" onclick="zeigSeite('ueben')">✏️ Üben</button>
+</nav>
+
 <h1>⭐ Mathe Star</h1>
 
-<div id="start" class="box">
-  <p>Wie heißt du?</p>
-  <input id="nameInput" placeholder="Dein Name" /><br><br>
-  <p>Welche Klasse?</p>
-  <button onclick="setKlasse(1)">1</button>
-  <button onclick="setKlasse(2)">2</button>
-  <button onclick="setKlasse(3)">3</button>
-  <button onclick="setKlasse(4)">4</button>
-  <p id="klasseText">Klasse: 1</p>
-  <button onclick="startQuiz()">Los geht's! 🚀</button>
-  <hr style="margin:20px 0;border-color:#f59e0b44">
-  <p><b>Möchtest du etwas lernen?</b></p>
-  <button class="erklaer-btn" onclick="zeigErklaerung('plus')">➕ Addition</button>
-  <button class="erklaer-btn" onclick="zeigErklaerung('minus')">➖ Subtraktion</button>
-  <button class="erklaer-btn" onclick="zeigErklaerung('mal')">✖️ Multiplikation</button>
-  <button class="erklaer-btn" onclick="zeigErklaerung('geteilt')">➗ Division</button>
-  <div id="erklaerung" class="hidden"></div>
+<!-- HOME -->
+<div id="seite-home" class="seite aktiv">
+  <div class="box">
+    <p style="font-size:1.2em">Willkommen bei <b>Mathe Star</b>! 🌟</p>
+    <p style="margin:15px 0;color:#666">Lerne und übe Mathe – Schritt für Schritt!</p>
+    <button class="haupt" onclick="zeigSeite('lernen')">📚 Jetzt lernen</button><br>
+    <button class="haupt" onclick="zeigSeite('ueben')">✏️ Jetzt üben</button>
+  </div>
 </div>
 
-<div id="quiz" class="box hidden">
-  <p id="aufgabe"></p>
-  <div id="frage" style="font-size:2em;margin:20px"></div>
-  <input type="number" id="antwort" placeholder="?" /><br><br>
-  <button onclick="pruefen()">Antworten ✓</button>
-  <button onclick="hilfe()" class="erklaer-btn">Hilfe 💡</button>
-  <button onclick="zurueck()" class="zurueck-btn">⬅️ Zurück zum Menü</button>
-  <p id="tipp" style="display:none;color:#666;font-size:1em"></p>
-  <p id="feedback" style="font-size:1.3em"></p>
+<!-- LERNEN -->
+<div id="seite-lernen" class="seite">
+  <div class="box">
+    <p><b>Was möchtest du lernen?</b></p>
+    <button class="klein" onclick="zeigErklaerung('plus')">➕ Addition</button>
+    <button class="klein" onclick="zeigErklaerung('minus')">➖ Subtraktion</button>
+    <button class="klein" onclick="zeigErklaerung('mal')">✖️ Multiplikation</button>
+    <button class="klein" onclick="zeigErklaerung('geteilt')">➗ Division</button>
+  </div>
+  <div id="erklaerung" class="hidden erklaer-box"></div>
 </div>
 
-<div id="belohnung" class="box hidden">
-  <h2>🏆 Geschafft!</h2>
-  <p id="ergebnis"></p>
-  <div id="sterne" style="font-size:2em"></div>
-  <button onclick="nochmal()">Nochmal 🔄</button>
-  <button onclick="zurueck()" class="zurueck-btn">⬅️ Zurück zum Menü</button>
+<!-- ÜBEN -->
+<div id="seite-ueben" class="seite">
+  <div id="ueben-start" class="box">
+    <p>Wie heißt du?</p>
+    <input id="nameInput" placeholder="Dein Name" /><br><br>
+    <p>Welche Klasse?</p>
+    <button class="klein" onclick="setKlasse(1)">1</button>
+    <button class="klein" onclick="setKlasse(2)">2</button>
+    <button class="klein" onclick="setKlasse(3)">3</button>
+    <button class="klein" onclick="setKlasse(4)">4</button>
+    <p id="klasseText" style="margin:10px 0">Klasse: 1</p>
+    <button class="haupt" onclick="startQuiz()">Los geht's! 🚀</button>
+  </div>
+
+  <div id="quiz" class="box hidden">
+    <p id="aufgabe"></p>
+    <div id="frage" style="font-size:2em;margin:20px"></div>
+    <input type="number" id="antwort" placeholder="?" /><br><br>
+    <button class="haupt" onclick="pruefen()">Antworten ✓</button>
+    <button class="klein" onclick="hilfe()">Hilfe 💡</button>
+    <button class="grau" onclick="zurueck()">⬅️ Abbrechen</button>
+    <p id="tipp" style="display:none;color:#666;margin-top:10px"></p>
+    <p id="feedback" style="font-size:1.3em;margin-top:10px"></p>
+  </div>
+
+  <div id="belohnung" class="box hidden">
+    <h2>🏆 Geschafft!</h2>
+    <p id="ergebnis" style="margin:15px 0"></p>
+    <div id="sterne" style="font-size:2em;margin:10px"></div>
+    <button class="haupt" onclick="nochmal()">Nochmal 🔄</button>
+    <button class="grau" onclick="zurueck()">⬅️ Zurück zum Menü</button>
+  </div>
 </div>
 
 <script>
 let name='',klasse=1,index=0,richtig=0,aktFrage=null;
 
+function zeigSeite(s){
+  document.querySelectorAll('.seite').forEach(el=>el.classList.remove('aktiv'));
+  document.querySelectorAll('nav button').forEach(el=>el.classList.remove('aktiv'));
+  document.getElementById('seite-'+s).classList.add('aktiv');
+  document.getElementById('nav-'+s).classList.add('aktiv');
+}
+
 const erklaerungen={
   plus:{
     titel:'➕ Addition – Zusammenzählen',
-    text:'Bei der Addition zählst du zwei Zahlen zusammen.<br><br>'+
-    '🍎🍎🍎 + 🍎🍎 = 🍎🍎🍎🍎🍎<br>'+
-    '<b>3 + 2 = 5</b><br><br>'+
-    'Stell dir vor: Du hast 3 Äpfel und bekommst noch 2 dazu. Jetzt hast du 5 Äpfel!<br><br>'+
-    '📝 Weitere Beispiele:<br>'+
-    '4 + 3 = 7<br>'+
-    '10 + 5 = 15'
+    text:'Bei der Addition zählst du zwei Zahlen zusammen.<br><br>🍎🍎🍎 + 🍎🍎 = 🍎🍎🍎🍎🍎<br><b>3 + 2 = 5</b><br><br>Stell dir vor: Du hast 3 Äpfel und bekommst noch 2 dazu. Jetzt hast du 5 Äpfel!<br><br>📝 Weitere Beispiele:<br>4 + 3 = 7<br>10 + 5 = 15'
   },
   minus:{
     titel:'➖ Subtraktion – Wegnehmen',
-    text:'Bei der Subtraktion nimmst du eine Zahl von einer anderen weg.<br><br>'+
-    '🍎🍎🍎🍎🍎 – 🍎🍎 = 🍎🍎🍎<br>'+
-    '<b>5 – 2 = 3</b><br><br>'+
-    'Stell dir vor: Du hast 5 Bonbons und isst 2. Es bleiben 3 übrig!<br><br>'+
-    '📝 Weitere Beispiele:<br>'+
-    '8 – 3 = 5<br>'+
-    '10 – 4 = 6'
+    text:'Bei der Subtraktion nimmst du eine Zahl von einer anderen weg.<br><br>🍎🍎🍎🍎🍎 – 🍎🍎 = 🍎🍎🍎<br><b>5 – 2 = 3</b><br><br>Stell dir vor: Du hast 5 Bonbons und isst 2. Es bleiben 3 übrig!<br><br>📝 Weitere Beispiele:<br>8 – 3 = 5<br>10 – 4 = 6'
   },
   mal:{
     titel:'✖️ Multiplikation – Mehrmals addieren',
-    text:'Bei der Multiplikation addierst du eine Zahl mehrmals.<br><br>'+
-    '<b>3 × 4</b> bedeutet: 3 mal die 4 addieren<br>'+
-    '4 + 4 + 4 = 12<br>'+
-    '<b>3 × 4 = 12</b><br><br>'+
-    'Stell dir vor: 3 Kinder haben je 4 Bonbons. Zusammen haben sie 12!<br><br>'+
-    '📝 Weitere Beispiele:<br>'+
-    '2 × 5 = 10<br>'+
-    '3 × 3 = 9'
+    text:'Bei der Multiplikation addierst du eine Zahl mehrmals.<br><br><b>3 × 4</b> bedeutet: 3 mal die 4 addieren<br>4 + 4 + 4 = 12<br><b>3 × 4 = 12</b><br><br>Stell dir vor: 3 Kinder haben je 4 Bonbons. Zusammen haben sie 12!<br><br>📝 Weitere Beispiele:<br>2 × 5 = 10<br>3 × 3 = 9'
   },
   geteilt:{
     titel:'➗ Division – Aufteilen',
-    text:'Bei der Division teilst du eine Zahl in gleiche Gruppen auf.<br><br>'+
-    '<b>12 ÷ 3</b> bedeutet: 12 auf 3 Gruppen aufteilen<br>'+
-    '🍬🍬🍬🍬 | 🍬🍬🍬🍬 | 🍬🍬🍬🍬<br>'+
-    '<b>12 ÷ 3 = 4</b><br><br>'+
-    'Stell dir vor: 12 Bonbons für 3 Kinder – jedes Kind bekommt 4!<br><br>'+
-    '📝 Weitere Beispiele:<br>'+
-    '10 ÷ 2 = 5<br>'+
-    '9 ÷ 3 = 3'
+    text:'Bei der Division teilst du eine Zahl in gleiche Gruppen auf.<br><br><b>12 ÷ 3</b> bedeutet: 12 auf 3 Gruppen aufteilen<br>🍬🍬🍬🍬 | 🍬🍬🍬🍬 | 🍬🍬🍬🍬<br><b>12 ÷ 3 = 4</b><br><br>Stell dir vor: 12 Bonbons für 3 Kinder – jedes Kind bekommt 4!<br><br>📝 Weitere Beispiele:<br>10 ÷ 2 = 5<br>9 ÷ 3 = 3'
   }
 };
 
 function zeigErklaerung(typ){
   let div=document.getElementById('erklaerung');
   let e=erklaerungen[typ];
-  div.innerHTML='<div class="erklaer-box"><b>'+e.titel+'</b><br><br>'+e.text+'</div>';
+  div.innerHTML='<b>'+e.titel+'</b><br><br>'+e.text;
   div.classList.remove('hidden');
 }
 
@@ -117,7 +129,7 @@ function setKlasse(k){klasse=k;document.getElementById('klasseText').textContent
 function startQuiz(){
   name=document.getElementById('nameInput').value||'Freund';
   index=0;richtig=0;
-  document.getElementById('start').classList.add('hidden');
+  document.getElementById('ueben-start').classList.add('hidden');
   document.getElementById('quiz').classList.remove('hidden');
   naechste();
 }
@@ -164,8 +176,7 @@ function hilfe(){
   if(op==='-')txt='Tipp: Nimm von '+a+' genau '+b+' weg!';
   if(op==='*')txt='Tipp: Addiere '+a+' mal die Zahl '+b+'!';
   if(op==='/')txt='Tipp: Teile '+a+' in '+b+' gleiche Gruppen!';
-  t.textContent=txt;
-  t.style.display='block';
+  t.textContent=txt;t.style.display='block';
 }
 
 function zeigeBelohnung(){
@@ -179,13 +190,14 @@ function zeigeBelohnung(){
 function zurueck(){
   document.getElementById('quiz').classList.add('hidden');
   document.getElementById('belohnung').classList.add('hidden');
-  document.getElementById('start').classList.remove('hidden');
+  document.getElementById('ueben-start').classList.remove('hidden');
   index=0;richtig=0;
 }
 
 function nochmal(){
   document.getElementById('belohnung').classList.add('hidden');
-  document.getElementById('start').classList.remove('hidden');
+  document.getElementById('ueben-start').classList.remove('hidden');
+  index=0;richtig=0;
 }
 </script>
 </body>
