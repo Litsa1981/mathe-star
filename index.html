@@ -13,6 +13,7 @@ input{font-size:1.2em;padding:10px;border-radius:10px;border:2px solid #f59e0b;w
 .hidden{display:none}
 .erklaer-btn{background:white;color:#f59e0b;border:2px solid #f59e0b;margin:5px}
 .erklaer-box{background:#fff9e6;border:2px solid #f59e0b;border-radius:15px;padding:15px;margin:10px auto;max-width:400px;text-align:left;font-size:1.1em}
+.zurueck-btn{background:#ddd;color:#555;border:none;font-size:0.9em;padding:8px 16px}
 </style>
 </head>
 <body>
@@ -43,6 +44,7 @@ input{font-size:1.2em;padding:10px;border-radius:10px;border:2px solid #f59e0b;w
   <input type="number" id="antwort" placeholder="?" /><br><br>
   <button onclick="pruefen()">Antworten ✓</button>
   <button onclick="hilfe()" class="erklaer-btn">Hilfe 💡</button>
+  <button onclick="zurueck()" class="zurueck-btn">⬅️ Zurück zum Menü</button>
   <p id="tipp" style="display:none;color:#666;font-size:1em"></p>
   <p id="feedback" style="font-size:1.3em"></p>
 </div>
@@ -52,6 +54,7 @@ input{font-size:1.2em;padding:10px;border-radius:10px;border:2px solid #f59e0b;w
   <p id="ergebnis"></p>
   <div id="sterne" style="font-size:2em"></div>
   <button onclick="nochmal()">Nochmal 🔄</button>
+  <button onclick="zurueck()" class="zurueck-btn">⬅️ Zurück zum Menü</button>
 </div>
 
 <script>
@@ -171,6 +174,13 @@ function zeigeBelohnung(){
   let msg=richtig===10?'🎉 Perfekt! Du bist ein echter Mathe-Star!':richtig>=7?'😊 Sehr gut! Weiter so!':'💪 Nicht aufgeben! Du schaffst das!';
   document.getElementById('ergebnis').innerHTML='<b>'+name+'</b> hat <b>'+richtig+' von 10</b> richtig!<br><br>'+msg;
   document.getElementById('sterne').textContent='⭐'.repeat(Math.round(richtig/2));
+}
+
+function zurueck(){
+  document.getElementById('quiz').classList.add('hidden');
+  document.getElementById('belohnung').classList.add('hidden');
+  document.getElementById('start').classList.remove('hidden');
+  index=0;richtig=0;
 }
 
 function nochmal(){
