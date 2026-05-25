@@ -3,147 +3,174 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mathe Star</title>
+<title>Mathe Taucher</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Segoe UI',sans-serif;background:#1a8fe3;min-height:100vh;overflow-x:hidden}
+body{font-family:'Segoe UI',sans-serif;background:#006994;min-height:100vh;overflow-x:hidden}
 
-/* SPLASH SCREEN */
-#splash{position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(180deg,#87CEEB 0%,#4db8e8 40%,#2196F3 100%);z-index:1000;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity 1s}
-.wolke{position:absolute;background:white;border-radius:50px;opacity:0.9}
-.wolke1{width:150px;height:60px;top:8%;left:5%;box-shadow:70px 0 0 50px white}
-.wolke2{width:120px;height:50px;top:15%;right:10%;box-shadow:60px 0 0 40px white}
-.wolke3{width:100px;height:40px;top:25%;left:20%;box-shadow:50px 0 0 35px white}
-.splash-logo{font-size:4em;font-weight:900;color:#1a1a2e;letter-spacing:-2px;position:relative;z-index:2}
-.splash-logo span{color:#ff6b35}
-.splash-underline{width:200px;height:4px;background:#ff6b35;border-radius:5px;margin:5px auto;position:relative;z-index:2}
-.splash-scene{position:absolute;bottom:0;width:100%;height:250px}
-.insel{position:absolute;bottom:0;right:0;font-size:1em;line-height:1}
-.schildkroete{position:absolute;bottom:60px;right:80px;font-size:3em;animation:bob 3s infinite}
-.palme{position:absolute;bottom:40px;right:20px;font-size:4em}
-.haus{position:absolute;bottom:50px;right:120px;font-size:3em}
-@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-15px)}}
-@keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+/* ANIMATIONEN */
+@keyframes schwimmen{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-15px) rotate(2deg)}}
+@keyframes blasen{0%{transform:translateY(0);opacity:1}100%{transform:translateY(-100px);opacity:0}}
+@keyframes wellen{0%,100%{transform:scaleX(1)}50%{transform:scaleX(1.05)}}
 @keyframes pop{0%{transform:scale(0)}80%{transform:scale(1.1)}100%{transform:scale(1)}}
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
-@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes treiben{0%,100%{transform:translateX(0) rotate(-5deg)}50%{transform:translateX(20px) rotate(5deg)}}
+@keyframes laden{0%{width:0%}100%{width:100%}}
+
+/* SPLASH */
+#splash{position:fixed;top:0;left:0;width:100%;height:100%;z-index:1000;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;transition:opacity 1s}
+.splash-bg{position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(180deg,#001a3a 0%,#003366 20%,#006994 50%,#0099cc 80%,#00ccff 100%)}
+.splash-blasen{position:absolute;width:100%;height:100%}
+.blase{position:absolute;border-radius:50%;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);animation:blasen 3s infinite}
+.splash-fisch{position:absolute;font-size:3em;animation:schwimmen 3s infinite}
+.splash-logo{position:relative;z-index:2;text-align:center}
+.logo-text{font-size:3.5em;font-weight:900;color:white;text-shadow:0 0 30px rgba(0,200,255,0.8);letter-spacing:-1px}
+.logo-text span{color:#FFD700}
+.logo-sub{color:rgba(255,255,255,0.8);font-size:1.1em;margin-top:5px}
+.lade-balken-container{width:250px;height:20px;background:rgba(0,0,0,0.3);border-radius:20px;margin:20px auto;overflow:hidden;border:2px solid rgba(255,255,255,0.3)}
+.lade-balken{height:100%;background:linear-gradient(90deg,#00ff88,#00ccff);border-radius:20px;animation:laden 2.5s ease forwards}
+.lade-text{color:rgba(255,255,255,0.8);font-size:0.9em}
+.unterwasser-szene{position:absolute;bottom:0;width:100%;height:200px}
+.sand{position:absolute;bottom:0;width:100%;height:80px;background:linear-gradient(180deg,transparent,#c4a35a);border-radius:50% 50% 0 0 / 30px 30px 0 0}
+.koralle{position:absolute;bottom:60px;font-size:3em}
+.grosser-fisch{position:absolute;bottom:100px;font-size:5em;animation:treiben 4s infinite}
 
 /* NAV */
-nav{background:#1565C0;padding:12px 15px;display:flex;justify-content:space-around;align-items:center;position:sticky;top:0;z-index:10;box-shadow:0 3px 10px rgba(0,0,0,0.3)}
-nav button{background:transparent;color:rgba(255,255,255,0.7);border:none;padding:8px 12px;border-radius:12px;font-size:0.85em;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:all 0.2s}
-nav button.aktiv{background:rgba(255,255,255,0.2);color:white}
-nav button .nav-icon{font-size:1.4em}
+nav{background:linear-gradient(90deg,#001a3a,#003366);padding:10px 15px;display:flex;justify-content:space-around;align-items:center;position:sticky;top:0;z-index:10;box-shadow:0 3px 15px rgba(0,0,0,0.4)}
+nav button{background:transparent;color:rgba(255,255,255,0.6);border:none;padding:8px 10px;border-radius:12px;font-size:0.8em;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:all 0.2s}
+nav button.aktiv{background:rgba(0,200,255,0.2);color:#00ccff}
+nav button .nav-icon{font-size:1.5em}
 nav button .nav-label{font-size:0.7em}
 
 /* SEITEN */
-.seite{display:none;padding:15px;animation:fadeIn 0.4s ease}
+.seite{display:none;padding:15px;animation:fadeIn 0.4s ease;padding-bottom:20px}
 .seite.aktiv{display:block}
+.hidden{display:none!important}
+
+/* HINTERGRUND */
+.unterwasser-bg{background:linear-gradient(180deg,#001a3a 0%,#003366 30%,#006994 70%,#0099cc 100%);min-height:100vh;position:relative;overflow:hidden}
+.blasen-deko{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}
+.blasen-deko .blase{animation:blasen linear infinite}
+
+/* KARTEN */
+.karte{background:rgba(255,255,255,0.95);border-radius:25px;padding:20px;margin-bottom:15px;box-shadow:0 8px 25px rgba(0,0,0,0.3);position:relative;z-index:1}
+.karte-blau{background:linear-gradient(135deg,rgba(0,50,100,0.9),rgba(0,100,150,0.9));color:white;border:1px solid rgba(0,200,255,0.3)}
 
 /* HOME */
-.home-header{background:linear-gradient(135deg,#1565C0,#1a8fe3);border-radius:25px;padding:25px 20px;margin-bottom:15px;color:white;position:relative;overflow:hidden}
-.home-header::before{content:'';position:absolute;top:-30px;right:-30px;width:120px;height:120px;background:rgba(255,255,255,0.1);border-radius:50%}
-.home-avatar-big{font-size:5em;animation:bob 3s infinite}
-.home-name{font-size:1.6em;font-weight:bold;margin:8px 0}
-.home-stats{display:flex;gap:15px;justify-content:center;margin-top:10px}
-.stat-chip{background:rgba(255,255,255,0.2);border-radius:20px;padding:6px 14px;font-size:0.95em;backdrop-filter:blur(5px)}
+.profil-karte{background:linear-gradient(135deg,#001a3a,#003d7a);border-radius:25px;padding:25px 20px;margin-bottom:15px;color:white;text-align:center;border:2px solid rgba(0,200,255,0.3);box-shadow:0 8px 25px rgba(0,0,0,0.4);position:relative;overflow:hidden}
+.profil-karte::before{content:'🌊';position:absolute;font-size:8em;opacity:0.05;top:-20px;right:-20px}
+.avatar-gross{font-size:5em;animation:schwimmen 3s infinite;display:inline-block}
+.stats-reihe{display:flex;gap:10px;justify-content:center;margin-top:12px;flex-wrap:wrap}
+.stat-chip{background:rgba(0,200,255,0.2);border:1px solid rgba(0,200,255,0.4);border-radius:20px;padding:6px 14px;font-size:0.95em;color:#00ccff}
 
-/* SPIELKARTEN GRID */
-.spiele-titel{color:white;font-size:1.3em;font-weight:bold;margin:15px 0 10px;text-align:left}
-.spiele-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:15px}
-.spiel-karte{border-radius:20px;overflow:hidden;cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;box-shadow:0 4px 15px rgba(0,0,0,0.2);position:relative}
+/* SPIEL KARTEN */
+.spiel-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:15px;position:relative;z-index:1}
+.spiel-karte{border-radius:22px;overflow:hidden;cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;box-shadow:0 6px 20px rgba(0,0,0,0.3)}
 .spiel-karte:active{transform:scale(0.95)}
 .spiel-karte.gesperrt{opacity:0.5;cursor:not-allowed}
-.spiel-karte .karte-bg{height:130px;display:flex;align-items:center;justify-content:center;font-size:3.5em;position:relative}
-.spiel-karte .karte-label{background:white;padding:10px 12px;font-size:0.95em;font-weight:bold;color:#1a1a2e;display:flex;justify-content:space-between;align-items:center}
-.spiel-karte .lock-badge{position:absolute;top:8px;right:8px;background:#ff6b35;color:white;border-radius:10px;padding:3px 8px;font-size:0.7em;font-weight:bold}
+.karte-bild{height:120px;display:flex;align-items:center;justify-content:center;font-size:3em;position:relative;overflow:hidden}
+.karte-bild::after{content:'';position:absolute;bottom:0;left:0;right:0;height:30px;background:linear-gradient(transparent,rgba(0,0,0,0.2))}
+.karte-info{background:white;padding:10px 12px;font-size:0.9em;font-weight:bold;color:#001a3a;display:flex;justify-content:space-between;align-items:center}
 
-/* SPIEL AKTIV */
-.spiel-header{background:linear-gradient(135deg,#1565C0,#1a8fe3);border-radius:20px;padding:15px;margin-bottom:12px;color:white}
-.spiel-progress{background:rgba(255,255,255,0.3);border-radius:10px;height:10px;margin:10px 0}
-.spiel-progress-bar{background:white;height:10px;border-radius:10px;transition:width 0.4s}
-.timer-container{display:flex;align-items:center;justify-content:center;gap:8px}
-.timer-circle{width:55px;height:55px;border-radius:50%;background:conic-gradient(#ff6b35 0%,rgba(255,255,255,0.3) 0%);display:flex;align-items:center;justify-content:center;font-size:1.3em;font-weight:bold;color:white;transition:background 0.5s}
+/* SPIEL */
+.spiel-header{background:linear-gradient(135deg,#001a3a,#003d7a);border-radius:22px;padding:15px;margin-bottom:12px;color:white;border:1px solid rgba(0,200,255,0.3)}
+.spiel-progress{background:rgba(255,255,255,0.2);border-radius:10px;height:10px;margin:10px 0}
+.spiel-progress-bar{background:linear-gradient(90deg,#00ff88,#00ccff);height:10px;border-radius:10px;transition:width 0.4s}
+.timer{width:55px;height:55px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3em;font-weight:bold;color:white;transition:background 0.5s}
 
-.spiel-inhalt{background:white;border-radius:25px;padding:25px 20px;box-shadow:0 8px 25px rgba(0,0,0,0.15)}
-.frage-box{background:linear-gradient(135deg,#667eea,#764ba2);border-radius:20px;padding:20px;margin:15px 0;color:white}
-.frage-text{font-size:2em;font-weight:bold}
-.objekte{display:flex;flex-wrap:wrap;justify-content:center;gap:5px;margin:15px 0;min-height:50px;font-size:2.2em}
+.frage-karte{background:linear-gradient(135deg,#003d7a,#006994);border-radius:22px;padding:20px;margin:12px 0;color:white;text-align:center;border:1px solid rgba(0,200,255,0.3)}
+.frage-gross{font-size:2.2em;font-weight:bold}
+.objekte{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin:12px 0;min-height:50px;font-size:2.2em}
 .objekt{animation:pop 0.3s ease}
 
-.antwort-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:15px}
-.antwort-btn{background:linear-gradient(135deg,#f8f9ff,#e8ecff);border:3px solid #c5cef5;border-radius:18px;padding:18px 10px;font-size:1.6em;font-weight:bold;color:#333;cursor:pointer;transition:all 0.2s;box-shadow:0 3px 10px rgba(0,0,0,0.1)}
+.antwort-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.antwort-btn{background:linear-gradient(135deg,#e8f4fd,#d0e8f7);border:3px solid #80c8e8;border-radius:18px;padding:18px 10px;font-size:1.6em;font-weight:bold;color:#001a3a;cursor:pointer;transition:all 0.2s;box-shadow:0 3px 10px rgba(0,0,0,0.1)}
 .antwort-btn:active{transform:scale(0.95)}
 .antwort-btn.richtig{background:linear-gradient(135deg,#d4edda,#b8e6c1);border-color:#28a745;animation:pop 0.3s}
 .antwort-btn.falsch{background:linear-gradient(135deg,#f8d7da,#f5c2c7);border-color:#dc3545;animation:shake 0.4s}
 
-.feedback-box{border-radius:20px;padding:15px;margin:12px 0;font-size:1.2em;font-weight:bold;min-height:50px;display:flex;align-items:center;justify-content:center}
-.feedback-richtig{background:linear-gradient(135deg,#d4edda,#b8e6c1);color:#155724}
-.feedback-falsch{background:linear-gradient(135deg,#f8d7da,#f5c2c7);color:#721c24}
+.feedback{border-radius:18px;padding:14px;margin:10px 0;font-size:1.1em;font-weight:bold;text-align:center;min-height:48px}
+.feedback-ok{background:linear-gradient(135deg,#d4edda,#b8e6c1);color:#155724}
+.feedback-nein{background:linear-gradient(135deg,#f8d7da,#f5c2c7);color:#721c24}
 
 /* ERGEBNIS */
-.ergebnis-card{background:linear-gradient(135deg,#1565C0,#1a8fe3);border-radius:25px;padding:30px 20px;color:white;text-align:center}
-.ergebnis-sterne{font-size:2.5em;margin:15px 0}
-.ergebnis-punkte{background:rgba(255,255,255,0.2);border-radius:20px;padding:12px 20px;font-size:1.1em;margin:10px 0;backdrop-filter:blur(5px)}
+.ergebnis{background:linear-gradient(135deg,#001a3a,#003d7a);border-radius:25px;padding:30px 20px;color:white;text-align:center;border:2px solid rgba(0,200,255,0.3)}
 
 /* BUTTONS */
-.btn-haupt{background:linear-gradient(135deg,#ff6b35,#ff8c42);color:white;border:none;padding:15px 30px;border-radius:20px;font-size:1.1em;font-weight:bold;cursor:pointer;margin:5px;transition:all 0.2s;box-shadow:0 4px 15px rgba(255,107,53,0.4);width:100%}
-.btn-haupt:active{transform:scale(0.97)}
-.btn-weiss{background:white;color:#1565C0;border:3px solid #1565C0;padding:12px 25px;border-radius:20px;font-size:1em;font-weight:bold;cursor:pointer;margin:5px;transition:all 0.2s;width:100%}
-.btn-klein{background:rgba(255,255,255,0.2);color:white;border:2px solid rgba(255,255,255,0.5);padding:8px 16px;border-radius:12px;font-size:0.95em;cursor:pointer;margin:4px}
-.btn-grau{background:#eee;color:#666;border:none;padding:10px 20px;border-radius:15px;font-size:0.95em;cursor:pointer;margin:5px}
-
-/* LERNEN */
-.lern-karte{background:white;border-radius:20px;margin-bottom:12px;overflow:hidden;box-shadow:0 4px 15px rgba(0,0,0,0.1)}
-.lern-header{padding:18px 20px;color:white;font-size:1.2em;font-weight:bold;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
-.lern-inhalt{padding:20px;font-size:1em;line-height:1.8;color:#333;display:none}
-.lern-inhalt.offen{display:block;animation:fadeIn 0.3s}
-
-/* PROFIL */
-.profil-header{background:linear-gradient(135deg,#1565C0,#1a8fe3);border-radius:25px;padding:25px;color:white;text-align:center;margin-bottom:12px}
-.abzeichen-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:10px}
-.abzeichen-item{background:white;border-radius:15px;padding:12px 8px;text-align:center;font-size:0.85em}
-.abzeichen-item.gesperrt{opacity:0.3}
-.abzeichen-emoji{font-size:2em}
-
-/* ELTERN */
-.eltern-card{background:white;border-radius:20px;padding:20px;margin-bottom:12px;box-shadow:0 4px 15px rgba(0,0,0,0.1)}
-.pin-display{font-size:2.5em;letter-spacing:15px;margin:15px 0;color:#1565C0}
-.pin-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:250px;margin:0 auto}
-.pin-btn{background:white;border:2px solid #1565C0;border-radius:15px;padding:15px;font-size:1.3em;font-weight:bold;cursor:pointer;color:#1565C0}
+.btn{background:linear-gradient(135deg,#0099cc,#006994);color:white;border:none;padding:14px 25px;border-radius:18px;font-size:1.05em;font-weight:bold;cursor:pointer;margin:5px;transition:all 0.2s;box-shadow:0 4px 15px rgba(0,150,200,0.4);width:100%}
+.btn:active{transform:scale(0.97)}
+.btn-gold{background:linear-gradient(135deg,#FFD700,#FFA500);color:#1a1a00;box-shadow:0 4px 15px rgba(255,200,0,0.4)}
+.btn-weiss{background:white;color:#003366;border:2px solid #0099cc}
+.btn-klein{background:rgba(0,200,255,0.2);color:#00ccff;border:1px solid rgba(0,200,255,0.4);padding:8px 14px;border-radius:12px;font-size:0.9em;cursor:pointer;margin:3px}
+.btn-grau{background:rgba(255,255,255,0.15);color:white;border:none;padding:8px 14px;border-radius:12px;font-size:0.9em;cursor:pointer}
 
 /* LERNPFAD */
-.pfad-container{padding:10px}
-.pfad-stufe{background:white;border-radius:20px;padding:15px 20px;margin-bottom:10px;display:flex;align-items:center;gap:15px;box-shadow:0 3px 10px rgba(0,0,0,0.1);cursor:pointer;transition:transform 0.2s}
+.pfad-stufe{background:rgba(255,255,255,0.95);border-radius:18px;padding:14px 18px;margin-bottom:10px;display:flex;align-items:center;gap:12px;box-shadow:0 4px 15px rgba(0,0,0,0.2);cursor:pointer;transition:transform 0.2s;position:relative;z-index:1}
 .pfad-stufe:active{transform:scale(0.98)}
 .pfad-stufe.gesperrt{opacity:0.5}
-.pfad-stufe.abgeschlossen{border-left:5px solid #28a745}
-.pfad-stufe.aktuell{border-left:5px solid #ff6b35;animation:pulse 2s infinite}
+.pfad-stufe.aktuell{border:3px solid #FFD700;animation:wellen 2s infinite}
 .pfad-icon{font-size:2.5em;width:55px;text-align:center}
-.pfad-info{text-align:left;flex:1}
-.pfad-name{font-size:1.1em;font-weight:bold;color:#1a1a2e}
-.pfad-desc{font-size:0.85em;color:#666;margin-top:3px}
-.pfad-badge{background:#ff6b35;color:white;border-radius:10px;padding:3px 10px;font-size:0.8em;font-weight:bold}
+.pfad-info{flex:1;text-align:left}
+.pfad-name{font-weight:bold;color:#001a3a;font-size:1.05em}
+.pfad-desc{color:#666;font-size:0.85em;margin-top:2px}
+.pfad-badge{background:#003366;color:white;border-radius:10px;padding:4px 10px;font-size:0.8em;font-weight:bold}
+.pfad-badge.ok{background:#28a745}
 
-canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:999}
+/* LERNEN */
+.lern-karte{border-radius:20px;overflow:hidden;margin-bottom:12px;box-shadow:0 4px 15px rgba(0,0,0,0.2);position:relative;z-index:1}
+.lern-kopf{padding:16px 18px;color:white;font-size:1.1em;font-weight:bold;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.lern-body{padding:18px;font-size:1em;line-height:1.8;color:#001a3a;display:none;background:white}
+.lern-body.offen{display:block;animation:fadeIn 0.3s}
+
+/* PROFIL */
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.stat-box{border-radius:14px;padding:14px;text-align:center}
+.abz-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
+.abz-item{background:rgba(255,255,255,0.1);border-radius:14px;padding:10px 6px;text-align:center;font-size:0.8em;color:white}
+.abz-item.gesperrt{opacity:0.3}
+.abz-emoji{font-size:2em}
+
+/* ELTERN */
+.pin-anzeige{font-size:2.5em;letter-spacing:12px;margin:15px 0;color:#00ccff;text-align:center}
+.pin-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:240px;margin:0 auto}
+.pin-btn{background:rgba(0,200,255,0.15);border:2px solid rgba(0,200,255,0.4);border-radius:14px;padding:14px;font-size:1.3em;font-weight:bold;cursor:pointer;color:white}
+
+canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:998}
 </style>
 </head>
 <body>
 
 <!-- SPLASH -->
 <div id="splash">
-  <div class="wolke wolke1"></div>
-  <div class="wolke wolke2"></div>
-  <div class="wolke wolke3"></div>
-  <div class="splash-logo">mathe<span>★</span>star</div>
-  <div class="splash-underline"></div>
-  <p style="color:white;margin-top:10px;font-size:1em;opacity:0.9">Lernen macht Spaß! 🎉</p>
-  <div class="splash-scene">
-    <div class="schildkroete">🐢</div>
-    <div class="palme">🌴</div>
-    <div class="haus">🏠</div>
+  <div class="splash-bg"></div>
+  <div class="splash-blasen" id="splash-blasen"></div>
+
+  <div class="unterwasser-szene">
+    <div class="sand"></div>
+    <div class="koralle" style="left:5%">🪸</div>
+    <div class="koralle" style="left:20%">🌿</div>
+    <div class="koralle" style="right:15%">🪸</div>
+    <div class="koralle" style="right:30%">🌊</div>
+    <div class="grosser-fisch" style="left:30%">🐠</div>
+    <div class="grosser-fisch" style="right:10%;animation-delay:1s">🐟</div>
+  </div>
+
+  <div class="splash-fisch" style="top:15%;left:10%;animation-delay:0.5s">🐙</div>
+  <div class="splash-fisch" style="top:25%;right:15%;font-size:2em">🐡</div>
+  <div class="splash-fisch" style="top:40%;left:5%;font-size:2em;animation-delay:1s">⭐</div>
+
+  <div class="splash-logo" style="position:relative;z-index:2">
+    <div class="logo-text">Mathe<span>🐠</span>Taucher</div>
+    <div class="logo-sub">🌊 Tauche ein in die Welt der Zahlen!</div>
+    <div class="lade-balken-container">
+      <div class="lade-balken"></div>
+    </div>
+    <div class="lade-text" id="lade-text">Lade... 🐟</div>
   </div>
 </div>
 
+<!-- NAV -->
 <nav id="nav" style="display:none">
   <button id="nav-home" class="aktiv" onclick="zeigSeite('home')">
     <span class="nav-icon">🏠</span><span class="nav-label">Start</span>
@@ -161,179 +188,189 @@ canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-
     <span class="nav-icon">🏆</span><span class="nav-label">Profil</span>
   </button>
   <button onclick="zeigeElternPin()">
-    <span class="nav-icon">👨‍👩‍</span><span class="nav-label">Eltern</span>
+    <span class="nav-icon">👨</span><span class="nav-label">Eltern</span>
   </button>
 </nav>
 
 <!-- HOME -->
-<div id="seite-home" class="seite aktiv" style="background:linear-gradient(180deg,#1a8fe3,#1565C0);min-height:100vh;padding-bottom:20px">
-  <div style="padding:15px">
-    <div class="home-header">
-      <div class="home-avatar-big" id="home-avatar">🦁</div>
-      <div class="home-name">Hallo, <span id="home-name">Freund</span>! 👋</div>
-      <div class="home-stats">
-        <div class="stat-chip">⭐ <span id="home-level">Anfänger</span></div>
+<div id="seite-home" class="seite aktiv unterwasser-bg">
+  <div style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0">
+    <div style="position:absolute;top:10%;left:5%;font-size:2em;animation:schwimmen 4s infinite">🐠</div>
+    <div style="position:absolute;top:20%;right:8%;font-size:1.5em;animation:schwimmen 3s infinite;animation-delay:1s">🐟</div>
+    <div style="position:absolute;top:60%;left:3%;font-size:1.8em;animation:treiben 5s infinite">🐙</div>
+    <div style="position:absolute;top:70%;right:5%;font-size:1.5em;animation:blasen 4s infinite">🫧</div>
+    <div style="position:absolute;top:80%;left:40%;font-size:1.2em;animation:blasen 3s infinite;animation-delay:1s">🫧</div>
+  </div>
+  <div style="position:relative;z-index:1;padding:15px">
+    <div class="profil-karte">
+      <div class="avatar-gross" id="home-avatar">🦈</div>
+      <div style="font-size:1.6em;font-weight:bold;margin:8px 0">Hallo, <span id="home-name">Taucher</span>! 🌊</div>
+      <div style="background:rgba(0,200,255,0.2);border-radius:20px;padding:6px 16px;display:inline-block;color:#00ccff;font-size:0.95em">⭐ <span id="home-level">Anfänger-Taucher</span></div>
+      <div class="stats-reihe">
         <div class="stat-chip">🏅 <span id="home-punkte">0</span></div>
-        <div class="stat-chip">🔥 <span id="home-streak">0</span></div>
+        <div class="stat-chip">🔥 <span id="home-streak">0</span> Tage</div>
+        <div class="stat-chip">🎮 <span id="home-spiele">0</span> Spiele</div>
       </div>
     </div>
 
-    <div style="background:rgba(255,255,255,0.15);border-radius:20px;padding:15px;margin-bottom:15px">
-      <input id="homeNameInput" placeholder="Dein Name eingeben..." style="width:100%;padding:12px;border-radius:12px;border:none;font-size:1em;margin-bottom:10px;text-align:center"/>
+    <div style="background:rgba(0,30,60,0.7);border-radius:20px;padding:15px;margin-bottom:15px;border:1px solid rgba(0,200,255,0.2)">
+      <p style="color:#00ccff;margin-bottom:10px;font-weight:bold">🐠 Dein Profil:</p>
+      <input id="homeNameInput" placeholder="Dein Name..." style="width:100%;padding:12px;border-radius:12px;border:2px solid rgba(0,200,255,0.4);background:rgba(0,0,0,0.3);color:white;font-size:1em;text-align:center;margin-bottom:10px"/>
       <div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:10px">
-        <span style="color:white;font-size:0.9em;width:100%;margin-bottom:5px">Avatar wählen:</span>
-        <span class="btn-klein gewaehlt" onclick="waehleAvatar('🦁',this)" style="font-size:1.5em;border-radius:12px;padding:8px">🦁</span>
-        <span class="btn-klein" onclick="waehleAvatar('🐯',this)" style="font-size:1.5em;border-radius:12px;padding:8px">🐯</span>
-        <span class="btn-klein" onclick="waehleAvatar('🦊',this)" style="font-size:1.5em;border-radius:12px;padding:8px">🦊</span>
-        <span class="btn-klein" onclick="waehleAvatar('🐸',this)" style="font-size:1.5em;border-radius:12px;padding:8px">🐸</span>
-        <span class="btn-klein" onclick="waehleAvatar('🦋',this)" style="font-size:1.5em;border-radius:12px;padding:8px">🦋</span>
-        <span class="btn-klein" onclick="waehleAvatar('🚀',this)" style="font-size:1.5em;border-radius:12px;padding:8px">🚀</span>
+        <span class="btn-klein av-btn gewaehlt" onclick="waehleAvatar('🦈',this)" style="font-size:1.5em">🦈</span>
+        <span class="btn-klein av-btn" onclick="waehleAvatar('🐬',this)" style="font-size:1.5em">🐬</span>
+        <span class="btn-klein av-btn" onclick="waehleAvatar('🐙',this)" style="font-size:1.5em">🐙</span>
+        <span class="btn-klein av-btn" onclick="waehleAvatar('🐡',this)" style="font-size:1.5em">🐡</span>
+        <span class="btn-klein av-btn" onclick="waehleAvatar('🦑',this)" style="font-size:1.5em">🦑</span>
+        <span class="btn-klein av-btn" onclick="waehleAvatar('🦀',this)" style="font-size:1.5em">🦀</span>
       </div>
-      <div style="display:flex;justify-content:center;gap:8px;margin-bottom:10px">
-        <span style="color:white;font-size:0.9em">Klasse:</span>
-        <button class="btn-klein" onclick="setKlasse(1)">1</button>
-        <button class="btn-klein" onclick="setKlasse(2)">2</button>
-        <button class="btn-klein" onclick="setKlasse(3)">3</button>
-        <button class="btn-klein" onclick="setKlasse(4)">4</button>
+      <div style="display:flex;justify-content:center;gap:6px;margin-bottom:10px;flex-wrap:wrap">
+        <span style="color:rgba(255,255,255,0.7);font-size:0.9em;width:100%;margin-bottom:4px">Klasse:</span>
+        <button class="btn-klein" onclick="setKlasse(1)">1. Klasse</button>
+        <button class="btn-klein" onclick="setKlasse(2)">2. Klasse</button>
+        <button class="btn-klein" onclick="setKlasse(3)">3. Klasse</button>
+        <button class="btn-klein" onclick="setKlasse(4)">4. Klasse</button>
       </div>
-      <p id="klasseText" style="color:rgba(255,255,255,0.8);font-size:0.9em;margin-bottom:10px">Klasse: 1</p>
-      <button class="btn-haupt" onclick="speicherProfil()">💾 Speichern & Loslegen!</button>
+      <p id="klasseText" style="color:rgba(255,255,255,0.6);font-size:0.9em;margin-bottom:10px">Klasse: 1</p>
+      <button class="btn btn-gold" onclick="speicherProfil()">🌊 Eintauchen!</button>
     </div>
 
-    <div class="spiele-titel">🎮 Spiele</div>
-    <div class="spiele-grid">
+    <p style="color:#00ccff;font-weight:bold;margin-bottom:10px;font-size:1.1em">🎮 Spiele auswählen:</p>
+    <div class="spiel-grid">
       <div class="spiel-karte" onclick="startSpiel('zaehlen')">
-        <div class="karte-bg" style="background:linear-gradient(135deg,#667eea,#764ba2)">🍎🔢</div>
-        <div class="karte-label">Zählen <span>▶</span></div>
+        <div class="karte-bild" style="background:linear-gradient(135deg,#006994,#0099cc)">🐠🔢🐟</div>
+        <div class="karte-info">Zählen <span>▶</span></div>
       </div>
       <div class="spiel-karte" onclick="startSpiel('rechnen')">
-        <div class="karte-bg" style="background:linear-gradient(135deg,#f093fb,#f5576c)">➕➖</div>
-        <div class="karte-label">Rechnen <span>▶</span></div>
+        <div class="karte-bild" style="background:linear-gradient(135deg,#1a0066,#4400cc)">🐙➕🦑</div>
+        <div class="karte-info">Rechnen <span>▶</span></div>
       </div>
       <div class="spiel-karte" onclick="startSpiel('vergleich')">
-        <div class="karte-bg" style="background:linear-gradient(135deg,#4facfe,#00f2fe)">⚖️</div>
-        <div class="karte-label">Vergleichen <span>▶</span></div>
+        <div class="karte-bild" style="background:linear-gradient(135deg,#004d00,#009900)">🐡⚖️🐬</div>
+        <div class="karte-info">Vergleichen <span>▶</span></div>
       </div>
       <div class="spiel-karte" onclick="startSpiel('luecke')">
-        <div class="karte-bg" style="background:linear-gradient(135deg,#43e97b,#38f9d7)">❓</div>
-        <div class="karte-label">Lücken <span>▶</span></div>
+        <div class="karte-bild" style="background:linear-gradient(135deg,#660033,#cc0066)">🦈❓🦀</div>
+        <div class="karte-info">Lücken <span>▶</span></div>
       </div>
       <div class="spiel-karte" id="karte-geld" onclick="startSpiel('geld')">
-        <div class="karte-bg" style="background:linear-gradient(135deg,#fa709a,#fee140)">💰</div>
-        <div class="karte-label">Geld <span id="geld-lock">🔒</span></div>
+        <div class="karte-bild" style="background:linear-gradient(135deg,#664400,#cc8800)">🪙💰🐚</div>
+        <div class="karte-info">Geld <span id="geld-lock">🔒</span></div>
       </div>
       <div class="spiel-karte" id="karte-zahlen" onclick="startSpiel('zahlenstrahl')">
-        <div class="karte-bg" style="background:linear-gradient(135deg,#a18cd1,#fbc2eb)">📏</div>
-        <div class="karte-label">Zahlenstrahl <span id="zahl-lock">🔒</span></div>
+        <div class="karte-bild" style="background:linear-gradient(135deg,#440066,#8800cc)">📏🌊🔢</div>
+        <div class="karte-info">Zahlenstrahl <span id="zahl-lock">🔒</span></div>
       </div>
     </div>
   </div>
 </div>
 
 <!-- LERNEN -->
-<div id="seite-lernen" class="seite" style="background:linear-gradient(180deg,#1a8fe3,#1565C0);min-height:100vh;padding-bottom:20px">
-  <div style="padding:15px">
-    <h2 style="color:white;margin-bottom:15px;font-size:1.5em">📚 Lernen</h2>
+<div id="seite-lernen" class="seite unterwasser-bg">
+  <div style="position:relative;z-index:1;padding:15px">
+    <h2 style="color:#00ccff;margin-bottom:15px;font-size:1.5em">📚 Lerne mit den Meerestieren!</h2>
     <div class="lern-karte">
-      <div class="lern-header" style="background:linear-gradient(135deg,#667eea,#764ba2)" onclick="toggleLern('plus')">
-        ➕ Addition – Zusammenzählen <span id="arrow-plus">▼</span>
+      <div class="lern-kopf" style="background:linear-gradient(135deg,#006994,#0099cc)" onclick="toggleLern('plus')">
+        🐠 Addition – Zusammenzählen <span id="arr-plus">▼</span>
       </div>
-      <div class="lern-inhalt" id="lern-plus">
-        <div style="font-size:2em;margin:10px 0">🍎🍎🍎 + 🍎🍎 = 🍎🍎🍎🍎🍎</div>
+      <div class="lern-body" id="lern-plus">
+        <div style="font-size:2em;margin:10px 0;text-align:center">🐠🐠🐠 + 🐠🐠 = 🐠🐠🐠🐠🐠</div>
         <b>3 + 2 = 5</b><br><br>
-        Du hast 3 Äpfel 🍎 und bekommst noch 2 dazu.<br>
-        Jetzt hast du <b>5 Äpfel</b>! 🎉<br><br>
-        📝 Weitere Beispiele:<br>
-        4 + 3 = <b>7</b><br>
+        🦈 Hai-Tipp: Du siehst 3 Fische 🐠 und 2 neue schwimmen dazu.<br>
+        Jetzt sind es <b>5 Fische</b>! 🎉<br><br>
+        📝 Beispiele:<br>
+        4 + 3 = <b>7</b> &nbsp; 🐡🐡🐡🐡 + 🐡🐡🐡 = 🐡🐡🐡🐡🐡🐡🐡<br>
         10 + 5 = <b>15</b><br>
         8 + 7 = <b>15</b>
       </div>
     </div>
     <div class="lern-karte">
-      <div class="lern-header" style="background:linear-gradient(135deg,#f093fb,#f5576c)" onclick="toggleLern('minus')">
-        ➖ Subtraktion – Wegnehmen <span id="arrow-minus">▼</span>
+      <div class="lern-kopf" style="background:linear-gradient(135deg,#1a0066,#4400cc)" onclick="toggleLern('minus')">
+        🐙 Subtraktion – Wegnehmen <span id="arr-minus">▼</span>
       </div>
-      <div class="lern-inhalt" id="lern-minus">
-        <div style="font-size:2em;margin:10px 0">🍬🍬🍬🍬🍬 – 🍬🍬 = 🍬🍬🍬</div>
+      <div class="lern-body" id="lern-minus">
+        <div style="font-size:2em;margin:10px 0;text-align:center">🐚🐚🐚🐚🐚 – 🐚🐚 = 🐚🐚🐚</div>
         <b>5 – 2 = 3</b><br><br>
-        Du hast 5 Bonbons 🍬 und isst 2 davon.<br>
-        Es bleiben <b>3 Bonbons</b> übrig! 😋<br><br>
-        📝 Weitere Beispiele:<br>
+        🐙 Kraken-Tipp: Du hast 5 Muscheln 🐚 und gibst 2 ab.<br>
+        Es bleiben <b>3 Muscheln</b> übrig! 🌊<br><br>
+        📝 Beispiele:<br>
         8 – 3 = <b>5</b><br>
         10 – 4 = <b>6</b>
       </div>
     </div>
     <div class="lern-karte">
-      <div class="lern-header" style="background:linear-gradient(135deg,#4facfe,#00f2fe);color:#1a1a2e" onclick="toggleLern('mal')">
-        ✖️ Multiplikation – Mehrmals addieren <span id="arrow-mal">▼</span>
+      <div class="lern-kopf" style="background:linear-gradient(135deg,#004d00,#009900)" onclick="toggleLern('mal')">
+        🐬 Multiplikation – Mehrmals addieren <span id="arr-mal">▼</span>
       </div>
-      <div class="lern-inhalt" id="lern-mal">
+      <div class="lern-body" id="lern-mal">
         <b>3 × 4 = 12</b><br><br>
-        Das bedeutet: 3 mal die Zahl 4 addieren<br>
+        🐬 Delfin-Tipp: 3 mal die Zahl 4 addieren:<br>
         4 + 4 + 4 = <b>12</b><br><br>
-        <div style="font-size:1.5em">🧒🎁🎁🎁🎁 + 🧒🎁🎁🎁🎁 + 🧒🎁🎁🎁🎁</div>
-        3 Kinder × 4 Geschenke = <b>12 Geschenke</b>! 🎉<br><br>
+        <div style="font-size:1.3em;text-align:center;margin:10px 0">
+          🐠🐠🐠🐠 + 🐠🐠🐠🐠 + 🐠🐠🐠🐠 = 12 Fische!
+        </div>
+        3 Delfingruppen × 4 Fische = <b>12 Fische</b>! 🎉<br><br>
         📝 Beispiele:<br>
-        2 × 5 = <b>10</b><br>
-        3 × 3 = <b>9</b>
+        2 × 5 = <b>10</b> &nbsp; 3 × 3 = <b>9</b>
       </div>
     </div>
     <div class="lern-karte">
-      <div class="lern-header" style="background:linear-gradient(135deg,#43e97b,#38f9d7);color:#1a1a2e" onclick="toggleLern('geteilt')">
-        ➗ Division – Aufteilen <span id="arrow-geteilt">▼</span>
+      <div class="lern-kopf" style="background:linear-gradient(135deg,#660033,#cc0066)" onclick="toggleLern('geteilt')">
+        🦈 Division – Aufteilen <span id="arr-geteilt">▼</span>
       </div>
-      <div class="lern-inhalt" id="lern-geteilt">
+      <div class="lern-body" id="lern-geteilt">
         <b>12 ÷ 3 = 4</b><br><br>
-        Teile 12 Bonbons auf 3 Kinder auf:<br>
-        <div style="font-size:1.2em;margin:10px 0">🍬🍬🍬🍬 | 🍬🍬🍬🍬 | 🍬🍬🍬🍬</div>
-        Jedes Kind bekommt <b>4 Bonbons</b>! 😊<br><br>
+        🦈 Hai-Tipp: Teile 12 Fische auf 3 Haie auf:<br>
+        <div style="font-size:1.3em;text-align:center;margin:10px 0">
+          🐠🐠🐠🐠 | 🐠🐠🐠🐠 | 🐠🐠🐠🐠
+        </div>
+        Jeder Hai bekommt <b>4 Fische</b>! 😊<br><br>
         📝 Beispiele:<br>
-        10 ÷ 2 = <b>5</b><br>
-        9 ÷ 3 = <b>3</b>
+        10 ÷ 2 = <b>5</b> &nbsp; 9 ÷ 3 = <b>3</b>
       </div>
     </div>
   </div>
 </div>
 
 <!-- LERNPFAD -->
-<div id="seite-pfad" class="seite" style="background:linear-gradient(180deg,#1a8fe3,#1565C0);min-height:100vh;padding-bottom:20px">
-  <div style="padding:15px">
-    <h2 style="color:white;margin-bottom:5px;font-size:1.5em">🗺️ Lernpfad</h2>
-    <p style="color:rgba(255,255,255,0.8);margin-bottom:15px;font-size:0.95em" id="pfad-status">Sammle Punkte um neue Stufen freizuschalten!</p>
+<div id="seite-pfad" class="seite unterwasser-bg">
+  <div style="position:relative;z-index:1;padding:15px">
+    <h2 style="color:#00ccff;margin-bottom:5px">🗺️ Dein Tauch-Pfad</h2>
+    <p style="color:rgba(255,255,255,0.7);margin-bottom:15px;font-size:0.95em" id="pfad-status">Tauche tiefer und entdecke neue Welten!</p>
     <div id="pfad-liste"></div>
   </div>
 </div>
 
 <!-- SPIELE -->
-<div id="seite-spiele" class="seite" style="background:linear-gradient(180deg,#1a8fe3,#1565C0);min-height:100vh;padding-bottom:20px">
-  <div style="padding:15px">
+<div id="seite-spiele" class="seite unterwasser-bg">
+  <div style="position:relative;z-index:1;padding:15px">
 
     <div id="spiel-auswahl">
-      <h2 style="color:white;margin-bottom:15px;font-size:1.5em">🎮 Alle Spiele</h2>
-      <div class="spiele-grid">
+      <h2 style="color:#00ccff;margin-bottom:15px">🎮 Alle Spiele</h2>
+      <div class="spiel-grid">
         <div class="spiel-karte" onclick="startSpiel('zaehlen')">
-          <div class="karte-bg" style="background:linear-gradient(135deg,#667eea,#764ba2)">🍎🔢</div>
-          <div class="karte-label">Zählen <span>▶</span></div>
+          <div class="karte-bild" style="background:linear-gradient(135deg,#006994,#0099cc)">🐠🔢🐟</div>
+          <div class="karte-info">Zählen <span>▶</span></div>
         </div>
         <div class="spiel-karte" onclick="startSpiel('rechnen')">
-          <div class="karte-bg" style="background:linear-gradient(135deg,#f093fb,#f5576c)">➕➖</div>
-          <div class="karte-label">Rechnen <span>▶</span></div>
+          <div class="karte-bild" style="background:linear-gradient(135deg,#1a0066,#4400cc)">🐙➕🦑</div>
+          <div class="karte-info">Rechnen <span>▶</span></div>
         </div>
         <div class="spiel-karte" onclick="startSpiel('vergleich')">
-          <div class="karte-bg" style="background:linear-gradient(135deg,#4facfe,#00f2fe)">⚖️</div>
-          <div class="karte-label">Vergleichen <span>▶</span></div>
+          <div class="karte-bild" style="background:linear-gradient(135deg,#004d00,#009900)">🐡⚖️🐬</div>
+          <div class="karte-info">Vergleichen <span>▶</span></div>
         </div>
         <div class="spiel-karte" onclick="startSpiel('luecke')">
-          <div class="karte-bg" style="background:linear-gradient(135deg,#43e97b,#38f9d7)">❓</div>
-          <div class="karte-label">Lücken <span>▶</span></div>
+          <div class="karte-bild" style="background:linear-gradient(135deg,#660033,#cc0066)">🦈❓🦀</div>
+          <div class="karte-info">Lücken <span>▶</span></div>
         </div>
         <div class="spiel-karte" id="karte-geld2" onclick="startSpiel('geld')">
-          <div class="karte-bg" style="background:linear-gradient(135deg,#fa709a,#fee140)">💰</div>
-          <div class="karte-label">Geld <span id="geld-lock2">🔒</span></div>
+          <div class="karte-bild" style="background:linear-gradient(135deg,#664400,#cc8800)">🪙💰🐚</div>
+          <div class="karte-info">Geld <span id="geld-lock2">🔒</span></div>
         </div>
         <div class="spiel-karte" id="karte-zahlen2" onclick="startSpiel('zahlenstrahl')">
-          <div class="karte-bg" style="background:linear-gradient(135deg,#a18cd1,#fbc2eb)">📏</div>
-          <div class="karte-label">Zahlenstrahl <span id="zahl-lock2">🔒</span></div>
+          <div class="karte-bild" style="background:linear-gradient(135deg,#440066,#8800cc)">📏🌊🔢</div>
+          <div class="karte-info">Zahlenstrahl <span id="zahl-lock2">🔒</span></div>
         </div>
       </div>
     </div>
@@ -341,77 +378,79 @@ canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-
     <div id="spiel-aktiv" class="hidden">
       <div class="spiel-header">
         <div style="display:flex;justify-content:space-between;align-items:center">
-          <button class="btn-grau" onclick="beendeSpiel()" style="padding:8px 12px;border-radius:12px">⬅️</button>
-          <span style="color:white;font-weight:bold;font-size:1.1em">Aufgabe <span id="spiel-nr">1</span>/10</span>
-          <div class="timer-circle" id="timer-ring">10</div>
+          <button class="btn-grau" onclick="beendeSpiel()">⬅️ Raus</button>
+          <span style="color:#00ccff;font-weight:bold">Aufgabe <span id="spiel-nr">1</span>/10</span>
+          <div class="timer" id="timer-ring" style="background:conic-gradient(#00ff88 100%,rgba(255,255,255,0.2) 100%)">10</div>
         </div>
         <div class="spiel-progress"><div class="spiel-progress-bar" id="spiel-bar" style="width:0%"></div></div>
-        <div style="color:rgba(255,255,255,0.9);font-size:0.95em">🏅 +<span id="spiel-punkte-lauf">0</span> Punkte</div>
+        <div style="color:rgba(255,255,255,0.8);font-size:0.9em;margin-top:5px">🏅 +<span id="spiel-punkte-lauf">0</span> Punkte | <span id="spiel-aufmunt"></span></div>
       </div>
 
-      <div class="spiel-inhalt">
-        <div class="frage-box">
-          <div class="frage-text" id="spiel-frage">Lade...</div>
+      <div style="background:rgba(0,10,30,0.8);border-radius:22px;padding:20px;border:1px solid rgba(0,200,255,0.2)">
+        <div class="frage-karte">
+          <div class="frage-gross" id="spiel-frage">Lade...</div>
         </div>
         <div class="objekte" id="spiel-objekte"></div>
-        <div id="spiel-feedback" class="feedback-box" style="display:none"></div>
+        <div id="spiel-feedback" class="feedback" style="display:none"></div>
         <div class="antwort-grid" id="spiel-antworten"></div>
       </div>
     </div>
 
     <div id="spiel-ende" class="hidden">
-      <div class="ergebnis-card">
-        <div style="font-size:4em" id="ende-avatar">🦁</div>
-        <h2 style="font-size:1.8em;margin:10px 0">Super gemacht! 🎉</h2>
-        <div class="ergebnis-sterne" id="ende-sterne"></div>
+      <div class="ergebnis">
+        <div style="font-size:4em" id="ende-avatar">🦈</div>
+        <div style="font-size:2em;margin:10px 0">🎉 Toll gemacht!</div>
+        <div id="ende-sterne" style="font-size:2.5em;margin:12px 0"></div>
         <p id="ende-ergebnis" style="font-size:1.1em;margin:10px 0"></p>
-        <div class="ergebnis-punkte" id="ende-punkte"></div>
-        <p id="ende-geschichte" style="font-size:0.95em;margin:12px 0;opacity:0.9;font-style:italic"></p>
+        <div style="background:rgba(0,200,255,0.15);border-radius:15px;padding:12px;margin:10px 0;border:1px solid rgba(0,200,255,0.3)">
+          <div id="ende-punkte" style="color:#00ccff;font-weight:bold"></div>
+        </div>
+        <p id="ende-geschichte" style="color:rgba(255,255,255,0.7);font-style:italic;margin:10px 0"></p>
       </div>
       <div style="margin-top:12px">
-        <button class="btn-haupt" onclick="startSpiel(letzteSpiel)">Nochmal spielen 🔄</button>
-        <button class="btn-weiss" style="margin-top:8px" onclick="beendeSpiel()">Andere Spiele wählen 🎮</button>
+        <button class="btn btn-gold" onclick="startSpiel(letzteSpiel)">🔄 Nochmal tauchen!</button>
+        <button class="btn btn-weiss" style="margin-top:8px" onclick="beendeSpiel()">🎮 Andere Spiele</button>
       </div>
     </div>
   </div>
 </div>
 
 <!-- PROFIL -->
-<div id="seite-profil" class="seite" style="background:linear-gradient(180deg,#1a8fe3,#1565C0);min-height:100vh;padding-bottom:20px">
-  <div style="padding:15px">
-    <div class="profil-header">
-      <div id="profil-avatar" style="font-size:5em">🦁</div>
-      <div style="font-size:1.5em;font-weight:bold;margin:8px 0"><span id="profil-name">Freund</span></div>
-      <div style="background:rgba(255,255,255,0.2);border-radius:20px;padding:6px 16px;display:inline-block">⭐ <span id="profil-level">Anfänger</span></div>
-      <div style="margin-top:12px;display:flex;justify-content:center;gap:20px">
-        <div><div style="font-size:1.5em;font-weight:bold"><span id="profil-punkte">0</span></div><div style="font-size:0.8em;opacity:0.8">Punkte</div></div>
-        <div><div style="font-size:1.5em;font-weight:bold"><span id="profil-streak">0</span></div><div style="font-size:0.8em;opacity:0.8">Tage 🔥</div></div>
-        <div><div style="font-size:1.5em;font-weight:bold"><span id="stat-spiele">0</span></div><div style="font-size:0.8em;opacity:0.8">Spiele</div></div>
+<div id="seite-profil" class="seite unterwasser-bg">
+  <div style="position:relative;z-index:1;padding:15px">
+    <div style="background:linear-gradient(135deg,#001a3a,#003d7a);border-radius:25px;padding:25px;color:white;text-align:center;margin-bottom:15px;border:2px solid rgba(0,200,255,0.3)">
+      <div id="profil-avatar" style="font-size:5em;animation:schwimmen 3s infinite;display:inline-block">🦈</div>
+      <div style="font-size:1.5em;font-weight:bold;margin:8px 0"><span id="profil-name">Taucher</span></div>
+      <div style="background:rgba(0,200,255,0.2);border-radius:20px;padding:6px 16px;display:inline-block;color:#00ccff">⭐ <span id="profil-level">Anfänger-Taucher</span></div>
+      <div style="display:flex;justify-content:center;gap:20px;margin-top:15px">
+        <div><div style="font-size:1.5em;font-weight:bold"><span id="profil-punkte">0</span></div><div style="font-size:0.8em;opacity:0.7">🏅 Punkte</div></div>
+        <div><div style="font-size:1.5em;font-weight:bold"><span id="profil-streak">0</span></div><div style="font-size:0.8em;opacity:0.7">🔥 Tage</div></div>
+        <div><div style="font-size:1.5em;font-weight:bold"><span id="profil-spiele">0</span></div><div style="font-size:0.8em;opacity:0.7">🎮 Spiele</div></div>
       </div>
     </div>
-    <div style="background:white;border-radius:20px;padding:20px;margin-bottom:12px">
-      <b style="color:#1a1a2e">📊 Statistik</b>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px">
-        <div style="background:#d4edda;border-radius:12px;padding:12px;text-align:center"><div style="font-size:1.5em;font-weight:bold;color:#155724"><span id="stat-richtig">0</span></div><div style="font-size:0.85em;color:#155724">✅ Richtig</div></div>
-        <div style="background:#f8d7da;border-radius:12px;padding:12px;text-align:center"><div style="font-size:1.5em;font-weight:bold;color:#721c24"><span id="stat-falsch">0</span></div><div style="font-size:0.85em;color:#721c24">❌ Falsch</div></div>
-        <div style="background:#cce5ff;border-radius:12px;padding:12px;text-align:center"><div style="font-size:1.5em;font-weight:bold;color:#004085"><span id="stat-best">0</span>/10</div><div style="font-size:0.85em;color:#004085">🏆 Bestes</div></div>
-        <div style="background:#fff3cd;border-radius:12px;padding:12px;text-align:center"><div style="font-size:1.5em;font-weight:bold;color:#856404"><span id="profil-punkte2">0</span></div><div style="font-size:0.85em;color:#856404">🏅 Punkte</div></div>
+    <div class="karte">
+      <b style="color:#001a3a">📊 Statistik</b>
+      <div class="stat-grid">
+        <div class="stat-box" style="background:#d4edda"><div style="font-size:1.4em;font-weight:bold;color:#155724"><span id="stat-richtig">0</span></div><div style="font-size:0.85em;color:#155724">✅ Richtig</div></div>
+        <div class="stat-box" style="background:#f8d7da"><div style="font-size:1.4em;font-weight:bold;color:#721c24"><span id="stat-falsch">0</span></div><div style="font-size:0.85em;color:#721c24">❌ Falsch</div></div>
+        <div class="stat-box" style="background:#cce5ff"><div style="font-size:1.4em;font-weight:bold;color:#004085"><span id="stat-best">0</span>/10</div><div style="font-size:0.85em;color:#004085">🏆 Bestes</div></div>
+        <div class="stat-box" style="background:#fff3cd"><div style="font-size:1.4em;font-weight:bold;color:#856404"><span id="stat-punkte">0</span></div><div style="font-size:0.85em;color:#856404">🏅 Punkte</div></div>
       </div>
     </div>
-    <div style="background:white;border-radius:20px;padding:20px">
-      <b style="color:#1a1a2e">🏅 Abzeichen</b>
-      <div class="abzeichen-grid" id="abzeichen-grid" style="margin-top:12px"></div>
+    <div style="background:linear-gradient(135deg,#001a3a,#003d7a);border-radius:20px;padding:20px;border:1px solid rgba(0,200,255,0.2)">
+      <b style="color:#00ccff">🏅 Abzeichen</b>
+      <div class="abz-grid" id="abz-grid"></div>
     </div>
   </div>
 </div>
 
 <!-- ELTERN -->
-<div id="seite-eltern" class="seite" style="background:linear-gradient(180deg,#1a8fe3,#1565C0);min-height:100vh;padding-bottom:20px">
-  <div style="padding:15px">
-    <h2 style="color:white;margin-bottom:15px">👨‍👩‍👧 Eltern-Bereich</h2>
-    <div id="eltern-pin-bereich" class="eltern-card">
-      <p style="color:#1565C0;font-weight:bold;margin-bottom:10px">Bitte PIN eingeben:</p>
-      <div class="pin-display" id="pin-anzeige">• • • •</div>
+<div id="seite-eltern" class="seite unterwasser-bg">
+  <div style="position:relative;z-index:1;padding:15px">
+    <h2 style="color:#00ccff;margin-bottom:15px">👨‍👩‍👧 Eltern-Bereich</h2>
+    <div id="eltern-pin-bereich" class="karte-blau" style="border-radius:20px;padding:20px">
+      <p style="color:#00ccff;font-weight:bold;margin-bottom:10px">🔐 PIN eingeben:</p>
+      <div class="pin-anzeige" id="pin-anzeige">• • • •</div>
       <div class="pin-grid">
         <button class="pin-btn" onclick="pinTippe(1)">1</button>
         <button class="pin-btn" onclick="pinTippe(2)">2</button>
@@ -424,25 +463,25 @@ canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-
         <button class="pin-btn" onclick="pinTippe(9)">9</button>
         <button class="pin-btn" onclick="pinLoeschen()">⌫</button>
         <button class="pin-btn" onclick="pinTippe(0)">0</button>
-        <button class="pin-btn" onclick="pinTippe('')">✓</button>
+        <button class="pin-btn" style="opacity:0.3">•</button>
       </div>
-      <p style="color:#999;font-size:0.85em;margin-top:10px">Standard-PIN: 1234</p>
+      <p style="color:rgba(255,255,255,0.5);font-size:0.85em;margin-top:10px">Standard-PIN: 1234</p>
     </div>
     <div id="eltern-inhalt" class="hidden">
-      <div class="eltern-card">
-        <b style="color:#1565C0;font-size:1.1em">📊 Fortschritt von <span id="eltern-name">Kind</span></b>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px">
-          <div style="background:#d4edda;border-radius:12px;padding:12px;text-align:center"><div style="font-size:1.3em;font-weight:bold;color:#155724"><span id="eltern-richtig">0</span></div><div style="font-size:0.8em">✅ Richtig</div></div>
-          <div style="background:#cce5ff;border-radius:12px;padding:12px;text-align:center"><div style="font-size:1.3em;font-weight:bold;color:#004085"><span id="eltern-spiele">0</span></div><div style="font-size:0.8em">🎮 Spiele</div></div>
-          <div style="background:#fff3cd;border-radius:12px;padding:12px;text-align:center"><div style="font-size:1.3em;font-weight:bold;color:#856404"><span id="eltern-punkte">0</span></div><div style="font-size:0.8em">🏅 Punkte</div></div>
-          <div style="background:#f8d7da;border-radius:12px;padding:12px;text-align:center"><div style="font-size:1.3em;font-weight:bold;color:#721c24"><span id="eltern-best">0</span>/10</div><div style="font-size:0.8em">🏆 Bestes</div></div>
+      <div class="karte" style="margin-bottom:12px">
+        <b style="color:#001a3a">📊 Fortschritt von <span id="eltern-name">Kind</span>:</b>
+        <div class="stat-grid" style="margin-top:10px">
+          <div class="stat-box" style="background:#d4edda"><div style="font-size:1.3em;font-weight:bold;color:#155724"><span id="eltern-richtig">0</span></div><div style="font-size:0.8em">✅ Richtig</div></div>
+          <div class="stat-box" style="background:#cce5ff"><div style="font-size:1.3em;font-weight:bold;color:#004085"><span id="eltern-spiele">0</span></div><div style="font-size:0.8em">🎮 Spiele</div></div>
+          <div class="stat-box" style="background:#fff3cd"><div style="font-size:1.3em;font-weight:bold;color:#856404"><span id="eltern-punkte">0</span></div><div style="font-size:0.8em">🏅 Punkte</div></div>
+          <div class="stat-box" style="background:#f8d7da"><div style="font-size:1.3em;font-weight:bold;color:#721c24"><span id="eltern-best">0</span>/10</div><div style="font-size:0.8em">🏆 Bestes</div></div>
         </div>
       </div>
-      <div class="eltern-card">
-        <b style="color:#1565C0">💡 Empfehlung:</b>
+      <div class="karte">
+        <b style="color:#001a3a">💡 Empfehlung:</b>
         <p id="eltern-empfehlung" style="margin-top:10px;color:#444;line-height:1.6"></p>
       </div>
-      <button class="btn-haupt" onclick="elternLogout()">🔒 Bereich verlassen</button>
+      <button class="btn" onclick="elternLogout()" style="margin-top:10px">🔒 Bereich verlassen</button>
     </div>
   </div>
 </div>
@@ -450,7 +489,434 @@ canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-
 <canvas id="konfetti-canvas"></canvas>
 
 <script>
-let name='Freund',klasse=1,avatar='🦁';
+let name='Taucher',klasse=1,avatar='🦈';
 let punkte=0,streak=0,gesamtRichtig=0,gesamtFalsch=0,spiele=0,bestErgebnis=0;
 let spielIndex=0,spielRichtig=0,spielPunkteLauf=0,aktFrage=null,letzteSpiel='zaehlen';
-let beantwortet=false,timerInterval
+let beantwortet=false,timerInterval=null,timerSek=10;
+let pinEingabe='';
+
+const meeresEmojis=['🐠','🐟','🐡','🐙','🦑','🦀','🐚','⭐','🪸','🐬','🦈','🐋'];
+const aufmunterungen=['Weiter tauchen! 🌊','Super Taucher! 🐬','Toll! 🦈','Klasse! ⭐','Bravo! 🐠'];
+const geschichten=['🦈 Der Hai ist stolz auf dich!','🐬 Der Delfin springt vor Freude!','🐙 Der Krake gibt dir einen High-Five mit allen 8 Armen!','⭐ Du hast einen Seestern gefunden!','🌊 Die Wellen applaudieren dir!'];
+
+const levels=[
+  {min:0,name:'Anfänger-Taucher 🤿'},
+  {min:50,name:'Schnorchler ⭐'},
+  {min:150,name:'Taucher 🐠'},
+  {min:300,name:'Meeres-Profi 🐬'},
+  {min:500,name:'Haifisch-Champion 🦈'}
+];
+
+function getLevel(){let l=levels[0].name;for(let i of levels)if(punkte>=i.min)l=i.name;return l;}
+function rnd(n){return Math.floor(Math.random()*n)+1}
+function rndEmoji(){return meeresEmojis[Math.floor(Math.random()*meeresEmojis.length)]}
+
+// SPLASH BLASEN
+function erstelleSplashBlasen(){
+  let c=document.getElementById('splash-blasen');
+  for(let i=0;i<20;i++){
+    let b=document.createElement('div');
+    b.className='blase';
+    let s=Math.random()*30+10;
+    b.style.cssText=`width:${s}px;height:${s}px;left:${Math.random()*100}%;bottom:${Math.random()*50}%;animation-duration:${Math.random()*3+2}s;animation-delay:${Math.random()*3}s`;
+    c.appendChild(b);
+  }
+}
+erstelleSplashBlasen();
+
+// LADETEXT
+let ladeTexte=['Fische zählen... 🐠','Muscheln sammeln... 🐚','Wellen reiten... 🌊','Kraken fragen... 🐙','Bereit! 🦈'];
+let ladeIdx=0;
+let ladeInterval=setInterval(()=>{
+  if(ladeIdx<ladeTexte.length){
+    document.getElementById('lade-text').textContent=ladeTexte[ladeIdx++];
+  }
+},500);
+
+setTimeout(()=>{
+  clearInterval(ladeInterval);
+  let s=document.getElementById('splash');
+  s.style.opacity='0';
+  setTimeout(()=>{
+    s.style.display='none';
+    document.getElementById('nav').style.display='flex';
+  },1000);
+},2800);
+
+function spieleSound(typ){
+  try{
+    let ctx=new(window.AudioContext||window.webkitAudioContext)();
+    let o=ctx.createOscillator(),g=ctx.createGain();
+    o.connect(g);g.connect(ctx.destination);
+    if(typ==='richtig'){
+      o.type='sine';
+      o.frequency.setValueAtTime(440,ctx.currentTime);
+      o.frequency.setValueAtTime(554,ctx.currentTime+0.1);
+      o.frequency.setValueAtTime(659,ctx.currentTime+0.2);
+      g.gain.setValueAtTime(0.3,ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.01,ctx.currentTime+0.5);
+      o.start();o.stop(ctx.currentTime+0.5);
+    }else{
+      o.type='sawtooth';
+      o.frequency.setValueAtTime(250,ctx.currentTime);
+      o.frequency.setValueAtTime(180,ctx.currentTime+0.2);
+      g.gain.setValueAtTime(0.2,ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.01,ctx.currentTime+0.4);
+      o.start();o.stop(ctx.currentTime+0.4);
+    }
+  }catch(e){}
+}
+
+function speicherProfil(){
+  name=document.getElementById('homeNameInput').value||'Taucher';
+  updateProfil();spieleSound('richtig');
+  zeigSeite('spiele');
+}
+
+function waehleAvatar(a,el){
+  avatar=a;
+  document.querySelectorAll('.av-btn').forEach(b=>b.style.background='rgba(0,200,255,0.2)');
+  el.style.background='rgba(0,200,255,0.5)';
+  updateProfil();
+}
+
+function setKlasse(k){klasse=k;document.getElementById('klasseText').textContent='Klasse: '+k}
+
+function updateProfil(){
+  document.getElementById('home-avatar').textContent=avatar;
+  document.getElementById('home-name').textContent=name;
+  document.getElementById('home-level').textContent=getLevel();
+  document.getElementById('home-punkte').textContent=punkte;
+  document.getElementById('home-streak').textContent=streak;
+  document.getElementById('home-spiele').textContent=spiele;
+  document.getElementById('profil-avatar').textContent=avatar;
+  document.getElementById('profil-name').textContent=name;
+  document.getElementById('profil-level').textContent=getLevel();
+  document.getElementById('profil-punkte').textContent=punkte;
+  document.getElementById('profil-streak').textContent=streak;
+  document.getElementById('profil-spiele').textContent=spiele;
+  document.getElementById('stat-richtig').textContent=gesamtRichtig;
+  document.getElementById('stat-falsch').textContent=gesamtFalsch;
+  document.getElementById('stat-best').textContent=bestErgebnis;
+  document.getElementById('stat-punkte').textContent=punkte;
+
+  let abzDaten=[
+    {e:'🎮',n:'1. Spiel',ok:spiele>=1},
+    {e:'✅',n:'10 Richtig',ok:gesamtRichtig>=10},
+    {e:'🏆',n:'Perfekt',ok:bestErgebnis===10},
+    {e:'💯',n:'100 Punkte',ok:punkte>=100},
+    {e:'🔥',n:'3 Tage',ok:streak>=3},
+    {e:'🦈',n:'Haifisch',ok:punkte>=500},
+    {e:'⚡',n:'50 Richtig',ok:gesamtRichtig>=50},
+    {e:'👑',n:'Meister',ok:punkte>=1000}
+  ];
+  let g=document.getElementById('abz-grid');
+  g.innerHTML='';
+  abzDaten.forEach(a=>{
+    g.innerHTML+='<div class="abz-item'+(a.ok?'':' gesperrt')+'"><div class="abz-emoji">'+a.e+'</div><div>'+a.n+'</div></div>';
+  });
+
+  let gOk=punkte>=50,zOk=punkte>=100;
+  ['geld-lock','geld-lock2'].forEach(id=>{if(document.getElementById(id))document.getElementById(id).textContent=gOk?'▶':'🔒';});
+  ['zahl-lock','zahl-lock2'].forEach(id=>{if(document.getElementById(id))document.getElementById(id).textContent=zOk?'▶':'🔒';});
+  ['karte-geld','karte-geld2'].forEach(id=>{let e=document.getElementById(id);if(e)gOk?e.classList.remove('gesperrt'):e.classList.add('gesperrt');});
+  ['karte-zahlen','karte-zahlen2'].forEach(id=>{let e=document.getElementById(id);if(e)zOk?e.classList.remove('gesperrt'):e.classList.add('gesperrt');});
+
+  updatePfad();
+}
+
+function updatePfad(){
+  let pfadDaten=[
+    {e:'🔢',n:'Zahlen 1-10',d:'Lerne Zahlen kennen',p:0,t:'zaehlen'},
+    {e:'🐠',n:'Fische zählen',d:'Zähle Meerestiere',p:20,t:'zaehlen'},
+    {e:'➕',n:'Addition',d:'Zahlen zusammenzählen',p:40,t:'rechnen'},
+    {e:'➖',n:'Subtraktion',d:'Zahlen wegnehmen',p:80,t:'rechnen'},
+    {e:'⚖️',n:'Vergleichen',d:'Größer oder kleiner?',p:120,t:'vergleich'},
+    {e:'✖️',n:'Multiplikation',d:'Mehrmals addieren',p:200,t:'rechnen'},
+    {e:'➗',n:'Division',d:'Zahlen aufteilen',p:320,t:'rechnen'},
+    {e:'🦈',n:'Hai-Champion',d:'Alles gemeistert!',p:500,t:'zaehlen'}
+  ];
+  let liste=document.getElementById('pfad-liste');liste.innerHTML='';
+  pfadDaten.forEach((s,i)=>{
+    let fertig=punkte>=s.p;
+    let aktuell=fertig&&(i===pfadDaten.length-1||punkte<pfadDaten[i+1].p);
+    let div=document.createElement('div');
+    div.className='pfad-stufe'+(fertig?' abgeschlossen':'  gesperrt')+(aktuell?' aktuell':'');
+    div.innerHTML=`<div class="pfad-icon">${s.e}</div><div class="pfad-info"><div class="pfad-name">${s.n}</div><div class="pfad-desc">${s.d}</div></div><div class="pfad-badge ${fertig?'ok':''}">${fertig?'✅':s.p+'P'}</div>`;
+    if(fertig)div.onclick=()=>startSpiel(s.t);
+    liste.appendChild(div);
+  });
+  document.getElementById('pfad-status').textContent=
+    punkte>=500?'🦈 Du bist ein Hai-Champion! Alles freigeschaltet!':
+    'Noch '+(500-punkte)+' Punkte bis zum Hai-Champion! 🐬';
+}
+
+function zeigSeite(s){
+  document.querySelectorAll('.seite').forEach(el=>el.classList.remove('aktiv'));
+  document.querySelectorAll('nav button').forEach(el=>el.classList.remove('aktiv'));
+  document.getElementById('seite-'+s).classList.add('aktiv');
+  if(document.getElementById('nav-'+s))document.getElementById('nav-'+s).classList.add('aktiv');
+  updateProfil();
+}
+
+function toggleLern(typ){
+  let el=document.getElementById('lern-'+typ);
+  let arr=document.getElementById('arr-'+typ);
+  el.classList.toggle('offen');
+  arr.textContent=el.classList.contains('offen')?'▲':'▼';
+}
+
+function startTimer(){
+  timerSek=10;clearInterval(timerInterval);
+  let ring=document.getElementById('timer-ring');
+  timerInterval=setInterval(()=>{
+    timerSek--;
+    let pct=timerSek/10*100;
+    let col=timerSek>5?'#00ff88':timerSek>3?'#FFD700':'#ff4444';
+    ring.style.background=`conic-gradient(${col} ${pct}%,rgba(255,255,255,0.2) ${pct}%)`;
+    ring.textContent=timerSek;
+    if(timerSek<=0){
+      clearInterval(timerInterval);
+      if(!beantwortet){
+        beantwortet=true;gesamtFalsch++;
+        zeigFeedback(false,'⏱️ Zeit! Antwort: '+aktFrage.antwort);
+        spieleSound('falsch');spielIndex++;
+        setTimeout(()=>naechsteAufgabe(letzteSpiel),1800);
+      }
+    }
+  },1000);
+}
+
+function startSpiel(typ){
+  if((typ==='geld'&&punkte<50)||(typ==='zahlenstrahl'&&punkte<100)){
+    alert('🔒 Noch nicht freigeschaltet! Sammle mehr Punkte!');return;
+  }
+  letzteSpiel=typ;spielIndex=0;spielRichtig=0;spielPunkteLauf=0;
+  document.getElementById('spiel-auswahl').classList.add('hidden');
+  document.getElementById('spiel-ende').classList.add('hidden');
+  document.getElementById('spiel-aktiv').classList.remove('hidden');
+  document.getElementById('spiel-punkte-lauf').textContent=0;
+  zeigSeite('spiele');naechsteAufgabe(typ);
+}
+
+function naechsteAufgabe(typ){
+  if(spielIndex>=10){endeSpiel();return}
+  beantwortet=false;
+  document.getElementById('spiel-nr').textContent=spielIndex+1;
+  document.getElementById('spiel-bar').style.width=(spielIndex/10*100)+'%';
+  document.getElementById('spiel-objekte').innerHTML='';
+  document.getElementById('spiel-antworten').innerHTML='';
+  document.getElementById('spiel-aufmunt').textContent=aufmunterungen[Math.floor(Math.random()*aufmunterungen.length)];
+  let fb=document.getElementById('spiel-feedback');fb.style.display='none';fb.className='feedback';
+  if(typ==='zaehlen')aufgabeZaehlen();
+  else if(typ==='rechnen')aufgabeRechnen();
+  else if(typ==='vergleich')aufgabeVergleich();
+  else if(typ==='luecke')aufgabeLuecke();
+  else if(typ==='geld')aufgabeGeld();
+  else if(typ==='zahlenstrahl')aufgabeZahlenstrahl();
+  startTimer();
+}
+
+function aufgabeZaehlen(){
+  let n=klasse<=2?rnd(10):rnd(20),e=rndEmoji();aktFrage={antwort:n};
+  document.getElementById('spiel-frage').textContent='Wie viele '+e+' siehst du?';
+  let o='';for(let i=0;i<n;i++)o+='<span class="objekt">'+e+'</span>';
+  document.getElementById('spiel-objekte').innerHTML=o;
+  zeigAntwortButtons(genOpts(n,4,1,25),n);
+}
+
+function aufgabeRechnen(){
+  let e=rndEmoji();
+  let ops=klasse<=2?['+','-']:['+','-','*'];
+  let op=ops[Math.floor(Math.random()*ops.length)];
+  let a,b,ans;
+  if(op==='+'){a=rnd(klasse<=2?10:20);b=rnd(klasse<=2?10:20);ans=a+b;}
+  else if(op==='-'){a=rnd(15)+5;b=rnd(a);ans=a-b;}
+  else{a=rnd(5);b=rnd(5);ans=a*b;}
+  aktFrage={antwort:ans};
+  let sym=op==='*'?'×':op;
+  document.getElementById('spiel-frage').textContent=a+' '+sym+' '+b+' = ?';
+  let o='';for(let i=0;i<Math.min(a,12);i++)o+='<span class="objekt">'+e+'</span>';
+  document.getElementById('spiel-objekte').innerHTML=o;
+  zeigAntwortButtons(genOpts(ans,4,0,60),ans);
+}
+
+function aufgabeVergleich(){
+  let a=rnd(20),b=rnd(20);while(a===b)b=rnd(20);
+  let e1=rndEmoji(),e2=rndEmoji();
+  aktFrage={antwort:a>b?'links':'rechts'};
+  let o1='',o2='';
+  for(let i=0;i<Math.min(a,10);i++)o1+='<span class="objekt">'+e1+'</span>';
+  for(let i=0;i<Math.min(b,10);i++)o2+='<span class="objekt">'+e2+'</span>';
+  document.getElementById('spiel-frage').textContent='Welche Seite hat MEHR? 🌊';
+  document.getElementById('spiel-objekte').innerHTML=
+    '<div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">'+
+    '<div style="background:rgba(0,100,150,0.3);padding:10px;border-radius:15px;border:2px solid rgba(0,200,255,0.4)">'+o1+'<br><b style="color:white;font-size:1.3em">'+a+'</b></div>'+
+    '<div style="font-size:2em;padding-top:15px">⚖️</div>'+
+    '<div style="background:rgba(0,100,150,0.3);padding:10px;border-radius:15px;border:2px solid rgba(0,200,255,0.4)">'+o2+'<br><b style="color:white;font-size:1.3em">'+b+'</b></div></div>';
+  document.getElementById('spiel-antworten').innerHTML=
+    '<button class="antwort-btn" onclick="pruefeAntwort(\'links\',this)">⬅️ Links<br><b>'+a+'</b></button>'+
+    '<button class="antwort-btn" onclick="pruefeAntwort(\'rechts\',this)">Rechts ➡️<br><b>'+b+'</b></button>';
+}
+
+function aufgabeLuecke(){
+  let ops=klasse<=2?['+','-']:['+','-','*','/'];
+  let op=ops[Math.floor(Math.random()*ops.length)];
+  let a,b,ans;
+  if(op==='+'){a=rnd(10);b=rnd(10);ans=a+b;}
+  else if(op==='-'){a=rnd(10)+5;b=rnd(a);ans=a-b;}
+  else if(op==='*'){a=rnd(5);b=rnd(5);ans=a*b;}
+  else{b=rnd(5)+1;ans=rnd(5);a=ans*b;}
+  aktFrage={antwort:ans};
+  let sym=op==='*'?'×':op==='/'?'÷':op;
+  document.getElementById('spiel-frage').textContent=a+' '+sym+' '+b+' = ?';
+  document.getElementById('spiel-objekte').innerHTML='<span style="font-size:3em;animation:schwimmen 2s infinite;display:inline-block">🤔</span>';
+  zeigAntwortButtons(genOpts(ans,4,0,60),ans);
+}
+
+function aufgabeGeld(){
+  let m=[1,2,5,10,20,50];
+  let n=rnd(4)+1,s=0,g=[];
+  for(let i=0;i<n;i++){let c=m[Math.floor(Math.random()*m.length)];g.push(c);s+=c;}
+  aktFrage={antwort:s};
+  document.getElementById('spiel-frage').textContent='Wie viel Cent ist das? 🪙';
+  let o='';g.forEach(c=>o+='<span class="objekt" style="background:rgba(255,200,0,0.3);border:2px solid #FFD700;border-radius:50%;padding:6px;font-size:0.8em;font-weight:bold;color:#FFD700">'+c+'¢</span> ');
+  document.getElementById('spiel-objekte').innerHTML=o;
+  zeigAntwortButtons(genOpts(s,4,1,200),s);
+}
+
+function aufgabeZahlenstrahl(){
+  let max=klasse<=2?20:100;
+  let z=rnd(max);aktFrage={antwort:z};
+  let pos=Math.round(z/max*100);
+  document.getElementById('spiel-frage').textContent='Welche Zahl zeigt der Pfeil? 👇';
+  document.getElementById('spiel-objekte').innerHTML=
+    '<div style="position:relative;margin:35px 15px 20px">'+
+    '<div style="background:rgba(0,200,255,0.3);height:8px;border-radius:5px;border:1px solid rgba(0,200,255,0.5)">'+
+    '<span style="position:absolute;left:-5px;top:12px;font-size:0.8em;color:rgba(255,255,255,0.7)">0</span>'+
+    '<span style="position:absolute;right:-10px;top:12px;font-size:0.8em;color:rgba(255,255,255,0.7)">'+max+'</span>'+
+    '<span style="position:absolute;left:'+pos+'%;top:-30px;transform:translateX(-50%);font-size:1.8em">👇</span>'+
+    '</div></div>';
+  zeigAntwortButtons(genOpts(z,4,0,max),z);
+}
+
+function genOpts(r,n,min,max){
+  let s=new Set([r]);let t=0;
+  while(s.size<n&&t<100){t++;let v=r+Math.floor(Math.random()*14)-7;if(v>=min&&v<=max&&v!==r)s.add(v);}
+  return[...s].sort(()=>Math.random()-0.5);
+}
+
+function zeigAntwortButtons(opts,r){
+  let div=document.getElementById('spiel-antworten');div.innerHTML='';
+  opts.forEach(o=>{
+    let b=document.createElement('button');b.className='antwort-btn';b.textContent=o;
+    b.onclick=function(){pruefeAntwort(o,this)};div.appendChild(b);
+  });
+}
+
+function zeigFeedback(ok,text){
+  let fb=document.getElementById('spiel-feedback');
+  fb.textContent=text;fb.className='feedback '+(ok?'feedback-ok':'feedback-nein');fb.style.display='block';
+}
+
+function pruefeAntwort(val,el){
+  if(beantwortet)return;beantwortet=true;clearInterval(timerInterval);
+  let ok=val==aktFrage.antwort;
+  if(ok){
+    spielRichtig++;gesamtRichtig++;
+    let bonus=timerSek>=8?15:timerSek>=5?12:10;
+    spielPunkteLauf+=bonus;punkte+=bonus;
+    zeigFeedback(true,'✅ Richtig! +'+bonus+' Punkte! 🐠');
+    el.classList.add('richtig');spieleSound('richtig');konfetti();
+  }else{
+    gesamtFalsch++;
+    zeigFeedback(false,'❌ Antwort war '+aktFrage.antwort+'. Weiter! 🌊');
+    el.classList.add('falsch');spieleSound('falsch');
+  }
+  document.getElementById('spiel-punkte-lauf').textContent=spielPunkteLauf;
+  spielIndex++;setTimeout(()=>naechsteAufgabe(letzteSpiel),1800);
+}
+
+function endeSpiel(){
+  spiele++;streak++;if(spielRichtig>bestErgebnis)bestErgebnis=spielRichtig;
+  clearInterval(timerInterval);
+  document.getElementById('spiel-aktiv').classList.add('hidden');
+  document.getElementById('spiel-ende').classList.remove('hidden');
+  document.getElementById('ende-avatar').textContent=avatar;
+  let msg=spielRichtig===10?'🎉 Perfekt! Du bist ein Hai-Champion!':spielRichtig>=7?'🐬 Sehr gut! Super Taucher!':'🌊 Nicht aufgeben! Tauche nochmal!';
+  document.getElementById('ende-ergebnis').innerHTML='<b>'+name+'</b>: <b>'+spielRichtig+'/10</b> richtig!<br>'+msg;
+  document.getElementById('ende-sterne').textContent='⭐'.repeat(Math.round(spielRichtig/2));
+  document.getElementById('ende-punkte').textContent='🏅 +'+spielPunkteLauf+' Punkte | Gesamt: '+punkte+' | '+getLevel();
+  document.getElementById('ende-geschichte').textContent=geschichten[Math.floor(Math.random()*geschichten.length)];
+  if(spielRichtig>=8)konfetti();updateProfil();
+}
+
+function beendeSpiel(){
+  clearInterval(timerInterval);
+  document.getElementById('spiel-aktiv').classList.add('hidden');
+  document.getElementById('spiel-ende').classList.add('hidden');
+  document.getElementById('spiel-auswahl').classList.remove('hidden');
+}
+
+function zeigeElternPin(){
+  pinEingabe='';
+  document.getElementById('pin-anzeige').textContent='• • • •';
+  document.getElementById('eltern-pin-bereich').classList.remove('hidden');
+  document.getElementById('eltern-inhalt').classList.add('hidden');
+  zeigSeite('eltern');
+}
+
+function pinTippe(n){
+  if(pinEingabe.length>=4)return;
+  pinEingabe+=n;
+  document.getElementById('pin-anzeige').textContent='• '.repeat(pinEingabe.length)+'_ '.repeat(4-pinEingabe.length);
+  if(pinEingabe.length===4){
+    if(pinEingabe==='1234'){
+      document.getElementById('eltern-pin-bereich').classList.add('hidden');
+      document.getElementById('eltern-inhalt').classList.remove('hidden');
+      document.getElementById('eltern-name').textContent=name;
+      document.getElementById('eltern-richtig').textContent=gesamtRichtig;
+      document.getElementById('eltern-spiele').textContent=spiele;
+      document.getElementById('eltern-punkte').textContent=punkte;
+      document.getElementById('eltern-best').textContent=bestErgebnis;
+      let e=spiele===0?'Das Kind hat noch nicht gespielt. Bitte ermutigen Sie es! 🎮':
+        bestErgebnis<5?'Das Kind braucht mehr Übung. Täglich üben empfohlen. 📚':
+        bestErgebnis<8?'Gute Fortschritte! Weiter so! ⭐':
+        'Ausgezeichnet! Sehr gute Leistung! 🏆';
+      document.getElementById('eltern-empfehlung').textContent=e;
+    }else{
+      alert('❌ Falsche PIN!');pinEingabe='';
+      document.getElementById('pin-anzeige').textContent='• • • •';
+    }
+  }
+}
+
+function pinLoeschen(){
+  pinEingabe=pinEingabe.slice(0,-1);
+  document.getElementById('pin-anzeige').textContent=
+    '• '.repeat(pinEingabe.length)+'_ '.repeat(4-pinEingabe.length)||'• • • •';
+}
+
+function elternLogout(){zeigSeite('home');}
+
+function konfetti(){
+  let c=document.getElementById('konfetti-canvas');
+  let ctx=c.getContext('2d');
+  c.width=window.innerWidth;c.height=window.innerHeight;
+  let p=[],colors=['#00ccff','#00ff88','#FFD700','#ff6b35','#ff69b4','#00ff00'];
+  let emj=['🐠','🐟','⭐','🌊','🐚','🪸'];
+  for(let i=0;i<60;i++)p.push({x:Math.random()*c.width,y:-10,w:rnd(12)+4,h:rnd(12)+4,color:colors[Math.floor(Math.random()*colors.length)],speed:Math.random()*4+2,angle:Math.random()*360});
+  let frame=0;
+  function draw(){
+    ctx.clearRect(0,0,c.width,c.height);
+    p.forEach(pt=>{ctx.fillStyle=pt.color;ctx.fillRect(pt.x,pt.y,pt.w,pt.h);pt.y+=pt.speed;pt.x+=Math.sin(pt.angle)*2;pt.angle+=0.1;});
+    if(++frame<90)requestAnimationFrame(draw);
+    else ctx.clearRect(0,0,c.width,c.height);
+  }
+  draw();
+}
+
+updateProfil();
+</script>
+</body>
+</html>
