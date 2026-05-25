@@ -11,10 +11,13 @@ button{background:#f59e0b;color:white;border:none;padding:12px 24px;border-radiu
 input{font-size:1.2em;padding:10px;border-radius:10px;border:2px solid #f59e0b;width:60%;text-align:center}
 .box{background:white;padding:20px;border-radius:20px;margin:20px auto;max-width:400px;box-shadow:0 4px 10px #f59e0b44}
 .hidden{display:none}
+.erklaer-btn{background:white;color:#f59e0b;border:2px solid #f59e0b;margin:5px}
+.erklaer-box{background:#fff9e6;border:2px solid #f59e0b;border-radius:15px;padding:15px;margin:10px auto;max-width:400px;text-align:left;font-size:1.1em}
 </style>
 </head>
 <body>
 <h1>⭐ Mathe Star</h1>
+
 <div id="start" class="box">
   <p>Wie heißt du?</p>
   <input id="nameInput" placeholder="Dein Name" /><br><br>
@@ -25,35 +28,100 @@ input{font-size:1.2em;padding:10px;border-radius:10px;border:2px solid #f59e0b;w
   <button onclick="setKlasse(4)">4</button>
   <p id="klasseText">Klasse: 1</p>
   <button onclick="startQuiz()">Los geht's! 🚀</button>
+  <hr style="margin:20px 0;border-color:#f59e0b44">
+  <p><b>Möchtest du etwas lernen?</b></p>
+  <button class="erklaer-btn" onclick="zeigErklaerung('plus')">➕ Addition</button>
+  <button class="erklaer-btn" onclick="zeigErklaerung('minus')">➖ Subtraktion</button>
+  <button class="erklaer-btn" onclick="zeigErklaerung('mal')">✖️ Multiplikation</button>
+  <button class="erklaer-btn" onclick="zeigErklaerung('geteilt')">➗ Division</button>
+  <div id="erklaerung" class="hidden"></div>
 </div>
+
 <div id="quiz" class="box hidden">
   <p id="aufgabe"></p>
   <div id="frage" style="font-size:2em;margin:20px"></div>
   <input type="number" id="antwort" placeholder="?" /><br><br>
-  <button onclick="pruefen()">Antworten</button>
-  <button onclick="hilfe()" style="background:white;color:#f59e0b;border:2px solid #f59e0b">Hilfe 💡</button>
-  <p id="tipp" style="display:none;color:#666"></p>
+  <button onclick="pruefen()">Antworten ✓</button>
+  <button onclick="hilfe()" class="erklaer-btn">Hilfe 💡</button>
+  <p id="tipp" style="display:none;color:#666;font-size:1em"></p>
   <p id="feedback" style="font-size:1.3em"></p>
 </div>
+
 <div id="belohnung" class="box hidden">
   <h2>🏆 Geschafft!</h2>
   <p id="ergebnis"></p>
   <div id="sterne" style="font-size:2em"></div>
   <button onclick="nochmal()">Nochmal 🔄</button>
 </div>
+
 <script>
-let name='',klasse=1,fragen=[],index=0,richtig=0,aktFrage=null;
+let name='',klasse=1,index=0,richtig=0,aktFrage=null;
+
+const erklaerungen={
+  plus:{
+    titel:'➕ Addition – Zusammenzählen',
+    text:'Bei der Addition zählst du zwei Zahlen zusammen.<br><br>'+
+    '🍎🍎🍎 + 🍎🍎 = 🍎🍎🍎🍎🍎<br>'+
+    '<b>3 + 2 = 5</b><br><br>'+
+    'Stell dir vor: Du hast 3 Äpfel und bekommst noch 2 dazu. Jetzt hast du 5 Äpfel!<br><br>'+
+    '📝 Weitere Beispiele:<br>'+
+    '4 + 3 = 7<br>'+
+    '10 + 5 = 15'
+  },
+  minus:{
+    titel:'➖ Subtraktion – Wegnehmen',
+    text:'Bei der Subtraktion nimmst du eine Zahl von einer anderen weg.<br><br>'+
+    '🍎🍎🍎🍎🍎 – 🍎🍎 = 🍎🍎🍎<br>'+
+    '<b>5 – 2 = 3</b><br><br>'+
+    'Stell dir vor: Du hast 5 Bonbons und isst 2. Es bleiben 3 übrig!<br><br>'+
+    '📝 Weitere Beispiele:<br>'+
+    '8 – 3 = 5<br>'+
+    '10 – 4 = 6'
+  },
+  mal:{
+    titel:'✖️ Multiplikation – Mehrmals addieren',
+    text:'Bei der Multiplikation addierst du eine Zahl mehrmals.<br><br>'+
+    '<b>3 × 4</b> bedeutet: 3 mal die 4 addieren<br>'+
+    '4 + 4 + 4 = 12<br>'+
+    '<b>3 × 4 = 12</b><br><br>'+
+    'Stell dir vor: 3 Kinder haben je 4 Bonbons. Zusammen haben sie 12!<br><br>'+
+    '📝 Weitere Beispiele:<br>'+
+    '2 × 5 = 10<br>'+
+    '3 × 3 = 9'
+  },
+  geteilt:{
+    titel:'➗ Division – Aufteilen',
+    text:'Bei der Division teilst du eine Zahl in gleiche Gruppen auf.<br><br>'+
+    '<b>12 ÷ 3</b> bedeutet: 12 auf 3 Gruppen aufteilen<br>'+
+    '🍬🍬🍬🍬 | 🍬🍬🍬🍬 | 🍬🍬🍬🍬<br>'+
+    '<b>12 ÷ 3 = 4</b><br><br>'+
+    'Stell dir vor: 12 Bonbons für 3 Kinder – jedes Kind bekommt 4!<br><br>'+
+    '📝 Weitere Beispiele:<br>'+
+    '10 ÷ 2 = 5<br>'+
+    '9 ÷ 3 = 3'
+  }
+};
+
+function zeigErklaerung(typ){
+  let div=document.getElementById('erklaerung');
+  let e=erklaerungen[typ];
+  div.innerHTML='<div class="erklaer-box"><b>'+e.titel+'</b><br><br>'+e.text+'</div>';
+  div.classList.remove('hidden');
+}
+
 function setKlasse(k){klasse=k;document.getElementById('klasseText').textContent='Klasse: '+k}
+
 function startQuiz(){
   name=document.getElementById('nameInput').value||'Freund';
-  fragen=[];index=0;richtig=0;
+  index=0;richtig=0;
   document.getElementById('start').classList.add('hidden');
   document.getElementById('quiz').classList.remove('hidden');
   naechste();
 }
+
 function naechste(){
   if(index>=10){zeigeBelohnung();return}
-  document.getElementById('aufgabe').textContent='Hallo '+name+'! Aufgabe '+(index+1)+' von 10';
+  document.getElementById('aufgabe').textContent='Hallo '+name+'! Aufgabe '+(index+1)+' von 10 💪';
   document.getElementById('antwort').value='';
   document.getElementById('feedback').textContent='';
   document.getElementById('tipp').style.display='none';
@@ -61,6 +129,7 @@ function naechste(){
   let op=aktFrage.op==='*'?'×':aktFrage.op==='/'?'÷':aktFrage.op;
   document.getElementById('frage').textContent=aktFrage.a+' '+op+' '+aktFrage.b+' = ?';
 }
+
 function genFrage(){
   let ops=klasse<=2?['+','-']:['+','-','*','/'];
   let op=ops[Math.floor(Math.random()*ops.length)];
@@ -72,27 +141,38 @@ function genFrage(){
   let ans=op==='+'?a+b:op==='-'?a-b:op==='*'?a*b:a/b;
   return{a,b,op,answer:ans};
 }
+
 function rnd(n){return Math.floor(Math.random()*n)+1}
+
 function pruefen(){
   let val=parseInt(document.getElementById('antwort').value);
   if(isNaN(val))return;
-  if(val===aktFrage.answer){richtig++;document.getElementById('feedback').textContent='✅ Richtig!';}
-  else{document.getElementById('feedback').textContent='❌ Antwort war '+aktFrage.answer;}
+  if(val===aktFrage.answer){richtig++;document.getElementById('feedback').textContent='✅ Richtig! Super!';}
+  else{document.getElementById('feedback').textContent='❌ Die Antwort war '+aktFrage.answer+'. Nicht aufgeben!';}
   index++;
   setTimeout(naechste,1500);
 }
+
 function hilfe(){
   let t=document.getElementById('tipp');
   let{a,b,op}=aktFrage;
-  let txt=op==='+'?a+' + '+b+' = zusammenzählen':op==='-'?a+' - '+b+' = wegnehmen':op==='*'?a+' × '+b+' = '+a+' mal '+b+' addieren':a+' ÷ '+b+' = in '+b+' gleiche Teile';
-  t.textContent=txt;t.style.display='block';
+  let txt='';
+  if(op==='+')txt='Tipp: Zähle '+a+' und '+b+' zusammen!';
+  if(op==='-')txt='Tipp: Nimm von '+a+' genau '+b+' weg!';
+  if(op==='*')txt='Tipp: Addiere '+a+' mal die Zahl '+b+'!';
+  if(op==='/')txt='Tipp: Teile '+a+' in '+b+' gleiche Gruppen!';
+  t.textContent=txt;
+  t.style.display='block';
 }
+
 function zeigeBelohnung(){
   document.getElementById('quiz').classList.add('hidden');
   document.getElementById('belohnung').classList.remove('hidden');
-  document.getElementById('ergebnis').textContent=name+' hat '+richtig+' von 10 richtig! '+(richtig===10?'🎉 Perfekt!':richtig>=7?'😊 Sehr gut!':'💪 Weiter üben!');
+  let msg=richtig===10?'🎉 Perfekt! Du bist ein echter Mathe-Star!':richtig>=7?'😊 Sehr gut! Weiter so!':'💪 Nicht aufgeben! Du schaffst das!';
+  document.getElementById('ergebnis').innerHTML='<b>'+name+'</b> hat <b>'+richtig+' von 10</b> richtig!<br><br>'+msg;
   document.getElementById('sterne').textContent='⭐'.repeat(Math.round(richtig/2));
 }
+
 function nochmal(){
   document.getElementById('belohnung').classList.add('hidden');
   document.getElementById('start').classList.remove('hidden');
