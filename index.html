@@ -7,34 +7,40 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Segoe UI',sans-serif;background:#006994;min-height:100vh;overflow-x:hidden}
-
-/* ANIMATIONEN */
 @keyframes schwimmen{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-15px) rotate(2deg)}}
 @keyframes blasen{0%{transform:translateY(0);opacity:1}100%{transform:translateY(-100px);opacity:0}}
-@keyframes wellen{0%,100%{transform:scaleX(1)}50%{transform:scaleX(1.05)}}
 @keyframes pop{0%{transform:scale(0)}80%{transform:scale(1.1)}100%{transform:scale(1)}}
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
 @keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 @keyframes treiben{0%,100%{transform:translateX(0) rotate(-5deg)}50%{transform:translateX(20px) rotate(5deg)}}
 @keyframes laden{0%{width:0%}100%{width:100%}}
+@keyframes wellen{0%,100%{transform:scaleX(1)}50%{transform:scaleX(1.05)}}
 
 /* SPLASH */
 #splash{position:fixed;top:0;left:0;width:100%;height:100%;z-index:1000;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;transition:opacity 1s}
 .splash-bg{position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(180deg,#001a3a 0%,#003366 20%,#006994 50%,#0099cc 80%,#00ccff 100%)}
-.splash-blasen{position:absolute;width:100%;height:100%}
 .blase{position:absolute;border-radius:50%;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);animation:blasen 3s infinite}
 .splash-fisch{position:absolute;font-size:3em;animation:schwimmen 3s infinite}
-.splash-logo{position:relative;z-index:2;text-align:center}
-.logo-text{font-size:3.5em;font-weight:900;color:white;text-shadow:0 0 30px rgba(0,200,255,0.8);letter-spacing:-1px}
+.logo-text{font-size:3em;font-weight:900;color:white;text-shadow:0 0 30px rgba(0,200,255,0.8)}
 .logo-text span{color:#FFD700}
-.logo-sub{color:rgba(255,255,255,0.8);font-size:1.1em;margin-top:5px}
-.lade-balken-container{width:250px;height:20px;background:rgba(0,0,0,0.3);border-radius:20px;margin:20px auto;overflow:hidden;border:2px solid rgba(255,255,255,0.3)}
-.lade-balken{height:100%;background:linear-gradient(90deg,#00ff88,#00ccff);border-radius:20px;animation:laden 2.5s ease forwards}
-.lade-text{color:rgba(255,255,255,0.8);font-size:0.9em}
-.unterwasser-szene{position:absolute;bottom:0;width:100%;height:200px}
-.sand{position:absolute;bottom:0;width:100%;height:80px;background:linear-gradient(180deg,transparent,#c4a35a);border-radius:50% 50% 0 0 / 30px 30px 0 0}
-.koralle{position:absolute;bottom:60px;font-size:3em}
-.grosser-fisch{position:absolute;bottom:100px;font-size:5em;animation:treiben 4s infinite}
+.lade-balken-container{width:250px;height:20px;background:rgba(0,0,0,0.3);border-radius:20px;margin:15px auto;overflow:hidden;border:2px solid rgba(255,255,255,0.3)}
+.lade-balken{height:100%;background:linear-gradient(90deg,#00ff88,#00ccff);border-radius:20px;animation:laden 2s ease forwards}
+.unterwasser-szene{position:absolute;bottom:0;width:100%;height:180px}
+.sand{position:absolute;bottom:0;width:100%;height:70px;background:linear-gradient(180deg,transparent,#c4a35a);border-radius:50% 50% 0 0/30px 30px 0 0}
+.koralle{position:absolute;bottom:55px;font-size:2.5em}
+.grosser-fisch{position:absolute;bottom:80px;font-size:4em;animation:treiben 4s infinite}
+
+/* SPRACHAUSWAHL */
+#sprachauswahl{position:fixed;top:0;left:0;width:100%;height:100%;z-index:2000;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(180deg,#001a3a,#003366 50%,#006994)}
+.sprach-titel{color:white;font-size:1.8em;font-weight:bold;margin-bottom:8px;text-align:center}
+.sprach-untertitel{color:rgba(255,255,255,0.7);font-size:1em;margin-bottom:25px;text-align:center}
+.sprach-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:90%;max-width:360px}
+.sprach-btn{background:rgba(255,255,255,0.1);border:2px solid rgba(0,200,255,0.4);border-radius:20px;padding:18px 12px;color:white;cursor:pointer;transition:all 0.2s;text-align:center}
+.sprach-btn:active{transform:scale(0.95)}
+.sprach-btn:hover{background:rgba(0,200,255,0.2);border-color:#00ccff}
+.sprach-flag{font-size:2.5em;display:block;margin-bottom:6px}
+.sprach-name{font-size:1em;font-weight:bold}
+.sprach-native{font-size:0.85em;opacity:0.8;margin-top:2px}
 
 /* NAV */
 nav{background:linear-gradient(90deg,#001a3a,#003366);padding:10px 15px;display:flex;justify-content:space-around;align-items:center;position:sticky;top:0;z-index:10;box-shadow:0 3px 15px rgba(0,0,0,0.4)}
@@ -43,41 +49,27 @@ nav button.aktiv{background:rgba(0,200,255,0.2);color:#00ccff}
 nav button .nav-icon{font-size:1.5em}
 nav button .nav-label{font-size:0.7em}
 
-/* SEITEN */
 .seite{display:none;padding:15px;animation:fadeIn 0.4s ease;padding-bottom:20px}
 .seite.aktiv{display:block}
 .hidden{display:none!important}
+.unterwasser-bg{background:linear-gradient(180deg,#001a3a 0%,#003366 30%,#006994 70%,#0099cc 100%);min-height:100vh}
 
-/* HINTERGRUND */
-.unterwasser-bg{background:linear-gradient(180deg,#001a3a 0%,#003366 30%,#006994 70%,#0099cc 100%);min-height:100vh;position:relative;overflow:hidden}
-.blasen-deko{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}
-.blasen-deko .blase{animation:blasen linear infinite}
-
-/* KARTEN */
-.karte{background:rgba(255,255,255,0.95);border-radius:25px;padding:20px;margin-bottom:15px;box-shadow:0 8px 25px rgba(0,0,0,0.3);position:relative;z-index:1}
-.karte-blau{background:linear-gradient(135deg,rgba(0,50,100,0.9),rgba(0,100,150,0.9));color:white;border:1px solid rgba(0,200,255,0.3)}
-
-/* HOME */
-.profil-karte{background:linear-gradient(135deg,#001a3a,#003d7a);border-radius:25px;padding:25px 20px;margin-bottom:15px;color:white;text-align:center;border:2px solid rgba(0,200,255,0.3);box-shadow:0 8px 25px rgba(0,0,0,0.4);position:relative;overflow:hidden}
-.profil-karte::before{content:'🌊';position:absolute;font-size:8em;opacity:0.05;top:-20px;right:-20px}
+.profil-karte{background:linear-gradient(135deg,#001a3a,#003d7a);border-radius:25px;padding:25px 20px;margin-bottom:15px;color:white;text-align:center;border:2px solid rgba(0,200,255,0.3);box-shadow:0 8px 25px rgba(0,0,0,0.4)}
 .avatar-gross{font-size:5em;animation:schwimmen 3s infinite;display:inline-block}
 .stats-reihe{display:flex;gap:10px;justify-content:center;margin-top:12px;flex-wrap:wrap}
-.stat-chip{background:rgba(0,200,255,0.2);border:1px solid rgba(0,200,255,0.4);border-radius:20px;padding:6px 14px;font-size:0.95em;color:#00ccff}
+.stat-chip{background:rgba(0,200,255,0.2);border:1px solid rgba(0,200,255,0.4);border-radius:20px;padding:6px 14px;font-size:0.9em;color:#00ccff}
 
-/* SPIEL KARTEN */
-.spiel-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:15px;position:relative;z-index:1}
-.spiel-karte{border-radius:22px;overflow:hidden;cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;box-shadow:0 6px 20px rgba(0,0,0,0.3)}
+.spiel-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:15px}
+.spiel-karte{border-radius:22px;overflow:hidden;cursor:pointer;transition:transform 0.2s;box-shadow:0 6px 20px rgba(0,0,0,0.3)}
 .spiel-karte:active{transform:scale(0.95)}
 .spiel-karte.gesperrt{opacity:0.5;cursor:not-allowed}
-.karte-bild{height:120px;display:flex;align-items:center;justify-content:center;font-size:3em;position:relative;overflow:hidden}
-.karte-bild::after{content:'';position:absolute;bottom:0;left:0;right:0;height:30px;background:linear-gradient(transparent,rgba(0,0,0,0.2))}
-.karte-info{background:white;padding:10px 12px;font-size:0.9em;font-weight:bold;color:#001a3a;display:flex;justify-content:space-between;align-items:center}
+.karte-bild{height:120px;display:flex;align-items:center;justify-content:center;font-size:3em}
+.karte-info{background:white;padding:10px 12px;font-size:0.9em;font-weight:bold;color:#001a3a;display:flex;justify-content:space-between}
 
-/* SPIEL */
 .spiel-header{background:linear-gradient(135deg,#001a3a,#003d7a);border-radius:22px;padding:15px;margin-bottom:12px;color:white;border:1px solid rgba(0,200,255,0.3)}
 .spiel-progress{background:rgba(255,255,255,0.2);border-radius:10px;height:10px;margin:10px 0}
 .spiel-progress-bar{background:linear-gradient(90deg,#00ff88,#00ccff);height:10px;border-radius:10px;transition:width 0.4s}
-.timer{width:55px;height:55px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3em;font-weight:bold;color:white;transition:background 0.5s}
+.timer{width:55px;height:55px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3em;font-weight:bold;color:white}
 
 .frage-karte{background:linear-gradient(135deg,#003d7a,#006994);border-radius:22px;padding:20px;margin:12px 0;color:white;text-align:center;border:1px solid rgba(0,200,255,0.3)}
 .frage-gross{font-size:2.2em;font-weight:bold}
@@ -90,40 +82,39 @@ nav button .nav-label{font-size:0.7em}
 .antwort-btn.richtig{background:linear-gradient(135deg,#d4edda,#b8e6c1);border-color:#28a745;animation:pop 0.3s}
 .antwort-btn.falsch{background:linear-gradient(135deg,#f8d7da,#f5c2c7);border-color:#dc3545;animation:shake 0.4s}
 
-.feedback{border-radius:18px;padding:14px;margin:10px 0;font-size:1.1em;font-weight:bold;text-align:center;min-height:48px}
+.feedback{border-radius:18px;padding:14px;margin:10px 0;font-size:1.1em;font-weight:bold;text-align:center}
 .feedback-ok{background:linear-gradient(135deg,#d4edda,#b8e6c1);color:#155724}
 .feedback-nein{background:linear-gradient(135deg,#f8d7da,#f5c2c7);color:#721c24}
 
-/* ERGEBNIS */
 .ergebnis{background:linear-gradient(135deg,#001a3a,#003d7a);border-radius:25px;padding:30px 20px;color:white;text-align:center;border:2px solid rgba(0,200,255,0.3)}
 
-/* BUTTONS */
 .btn{background:linear-gradient(135deg,#0099cc,#006994);color:white;border:none;padding:14px 25px;border-radius:18px;font-size:1.05em;font-weight:bold;cursor:pointer;margin:5px;transition:all 0.2s;box-shadow:0 4px 15px rgba(0,150,200,0.4);width:100%}
 .btn:active{transform:scale(0.97)}
-.btn-gold{background:linear-gradient(135deg,#FFD700,#FFA500);color:#1a1a00;box-shadow:0 4px 15px rgba(255,200,0,0.4)}
+.btn-gold{background:linear-gradient(135deg,#FFD700,#FFA500);color:#1a1a00}
 .btn-weiss{background:white;color:#003366;border:2px solid #0099cc}
 .btn-klein{background:rgba(0,200,255,0.2);color:#00ccff;border:1px solid rgba(0,200,255,0.4);padding:8px 14px;border-radius:12px;font-size:0.9em;cursor:pointer;margin:3px}
 .btn-grau{background:rgba(255,255,255,0.15);color:white;border:none;padding:8px 14px;border-radius:12px;font-size:0.9em;cursor:pointer}
 
-/* LERNPFAD */
-.pfad-stufe{background:rgba(255,255,255,0.95);border-radius:18px;padding:14px 18px;margin-bottom:10px;display:flex;align-items:center;gap:12px;box-shadow:0 4px 15px rgba(0,0,0,0.2);cursor:pointer;transition:transform 0.2s;position:relative;z-index:1}
+.karte{background:rgba(255,255,255,0.95);border-radius:25px;padding:20px;margin-bottom:15px;box-shadow:0 8px 25px rgba(0,0,0,0.3)}
+.karte-blau{background:rgba(0,30,60,0.8);border-radius:20px;padding:20px;border:1px solid rgba(0,200,255,0.2)}
+
+.pfad-stufe{background:rgba(255,255,255,0.95);border-radius:18px;padding:14px 18px;margin-bottom:10px;display:flex;align-items:center;gap:12px;box-shadow:0 4px 15px rgba(0,0,0,0.2);cursor:pointer;transition:transform 0.2s}
 .pfad-stufe:active{transform:scale(0.98)}
 .pfad-stufe.gesperrt{opacity:0.5}
 .pfad-stufe.aktuell{border:3px solid #FFD700;animation:wellen 2s infinite}
+.pfad-stufe.abgeschlossen{border-left:5px solid #28a745}
 .pfad-icon{font-size:2.5em;width:55px;text-align:center}
 .pfad-info{flex:1;text-align:left}
 .pfad-name{font-weight:bold;color:#001a3a;font-size:1.05em}
-.pfad-desc{color:#666;font-size:0.85em;margin-top:2px}
+.pfad-desc{color:#666;font-size:0.85em}
 .pfad-badge{background:#003366;color:white;border-radius:10px;padding:4px 10px;font-size:0.8em;font-weight:bold}
 .pfad-badge.ok{background:#28a745}
 
-/* LERNEN */
-.lern-karte{border-radius:20px;overflow:hidden;margin-bottom:12px;box-shadow:0 4px 15px rgba(0,0,0,0.2);position:relative;z-index:1}
-.lern-kopf{padding:16px 18px;color:white;font-size:1.1em;font-weight:bold;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.lern-karte{border-radius:20px;overflow:hidden;margin-bottom:12px;box-shadow:0 4px 15px rgba(0,0,0,0.2)}
+.lern-kopf{padding:16px 18px;color:white;font-size:1.1em;font-weight:bold;cursor:pointer;display:flex;justify-content:space-between}
 .lern-body{padding:18px;font-size:1em;line-height:1.8;color:#001a3a;display:none;background:white}
 .lern-body.offen{display:block;animation:fadeIn 0.3s}
 
-/* PROFIL */
 .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
 .stat-box{border-radius:14px;padding:14px;text-align:center}
 .abz-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
@@ -131,7 +122,6 @@ nav button .nav-label{font-size:0.7em}
 .abz-item.gesperrt{opacity:0.3}
 .abz-emoji{font-size:2em}
 
-/* ELTERN */
 .pin-anzeige{font-size:2.5em;letter-spacing:12px;margin:15px 0;color:#00ccff;text-align:center}
 .pin-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:240px;margin:0 auto}
 .pin-btn{background:rgba(0,200,255,0.15);border:2px solid rgba(0,200,255,0.4);border-radius:14px;padding:14px;font-size:1.3em;font-weight:bold;cursor:pointer;color:white}
@@ -141,54 +131,81 @@ canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-
 </head>
 <body>
 
-<!-- SPLASH -->
-<div id="splash">
-  <div class="splash-bg"></div>
-  <div class="splash-blasen" id="splash-blasen"></div>
+<!-- SPRACHAUSWAHL -->
+<div id="sprachauswahl">
+  <div style="font-size:4em;margin-bottom:10px">🌊</div>
+  <div class="sprach-titel">Mathe<span style="color:#FFD700">🐠</span>Taucher</div>
+  <div class="sprach-untertitel">Wähle deine Sprache / Choose your language</div>
+  <div class="sprach-grid">
+    <div class="sprach-btn" onclick="waehleSpache('de')">
+      <span class="sprach-flag">🇩🇪</span>
+      <div class="sprach-name">Deutsch</div>
+      <div class="sprach-native">Deutsch</div>
+    </div>
+    <div class="sprach-btn" onclick="waehleSpache('en')">
+      <span class="sprach-flag">🇬🇧</span>
+      <div class="sprach-name">English</div>
+      <div class="sprach-native">English</div>
+    </div>
+    <div class="sprach-btn" onclick="waehleSpache('es')">
+      <span class="sprach-flag">🇪🇸</span>
+      <div class="sprach-name">Español</div>
+      <div class="sprach-native">Español</div>
+    </div>
+    <div class="sprach-btn" onclick="waehleSpache('it')">
+      <span class="sprach-flag">🇮🇹</span>
+      <div class="sprach-name">Italiano</div>
+      <div class="sprach-native">Italiano</div>
+    </div>
+    <div class="sprach-btn" onclick="waehleSpache('el')" style="grid-column:1/-1;max-width:180px;margin:0 auto">
+      <span class="sprach-flag">🇬🇷</span>
+      <div class="sprach-name">Ελληνικά</div>
+      <div class="sprach-native">Griechisch</div>
+    </div>
+  </div>
+</div>
 
+<!-- SPLASH -->
+<div id="splash" style="display:none">
+  <div class="splash-bg"></div>
+  <div id="splash-blasen"></div>
   <div class="unterwasser-szene">
     <div class="sand"></div>
     <div class="koralle" style="left:5%">🪸</div>
     <div class="koralle" style="left:20%">🌿</div>
     <div class="koralle" style="right:15%">🪸</div>
-    <div class="koralle" style="right:30%">🌊</div>
     <div class="grosser-fisch" style="left:30%">🐠</div>
     <div class="grosser-fisch" style="right:10%;animation-delay:1s">🐟</div>
   </div>
-
-  <div class="splash-fisch" style="top:15%;left:10%;animation-delay:0.5s">🐙</div>
+  <div class="splash-fisch" style="top:15%;left:10%">🐙</div>
   <div class="splash-fisch" style="top:25%;right:15%;font-size:2em">🐡</div>
-  <div class="splash-fisch" style="top:40%;left:5%;font-size:2em;animation-delay:1s">⭐</div>
-
-  <div class="splash-logo" style="position:relative;z-index:2">
+  <div style="position:relative;z-index:2;text-align:center">
     <div class="logo-text">Mathe<span>🐠</span>Taucher</div>
-    <div class="logo-sub">🌊 Tauche ein in die Welt der Zahlen!</div>
-    <div class="lade-balken-container">
-      <div class="lade-balken"></div>
-    </div>
-    <div class="lade-text" id="lade-text">Lade... 🐟</div>
+    <div style="color:rgba(255,255,255,0.8);font-size:1em;margin-top:5px" id="splash-sub">🌊 Tauche ein in die Welt der Zahlen!</div>
+    <div class="lade-balken-container"><div class="lade-balken"></div></div>
+    <div style="color:rgba(255,255,255,0.7);font-size:0.9em" id="lade-text">Lade... 🐟</div>
   </div>
 </div>
 
 <!-- NAV -->
 <nav id="nav" style="display:none">
   <button id="nav-home" class="aktiv" onclick="zeigSeite('home')">
-    <span class="nav-icon">🏠</span><span class="nav-label">Start</span>
+    <span class="nav-icon">🏠</span><span class="nav-label" id="nav-start-label">Start</span>
   </button>
   <button id="nav-lernen" onclick="zeigSeite('lernen')">
-    <span class="nav-icon">📚</span><span class="nav-label">Lernen</span>
+    <span class="nav-icon">📚</span><span class="nav-label" id="nav-learn-label">Lernen</span>
   </button>
   <button id="nav-pfad" onclick="zeigSeite('pfad')">
-    <span class="nav-icon">🗺️</span><span class="nav-label">Pfad</span>
+    <span class="nav-icon">🗺️</span><span class="nav-label" id="nav-path-label">Pfad</span>
   </button>
   <button id="nav-spiele" onclick="zeigSeite('spiele')">
-    <span class="nav-icon">🎮</span><span class="nav-label">Spiele</span>
+    <span class="nav-icon">🎮</span><span class="nav-label" id="nav-games-label">Spiele</span>
   </button>
   <button id="nav-profil" onclick="zeigSeite('profil')">
-    <span class="nav-icon">🏆</span><span class="nav-label">Profil</span>
+    <span class="nav-icon">🏆</span><span class="nav-label" id="nav-profile-label">Profil</span>
   </button>
   <button onclick="zeigeElternPin()">
-    <span class="nav-icon">👨</span><span class="nav-label">Eltern</span>
+    <span class="nav-icon">👨‍👩‍👧</span><span class="nav-label" id="nav-parents-label">Eltern</span>
   </button>
 </nav>
 
@@ -199,23 +216,21 @@ canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-
     <div style="position:absolute;top:20%;right:8%;font-size:1.5em;animation:schwimmen 3s infinite;animation-delay:1s">🐟</div>
     <div style="position:absolute;top:60%;left:3%;font-size:1.8em;animation:treiben 5s infinite">🐙</div>
     <div style="position:absolute;top:70%;right:5%;font-size:1.5em;animation:blasen 4s infinite">🫧</div>
-    <div style="position:absolute;top:80%;left:40%;font-size:1.2em;animation:blasen 3s infinite;animation-delay:1s">🫧</div>
   </div>
   <div style="position:relative;z-index:1;padding:15px">
     <div class="profil-karte">
       <div class="avatar-gross" id="home-avatar">🦈</div>
-      <div style="font-size:1.6em;font-weight:bold;margin:8px 0">Hallo, <span id="home-name">Taucher</span>! 🌊</div>
-      <div style="background:rgba(0,200,255,0.2);border-radius:20px;padding:6px 16px;display:inline-block;color:#00ccff;font-size:0.95em">⭐ <span id="home-level">Anfänger-Taucher</span></div>
+      <div style="font-size:1.5em;font-weight:bold;margin:8px 0"><span id="home-greeting">Hallo</span>, <span id="home-name">Taucher</span>! 🌊</div>
+      <div style="background:rgba(0,200,255,0.2);border-radius:20px;padding:6px 16px;display:inline-block;color:#00ccff">⭐ <span id="home-level">Anfänger</span></div>
       <div class="stats-reihe">
         <div class="stat-chip">🏅 <span id="home-punkte">0</span></div>
-        <div class="stat-chip">🔥 <span id="home-streak">0</span> Tage</div>
-        <div class="stat-chip">🎮 <span id="home-spiele">0</span> Spiele</div>
+        <div class="stat-chip">🔥 <span id="home-streak">0</span></div>
+        <div class="stat-chip">🎮 <span id="home-spiele">0</span></div>
       </div>
     </div>
-
     <div style="background:rgba(0,30,60,0.7);border-radius:20px;padding:15px;margin-bottom:15px;border:1px solid rgba(0,200,255,0.2)">
-      <p style="color:#00ccff;margin-bottom:10px;font-weight:bold">🐠 Dein Profil:</p>
-      <input id="homeNameInput" placeholder="Dein Name..." style="width:100%;padding:12px;border-radius:12px;border:2px solid rgba(0,200,255,0.4);background:rgba(0,0,0,0.3);color:white;font-size:1em;text-align:center;margin-bottom:10px"/>
+      <p style="color:#00ccff;margin-bottom:10px;font-weight:bold" id="profile-label">🐠 Dein Profil:</p>
+      <input id="homeNameInput" placeholder="..." style="width:100%;padding:12px;border-radius:12px;border:2px solid rgba(0,200,255,0.4);background:rgba(0,0,0,0.3);color:white;font-size:1em;text-align:center;margin-bottom:10px"/>
       <div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:10px">
         <span class="btn-klein av-btn gewaehlt" onclick="waehleAvatar('🦈',this)" style="font-size:1.5em">🦈</span>
         <span class="btn-klein av-btn" onclick="waehleAvatar('🐬',this)" style="font-size:1.5em">🐬</span>
@@ -225,41 +240,41 @@ canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-
         <span class="btn-klein av-btn" onclick="waehleAvatar('🦀',this)" style="font-size:1.5em">🦀</span>
       </div>
       <div style="display:flex;justify-content:center;gap:6px;margin-bottom:10px;flex-wrap:wrap">
-        <span style="color:rgba(255,255,255,0.7);font-size:0.9em;width:100%;margin-bottom:4px">Klasse:</span>
-        <button class="btn-klein" onclick="setKlasse(1)">1. Klasse</button>
-        <button class="btn-klein" onclick="setKlasse(2)">2. Klasse</button>
-        <button class="btn-klein" onclick="setKlasse(3)">3. Klasse</button>
-        <button class="btn-klein" onclick="setKlasse(4)">4. Klasse</button>
+        <button class="btn-klein" onclick="setKlasse(1)" id="kl1">1</button>
+        <button class="btn-klein" onclick="setKlasse(2)" id="kl2">2</button>
+        <button class="btn-klein" onclick="setKlasse(3)" id="kl3">3</button>
+        <button class="btn-klein" onclick="setKlasse(4)" id="kl4">4</button>
       </div>
-      <p id="klasseText" style="color:rgba(255,255,255,0.6);font-size:0.9em;margin-bottom:10px">Klasse: 1</p>
-      <button class="btn btn-gold" onclick="speicherProfil()">🌊 Eintauchen!</button>
+      <p id="klasseText" style="color:rgba(255,255,255,0.6);font-size:0.9em;margin-bottom:10px"></p>
+      <button class="btn btn-gold" onclick="speicherProfil()" id="save-btn">🌊 Eintauchen!</button>
+      <br><br>
+      <button class="btn-klein" onclick="zeigeSprachwahl()" style="width:100%;text-align:center">🌍 <span id="lang-change-btn">Sprache ändern</span></button>
     </div>
-
-    <p style="color:#00ccff;font-weight:bold;margin-bottom:10px;font-size:1.1em">🎮 Spiele auswählen:</p>
+    <p style="color:#00ccff;font-weight:bold;margin-bottom:10px" id="games-title">🎮 Spiele:</p>
     <div class="spiel-grid">
       <div class="spiel-karte" onclick="startSpiel('zaehlen')">
         <div class="karte-bild" style="background:linear-gradient(135deg,#006994,#0099cc)">🐠🔢🐟</div>
-        <div class="karte-info">Zählen <span>▶</span></div>
+        <div class="karte-info"><span id="game1-name">Zählen</span> <span>▶</span></div>
       </div>
       <div class="spiel-karte" onclick="startSpiel('rechnen')">
         <div class="karte-bild" style="background:linear-gradient(135deg,#1a0066,#4400cc)">🐙➕🦑</div>
-        <div class="karte-info">Rechnen <span>▶</span></div>
+        <div class="karte-info"><span id="game2-name">Rechnen</span> <span>▶</span></div>
       </div>
       <div class="spiel-karte" onclick="startSpiel('vergleich')">
         <div class="karte-bild" style="background:linear-gradient(135deg,#004d00,#009900)">🐡⚖️🐬</div>
-        <div class="karte-info">Vergleichen <span>▶</span></div>
+        <div class="karte-info"><span id="game3-name">Vergleichen</span> <span>▶</span></div>
       </div>
       <div class="spiel-karte" onclick="startSpiel('luecke')">
         <div class="karte-bild" style="background:linear-gradient(135deg,#660033,#cc0066)">🦈❓🦀</div>
-        <div class="karte-info">Lücken <span>▶</span></div>
+        <div class="karte-info"><span id="game4-name">Lücken</span> <span>▶</span></div>
       </div>
       <div class="spiel-karte" id="karte-geld" onclick="startSpiel('geld')">
         <div class="karte-bild" style="background:linear-gradient(135deg,#664400,#cc8800)">🪙💰🐚</div>
-        <div class="karte-info">Geld <span id="geld-lock">🔒</span></div>
+        <div class="karte-info"><span id="game5-name">Geld</span> <span id="geld-lock">🔒</span></div>
       </div>
       <div class="spiel-karte" id="karte-zahlen" onclick="startSpiel('zahlenstrahl')">
         <div class="karte-bild" style="background:linear-gradient(135deg,#440066,#8800cc)">📏🌊🔢</div>
-        <div class="karte-info">Zahlenstrahl <span id="zahl-lock">🔒</span></div>
+        <div class="karte-info"><span id="game6-name">Zahlenstrahl</span> <span id="zahl-lock">🔒</span></div>
       </div>
     </div>
   </div>
@@ -268,75 +283,57 @@ canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-
 <!-- LERNEN -->
 <div id="seite-lernen" class="seite unterwasser-bg">
   <div style="position:relative;z-index:1;padding:15px">
-    <h2 style="color:#00ccff;margin-bottom:15px;font-size:1.5em">📚 Lerne mit den Meerestieren!</h2>
+    <h2 style="color:#00ccff;margin-bottom:15px" id="learn-title">📚 Lernen</h2>
     <div class="lern-karte">
       <div class="lern-kopf" style="background:linear-gradient(135deg,#006994,#0099cc)" onclick="toggleLern('plus')">
-        🐠 Addition – Zusammenzählen <span id="arr-plus">▼</span>
+        <span id="lern-plus-titel">🐠 Addition</span> <span id="arr-plus">▼</span>
       </div>
       <div class="lern-body" id="lern-plus">
         <div style="font-size:2em;margin:10px 0;text-align:center">🐠🐠🐠 + 🐠🐠 = 🐠🐠🐠🐠🐠</div>
-        <b>3 + 2 = 5</b><br><br>
-        🦈 Hai-Tipp: Du siehst 3 Fische 🐠 und 2 neue schwimmen dazu.<br>
-        Jetzt sind es <b>5 Fische</b>! 🎉<br><br>
-        📝 Beispiele:<br>
-        4 + 3 = <b>7</b> &nbsp; 🐡🐡🐡🐡 + 🐡🐡🐡 = 🐡🐡🐡🐡🐡🐡🐡<br>
-        10 + 5 = <b>15</b><br>
-        8 + 7 = <b>15</b>
+        <b id="lern-plus-ex">3 + 2 = 5</b><br><br>
+        <span id="lern-plus-text">Du hast 3 Fische 🐠 und 2 schwimmen dazu. Jetzt sind es 5!</span><br><br>
+        📝 <span id="lern-plus-more">4 + 3 = 7 &nbsp; 10 + 5 = 15</span>
       </div>
     </div>
     <div class="lern-karte">
       <div class="lern-kopf" style="background:linear-gradient(135deg,#1a0066,#4400cc)" onclick="toggleLern('minus')">
-        🐙 Subtraktion – Wegnehmen <span id="arr-minus">▼</span>
+        <span id="lern-minus-titel">🐙 Subtraktion</span> <span id="arr-minus">▼</span>
       </div>
       <div class="lern-body" id="lern-minus">
         <div style="font-size:2em;margin:10px 0;text-align:center">🐚🐚🐚🐚🐚 – 🐚🐚 = 🐚🐚🐚</div>
-        <b>5 – 2 = 3</b><br><br>
-        🐙 Kraken-Tipp: Du hast 5 Muscheln 🐚 und gibst 2 ab.<br>
-        Es bleiben <b>3 Muscheln</b> übrig! 🌊<br><br>
-        📝 Beispiele:<br>
-        8 – 3 = <b>5</b><br>
-        10 – 4 = <b>6</b>
+        <b id="lern-minus-ex">5 – 2 = 3</b><br><br>
+        <span id="lern-minus-text">Du hast 5 Muscheln 🐚 und gibst 2 ab. Es bleiben 3 übrig!</span><br><br>
+        📝 <span id="lern-minus-more">8 – 3 = 5 &nbsp; 10 – 4 = 6</span>
       </div>
     </div>
     <div class="lern-karte">
       <div class="lern-kopf" style="background:linear-gradient(135deg,#004d00,#009900)" onclick="toggleLern('mal')">
-        🐬 Multiplikation – Mehrmals addieren <span id="arr-mal">▼</span>
+        <span id="lern-mal-titel">🐬 Multiplikation</span> <span id="arr-mal">▼</span>
       </div>
       <div class="lern-body" id="lern-mal">
-        <b>3 × 4 = 12</b><br><br>
-        🐬 Delfin-Tipp: 3 mal die Zahl 4 addieren:<br>
-        4 + 4 + 4 = <b>12</b><br><br>
-        <div style="font-size:1.3em;text-align:center;margin:10px 0">
-          🐠🐠🐠🐠 + 🐠🐠🐠🐠 + 🐠🐠🐠🐠 = 12 Fische!
-        </div>
-        3 Delfingruppen × 4 Fische = <b>12 Fische</b>! 🎉<br><br>
-        📝 Beispiele:<br>
-        2 × 5 = <b>10</b> &nbsp; 3 × 3 = <b>9</b>
+        <b id="lern-mal-ex">3 × 4 = 12</b><br><br>
+        <span id="lern-mal-text">3 mal die Zahl 4: 4+4+4=12. 3 Delfine × 4 Fische = 12!</span><br><br>
+        📝 <span id="lern-mal-more">2 × 5 = 10 &nbsp; 3 × 3 = 9</span>
       </div>
     </div>
     <div class="lern-karte">
       <div class="lern-kopf" style="background:linear-gradient(135deg,#660033,#cc0066)" onclick="toggleLern('geteilt')">
-        🦈 Division – Aufteilen <span id="arr-geteilt">▼</span>
+        <span id="lern-div-titel">🦈 Division</span> <span id="arr-geteilt">▼</span>
       </div>
       <div class="lern-body" id="lern-geteilt">
-        <b>12 ÷ 3 = 4</b><br><br>
-        🦈 Hai-Tipp: Teile 12 Fische auf 3 Haie auf:<br>
-        <div style="font-size:1.3em;text-align:center;margin:10px 0">
-          🐠🐠🐠🐠 | 🐠🐠🐠🐠 | 🐠🐠🐠🐠
-        </div>
-        Jeder Hai bekommt <b>4 Fische</b>! 😊<br><br>
-        📝 Beispiele:<br>
-        10 ÷ 2 = <b>5</b> &nbsp; 9 ÷ 3 = <b>3</b>
+        <b id="lern-div-ex">12 ÷ 3 = 4</b><br><br>
+        <span id="lern-div-text">12 Fische auf 3 Haie aufteilen: 🐠🐠🐠🐠|🐠🐠🐠🐠|🐠🐠🐠🐠 = 4 pro Hai!</span><br><br>
+        📝 <span id="lern-div-more">10 ÷ 2 = 5 &nbsp; 9 ÷ 3 = 3</span>
       </div>
     </div>
   </div>
 </div>
 
-<!-- LERNPFAD -->
+<!-- PFAD -->
 <div id="seite-pfad" class="seite unterwasser-bg">
   <div style="position:relative;z-index:1;padding:15px">
-    <h2 style="color:#00ccff;margin-bottom:5px">🗺️ Dein Tauch-Pfad</h2>
-    <p style="color:rgba(255,255,255,0.7);margin-bottom:15px;font-size:0.95em" id="pfad-status">Tauche tiefer und entdecke neue Welten!</p>
+    <h2 style="color:#00ccff;margin-bottom:5px" id="path-title">🗺️ Lernpfad</h2>
+    <p style="color:rgba(255,255,255,0.7);margin-bottom:15px" id="pfad-status"></p>
     <div id="pfad-liste"></div>
   </div>
 </div>
@@ -344,33 +341,32 @@ canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-
 <!-- SPIELE -->
 <div id="seite-spiele" class="seite unterwasser-bg">
   <div style="position:relative;z-index:1;padding:15px">
-
     <div id="spiel-auswahl">
-      <h2 style="color:#00ccff;margin-bottom:15px">🎮 Alle Spiele</h2>
+      <h2 style="color:#00ccff;margin-bottom:15px" id="all-games-title">🎮 Alle Spiele</h2>
       <div class="spiel-grid">
         <div class="spiel-karte" onclick="startSpiel('zaehlen')">
           <div class="karte-bild" style="background:linear-gradient(135deg,#006994,#0099cc)">🐠🔢🐟</div>
-          <div class="karte-info">Zählen <span>▶</span></div>
+          <div class="karte-info"><span id="game1b-name">Zählen</span> <span>▶</span></div>
         </div>
         <div class="spiel-karte" onclick="startSpiel('rechnen')">
           <div class="karte-bild" style="background:linear-gradient(135deg,#1a0066,#4400cc)">🐙➕🦑</div>
-          <div class="karte-info">Rechnen <span>▶</span></div>
+          <div class="karte-info"><span id="game2b-name">Rechnen</span> <span>▶</span></div>
         </div>
         <div class="spiel-karte" onclick="startSpiel('vergleich')">
           <div class="karte-bild" style="background:linear-gradient(135deg,#004d00,#009900)">🐡⚖️🐬</div>
-          <div class="karte-info">Vergleichen <span>▶</span></div>
+          <div class="karte-info"><span id="game3b-name">Vergleichen</span> <span>▶</span></div>
         </div>
         <div class="spiel-karte" onclick="startSpiel('luecke')">
           <div class="karte-bild" style="background:linear-gradient(135deg,#660033,#cc0066)">🦈❓🦀</div>
-          <div class="karte-info">Lücken <span>▶</span></div>
+          <div class="karte-info"><span id="game4b-name">Lücken</span> <span>▶</span></div>
         </div>
         <div class="spiel-karte" id="karte-geld2" onclick="startSpiel('geld')">
           <div class="karte-bild" style="background:linear-gradient(135deg,#664400,#cc8800)">🪙💰🐚</div>
-          <div class="karte-info">Geld <span id="geld-lock2">🔒</span></div>
+          <div class="karte-info"><span id="game5b-name">Geld</span> <span id="geld-lock2">🔒</span></div>
         </div>
         <div class="spiel-karte" id="karte-zahlen2" onclick="startSpiel('zahlenstrahl')">
           <div class="karte-bild" style="background:linear-gradient(135deg,#440066,#8800cc)">📏🌊🔢</div>
-          <div class="karte-info">Zahlenstrahl <span id="zahl-lock2">🔒</span></div>
+          <div class="karte-info"><span id="game6b-name">Zahlenstrahl</span> <span id="zahl-lock2">🔒</span></div>
         </div>
       </div>
     </div>
@@ -378,18 +374,15 @@ canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-
     <div id="spiel-aktiv" class="hidden">
       <div class="spiel-header">
         <div style="display:flex;justify-content:space-between;align-items:center">
-          <button class="btn-grau" onclick="beendeSpiel()">⬅️ Raus</button>
-          <span style="color:#00ccff;font-weight:bold">Aufgabe <span id="spiel-nr">1</span>/10</span>
+          <button class="btn-grau" onclick="beendeSpiel()" id="back-btn">⬅️</button>
+          <span style="color:#00ccff;font-weight:bold"><span id="task-label">Aufgabe</span> <span id="spiel-nr">1</span>/10</span>
           <div class="timer" id="timer-ring" style="background:conic-gradient(#00ff88 100%,rgba(255,255,255,0.2) 100%)">10</div>
         </div>
         <div class="spiel-progress"><div class="spiel-progress-bar" id="spiel-bar" style="width:0%"></div></div>
-        <div style="color:rgba(255,255,255,0.8);font-size:0.9em;margin-top:5px">🏅 +<span id="spiel-punkte-lauf">0</span> Punkte | <span id="spiel-aufmunt"></span></div>
+        <div style="color:rgba(255,255,255,0.8);font-size:0.9em;margin-top:5px">🏅 +<span id="spiel-punkte-lauf">0</span> | <span id="spiel-aufmunt"></span></div>
       </div>
-
       <div style="background:rgba(0,10,30,0.8);border-radius:22px;padding:20px;border:1px solid rgba(0,200,255,0.2)">
-        <div class="frage-karte">
-          <div class="frage-gross" id="spiel-frage">Lade...</div>
-        </div>
+        <div class="frage-karte"><div class="frage-gross" id="spiel-frage"></div></div>
         <div class="objekte" id="spiel-objekte"></div>
         <div id="spiel-feedback" class="feedback" style="display:none"></div>
         <div class="antwort-grid" id="spiel-antworten"></div>
@@ -399,7 +392,7 @@ canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-
     <div id="spiel-ende" class="hidden">
       <div class="ergebnis">
         <div style="font-size:4em" id="ende-avatar">🦈</div>
-        <div style="font-size:2em;margin:10px 0">🎉 Toll gemacht!</div>
+        <div style="font-size:2em;margin:10px 0" id="well-done-text">🎉 Toll gemacht!</div>
         <div id="ende-sterne" style="font-size:2.5em;margin:12px 0"></div>
         <p id="ende-ergebnis" style="font-size:1.1em;margin:10px 0"></p>
         <div style="background:rgba(0,200,255,0.15);border-radius:15px;padding:12px;margin:10px 0;border:1px solid rgba(0,200,255,0.3)">
@@ -408,8 +401,8 @@ canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-
         <p id="ende-geschichte" style="color:rgba(255,255,255,0.7);font-style:italic;margin:10px 0"></p>
       </div>
       <div style="margin-top:12px">
-        <button class="btn btn-gold" onclick="startSpiel(letzteSpiel)">🔄 Nochmal tauchen!</button>
-        <button class="btn btn-weiss" style="margin-top:8px" onclick="beendeSpiel()">🎮 Andere Spiele</button>
+        <button class="btn btn-gold" onclick="startSpiel(letzteSpiel)" id="play-again-btn">🔄 Nochmal!</button>
+        <button class="btn btn-weiss" style="margin-top:8px" onclick="beendeSpiel()" id="other-games-btn">🎮 Andere Spiele</button>
       </div>
     </div>
   </div>
@@ -421,24 +414,24 @@ canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-
     <div style="background:linear-gradient(135deg,#001a3a,#003d7a);border-radius:25px;padding:25px;color:white;text-align:center;margin-bottom:15px;border:2px solid rgba(0,200,255,0.3)">
       <div id="profil-avatar" style="font-size:5em;animation:schwimmen 3s infinite;display:inline-block">🦈</div>
       <div style="font-size:1.5em;font-weight:bold;margin:8px 0"><span id="profil-name">Taucher</span></div>
-      <div style="background:rgba(0,200,255,0.2);border-radius:20px;padding:6px 16px;display:inline-block;color:#00ccff">⭐ <span id="profil-level">Anfänger-Taucher</span></div>
+      <div style="background:rgba(0,200,255,0.2);border-radius:20px;padding:6px 16px;display:inline-block;color:#00ccff">⭐ <span id="profil-level">Anfänger</span></div>
       <div style="display:flex;justify-content:center;gap:20px;margin-top:15px">
-        <div><div style="font-size:1.5em;font-weight:bold"><span id="profil-punkte">0</span></div><div style="font-size:0.8em;opacity:0.7">🏅 Punkte</div></div>
-        <div><div style="font-size:1.5em;font-weight:bold"><span id="profil-streak">0</span></div><div style="font-size:0.8em;opacity:0.7">🔥 Tage</div></div>
-        <div><div style="font-size:1.5em;font-weight:bold"><span id="profil-spiele">0</span></div><div style="font-size:0.8em;opacity:0.7">🎮 Spiele</div></div>
+        <div><div style="font-size:1.5em;font-weight:bold"><span id="profil-punkte">0</span></div><div style="font-size:0.8em;opacity:0.7">🏅</div></div>
+        <div><div style="font-size:1.5em;font-weight:bold"><span id="profil-streak">0</span></div><div style="font-size:0.8em;opacity:0.7">🔥</div></div>
+        <div><div style="font-size:1.5em;font-weight:bold"><span id="profil-spiele">0</span></div><div style="font-size:0.8em;opacity:0.7">🎮</div></div>
       </div>
     </div>
     <div class="karte">
-      <b style="color:#001a3a">📊 Statistik</b>
+      <b style="color:#001a3a" id="stats-title">📊 Statistik</b>
       <div class="stat-grid">
-        <div class="stat-box" style="background:#d4edda"><div style="font-size:1.4em;font-weight:bold;color:#155724"><span id="stat-richtig">0</span></div><div style="font-size:0.85em;color:#155724">✅ Richtig</div></div>
-        <div class="stat-box" style="background:#f8d7da"><div style="font-size:1.4em;font-weight:bold;color:#721c24"><span id="stat-falsch">0</span></div><div style="font-size:0.85em;color:#721c24">❌ Falsch</div></div>
-        <div class="stat-box" style="background:#cce5ff"><div style="font-size:1.4em;font-weight:bold;color:#004085"><span id="stat-best">0</span>/10</div><div style="font-size:0.85em;color:#004085">🏆 Bestes</div></div>
-        <div class="stat-box" style="background:#fff3cd"><div style="font-size:1.4em;font-weight:bold;color:#856404"><span id="stat-punkte">0</span></div><div style="font-size:0.85em;color:#856404">🏅 Punkte</div></div>
+        <div class="stat-box" style="background:#d4edda"><div style="font-size:1.4em;font-weight:bold;color:#155724"><span id="stat-richtig">0</span></div><div style="font-size:0.85em;color:#155724" id="correct-label">✅ Richtig</div></div>
+        <div class="stat-box" style="background:#f8d7da"><div style="font-size:1.4em;font-weight:bold;color:#721c24"><span id="stat-falsch">0</span></div><div style="font-size:0.85em;color:#721c24" id="wrong-label">❌ Falsch</div></div>
+        <div class="stat-box" style="background:#cce5ff"><div style="font-size:1.4em;font-weight:bold;color:#004085"><span id="stat-best">0</span>/10</div><div style="font-size:0.85em;color:#004085" id="best-label">🏆 Bestes</div></div>
+        <div class="stat-box" style="background:#fff3cd"><div style="font-size:1.4em;font-weight:bold;color:#856404"><span id="stat-punkte">0</span></div><div style="font-size:0.85em;color:#856404">🏅</div></div>
       </div>
     </div>
     <div style="background:linear-gradient(135deg,#001a3a,#003d7a);border-radius:20px;padding:20px;border:1px solid rgba(0,200,255,0.2)">
-      <b style="color:#00ccff">🏅 Abzeichen</b>
+      <b style="color:#00ccff" id="badges-title">🏅 Abzeichen</b>
       <div class="abz-grid" id="abz-grid"></div>
     </div>
   </div>
@@ -447,9 +440,9 @@ canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-
 <!-- ELTERN -->
 <div id="seite-eltern" class="seite unterwasser-bg">
   <div style="position:relative;z-index:1;padding:15px">
-    <h2 style="color:#00ccff;margin-bottom:15px">👨‍👩‍👧 Eltern-Bereich</h2>
-    <div id="eltern-pin-bereich" class="karte-blau" style="border-radius:20px;padding:20px">
-      <p style="color:#00ccff;font-weight:bold;margin-bottom:10px">🔐 PIN eingeben:</p>
+    <h2 style="color:#00ccff;margin-bottom:15px" id="parents-title">👨‍👩‍👧 Eltern-Bereich</h2>
+    <div id="eltern-pin-bereich" class="karte-blau">
+      <p style="color:#00ccff;font-weight:bold;margin-bottom:10px" id="pin-label">🔐 PIN eingeben:</p>
       <div class="pin-anzeige" id="pin-anzeige">• • • •</div>
       <div class="pin-grid">
         <button class="pin-btn" onclick="pinTippe(1)">1</button>
@@ -465,23 +458,23 @@ canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-
         <button class="pin-btn" onclick="pinTippe(0)">0</button>
         <button class="pin-btn" style="opacity:0.3">•</button>
       </div>
-      <p style="color:rgba(255,255,255,0.5);font-size:0.85em;margin-top:10px">Standard-PIN: 1234</p>
+      <p style="color:rgba(255,255,255,0.5);font-size:0.85em;margin-top:10px">PIN: 1234</p>
     </div>
     <div id="eltern-inhalt" class="hidden">
       <div class="karte" style="margin-bottom:12px">
-        <b style="color:#001a3a">📊 Fortschritt von <span id="eltern-name">Kind</span>:</b>
+        <b style="color:#001a3a" id="progress-label">📊 Fortschritt von <span id="eltern-name">Kind</span>:</b>
         <div class="stat-grid" style="margin-top:10px">
-          <div class="stat-box" style="background:#d4edda"><div style="font-size:1.3em;font-weight:bold;color:#155724"><span id="eltern-richtig">0</span></div><div style="font-size:0.8em">✅ Richtig</div></div>
-          <div class="stat-box" style="background:#cce5ff"><div style="font-size:1.3em;font-weight:bold;color:#004085"><span id="eltern-spiele">0</span></div><div style="font-size:0.8em">🎮 Spiele</div></div>
-          <div class="stat-box" style="background:#fff3cd"><div style="font-size:1.3em;font-weight:bold;color:#856404"><span id="eltern-punkte">0</span></div><div style="font-size:0.8em">🏅 Punkte</div></div>
-          <div class="stat-box" style="background:#f8d7da"><div style="font-size:1.3em;font-weight:bold;color:#721c24"><span id="eltern-best">0</span>/10</div><div style="font-size:0.8em">🏆 Bestes</div></div>
+          <div class="stat-box" style="background:#d4edda"><div style="font-size:1.3em;font-weight:bold;color:#155724"><span id="eltern-richtig">0</span></div><div style="font-size:0.8em" id="el-correct">✅ Richtig</div></div>
+          <div class="stat-box" style="background:#cce5ff"><div style="font-size:1.3em;font-weight:bold;color:#004085"><span id="eltern-spiele">0</span></div><div style="font-size:0.8em" id="el-games">🎮 Spiele</div></div>
+          <div class="stat-box" style="background:#fff3cd"><div style="font-size:1.3em;font-weight:bold;color:#856404"><span id="eltern-punkte">0</span></div><div style="font-size:0.8em">🏅</div></div>
+          <div class="stat-box" style="background:#f8d7da"><div style="font-size:1.3em;font-weight:bold;color:#721c24"><span id="eltern-best">0</span>/10</div><div style="font-size:0.8em" id="el-best">🏆 Bestes</div></div>
         </div>
       </div>
       <div class="karte">
-        <b style="color:#001a3a">💡 Empfehlung:</b>
+        <b style="color:#001a3a" id="rec-title">💡 Empfehlung:</b>
         <p id="eltern-empfehlung" style="margin-top:10px;color:#444;line-height:1.6"></p>
       </div>
-      <button class="btn" onclick="elternLogout()" style="margin-top:10px">🔒 Bereich verlassen</button>
+      <button class="btn" onclick="elternLogout()" id="logout-btn">🔒 Verlassen</button>
     </div>
   </div>
 </div>
@@ -489,59 +482,246 @@ canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-
 <canvas id="konfetti-canvas"></canvas>
 
 <script>
-let name='Taucher',klasse=1,avatar='🦈';
+let name='Taucher',klasse=1,avatar='🦈',sprache='de';
 let punkte=0,streak=0,gesamtRichtig=0,gesamtFalsch=0,spiele=0,bestErgebnis=0;
 let spielIndex=0,spielRichtig=0,spielPunkteLauf=0,aktFrage=null,letzteSpiel='zaehlen';
-let beantwortet=false,timerInterval=null,timerSek=10;
-let pinEingabe='';
+let beantwortet=false,timerInterval=null,timerSek=10,pinEingabe='';
+
+const texte={
+  de:{
+    greeting:'Hallo',splash:'🌊 Tauche ein in die Welt der Zahlen!',
+    navStart:'Start',navLearn:'Lernen',navPath:'Pfad',navGames:'Spiele',navProfile:'Profil',navParents:'Eltern',
+    profile:'🐠 Dein Profil:',saveBtn:'🌊 Eintauchen!',gamesTitle:'🎮 Spiele:',
+    game1:'Zählen',game2:'Rechnen',game3:'Vergleichen',game4:'Lücken',game5:'Geld',game6:'Zahlenstrahl',
+    learnTitle:'📚 Lernen',
+    plusTitle:'🐠 Addition – Zusammenzählen',plusText:'Du hast 3 Fische 🐠 und 2 schwimmen dazu. Jetzt sind es 5!',
+    minusTitle:'🐙 Subtraktion – Wegnehmen',minusText:'Du hast 5 Muscheln 🐚 und gibst 2 ab. Es bleiben 3 übrig!',
+    malTitle:'🐬 Multiplikation – Mehrmals addieren',malText:'3 mal die Zahl 4: 4+4+4=12. 3 Delfine × 4 Fische = 12!',
+    divTitle:'🦈 Division – Aufteilen',divText:'12 Fische auf 3 Haie aufteilen = 4 pro Hai!',
+    pathTitle:'🗺️ Lernpfad',allGames:'🎮 Alle Spiele',
+    task:'Aufgabe',backBtn:'⬅️',wellDone:'🎉 Toll gemacht!',playAgain:'🔄 Nochmal!',otherGames:'🎮 Andere Spiele',
+    statsTitle:'📊 Statistik',correct:'✅ Richtig',wrong:'❌ Falsch',best:'🏆 Bestes',badgesTitle:'🏅 Abzeichen',
+    parentsTitle:'👨‍👩‍👧 Eltern-Bereich',pinLabel:'🔐 PIN eingeben:',progressLabel:'📊 Fortschritt von',
+    recTitle:'💡 Empfehlung:',logoutBtn:'🔒 Verlassen',langChange:'Sprache ändern',
+    klasse:'Klasse:',
+    levels:['Anfänger-Taucher 🤿','Schnorchler ⭐','Taucher 🐠','Meeres-Profi 🐬','Hai-Champion 🦈'],
+    aufmunterungen:['Weiter! 🌊','Super! 🐬','Toll! 🦈','Klasse! ⭐','Bravo! 🐠'],
+    geschichten:['🦈 Der Hai ist stolz!','🐬 Der Delfin springt vor Freude!','🐙 Der Krake gibt High-Five!','⭐ Du hast einen Seestern gefunden!'],
+    countQ:'Wie viele siehst du?',compareQ:'Welche Seite hat MEHR? 🌊',gapQ:'Fülle die Lücke:',moneyQ:'Wie viel Cent? 🪙',numberQ:'Welche Zahl zeigt der Pfeil? 👇',
+    correct_fb:'✅ Richtig! +',points:' Punkte! 🐠',wrong_fb:'❌ Antwort war ',keep_going:'. Weiter! 🌊',time_up:'⏱️ Zeit! Antwort: ',
+    pfadStatus1:'Noch ',pfadStatus2:' Punkte bis zum Hai-Champion! 🐬',pfadDone:'🦈 Du bist ein Hai-Champion!',
+    recNone:'Das Kind hat noch nicht gespielt. Bitte ermutigen! 🎮',recLow:'Das Kind braucht mehr Übung. Täglich üben empfohlen. 📚',recMid:'Gute Fortschritte! Weiter so! ⭐',recHigh:'Ausgezeichnet! Sehr gute Leistung! 🏆',
+    pfadNamen:['Zahlen 1-10','Fische zählen','Addition','Subtraktion','Vergleichen','Multiplikation','Division','Hai-Champion'],
+    pfadDescs:['Lerne Zahlen kennen','Zähle Meerestiere','Zahlen zusammenzählen','Zahlen wegnehmen','Größer oder kleiner?','Mehrmals addieren','Zahlen aufteilen','Alles gemeistert!'],
+  },
+  en:{
+    greeting:'Hello',splash:'🌊 Dive into the world of numbers!',
+    navStart:'Home',navLearn:'Learn',navPath:'Path',navGames:'Games',navProfile:'Profile',navParents:'Parents',
+    profile:'🐠 Your Profile:',saveBtn:'🌊 Dive in!',gamesTitle:'🎮 Games:',
+    game1:'Count',game2:'Calculate',game3:'Compare',game4:'Fill Gap',game5:'Money',game6:'Number Line',
+    learnTitle:'📚 Learn',
+    plusTitle:'🐠 Addition – Add Together',plusText:'You have 3 fish 🐠 and 2 more swim over. Now there are 5!',
+    minusTitle:'🐙 Subtraction – Take Away',minusText:'You have 5 shells 🐚 and give 2 away. 3 remain!',
+    malTitle:'🐬 Multiplication – Add Multiple Times',malText:'3 times the number 4: 4+4+4=12. 3 dolphins × 4 fish = 12!',
+    divTitle:'🦈 Division – Share Equally',divText:'Share 12 fish among 3 sharks = 4 per shark!',
+    pathTitle:'🗺️ Learning Path',allGames:'🎮 All Games',
+    task:'Task',backBtn:'⬅️',wellDone:'🎉 Well done!',playAgain:'🔄 Play again!',otherGames:'🎮 Other games',
+    statsTitle:'📊 Statistics',correct:'✅ Correct',wrong:'❌ Wrong',best:'🏆 Best',badgesTitle:'🏅 Badges',
+    parentsTitle:'👨‍👩‍👧 Parents Area',pinLabel:'🔐 Enter PIN:',progressLabel:'📊 Progress of',
+    recTitle:'💡 Recommendation:',logoutBtn:'🔒 Leave',langChange:'Change language',
+    klasse:'Grade:',
+    levels:['Beginner Diver 🤿','Snorkeler ⭐','Diver 🐠','Ocean Pro 🐬','Shark Champion 🦈'],
+    aufmunterungen:['Keep going! 🌊','Super! 🐬','Great! 🦈','Awesome! ⭐','Bravo! 🐠'],
+    geschichten:['🦈 The shark is proud!','🐬 The dolphin jumps for joy!','🐙 The octopus gives you a high-five!','⭐ You found a starfish!'],
+    countQ:'How many do you see?',compareQ:'Which side has MORE? 🌊',gapQ:'Fill the gap:',moneyQ:'How many cents? 🪙',numberQ:'Which number shows the arrow? 👇',
+    correct_fb:'✅ Correct! +',points:' points! 🐠',wrong_fb:'❌ Answer was ',keep_going:'. Keep going! 🌊',time_up:'⏱️ Time! Answer: ',
+    pfadStatus1:'Still ',pfadStatus2:' points to Shark Champion! 🐬',pfadDone:'🦈 You are a Shark Champion!',
+    recNone:'The child has not played yet. Please encourage them! 🎮',recLow:'The child needs more practice. Daily practice recommended. 📚',recMid:'Good progress! Keep it up! ⭐',recHigh:'Excellent! Very good performance! 🏆',
+    pfadNamen:['Numbers 1-10','Count Fish','Addition','Subtraction','Compare','Multiplication','Division','Shark Champ'],
+    pfadDescs:['Learn numbers','Count sea creatures','Add numbers','Subtract numbers','Bigger or smaller?','Multiply','Divide','All mastered!'],
+  },
+  es:{
+    greeting:'Hola',splash:'🌊 ¡Sumérgete en el mundo de los números!',
+    navStart:'Inicio',navLearn:'Aprender',navPath:'Camino',navGames:'Juegos',navProfile:'Perfil',navParents:'Padres',
+    profile:'🐠 Tu Perfil:',saveBtn:'🌊 ¡Zambullirse!',gamesTitle:'🎮 Juegos:',
+    game1:'Contar',game2:'Calcular',game3:'Comparar',game4:'Rellenar',game5:'Dinero',game6:'Recta numérica',
+    learnTitle:'📚 Aprender',
+    plusTitle:'🐠 Suma – Sumar',plusText:'Tienes 3 peces 🐠 y nadan 2 más. ¡Ahora son 5!',
+    minusTitle:'🐙 Resta – Quitar',minusText:'Tienes 5 conchas 🐚 y das 2. ¡Quedan 3!',
+    malTitle:'🐬 Multiplicación – Sumar varias veces',malText:'3 veces el número 4: 4+4+4=12. ¡3 delfines × 4 peces = 12!',
+    divTitle:'🦈 División – Repartir',divText:'¡Repartir 12 peces entre 3 tiburones = 4 por tiburón!',
+    pathTitle:'🗺️ Camino de aprendizaje',allGames:'🎮 Todos los juegos',
+    task:'Tarea',backBtn:'⬅️',wellDone:'🎉 ¡Bien hecho!',playAgain:'🔄 ¡Otra vez!',otherGames:'🎮 Otros juegos',
+    statsTitle:'📊 Estadísticas',correct:'✅ Correcto',wrong:'❌ Incorrecto',best:'🏆 Mejor',badgesTitle:'🏅 Insignias',
+    parentsTitle:'👨‍👩‍👧 Área de Padres',pinLabel:'🔐 Introducir PIN:',progressLabel:'📊 Progreso de',
+    recTitle:'💡 Recomendación:',logoutBtn:'🔒 Salir',langChange:'Cambiar idioma',
+    klasse:'Clase:',
+    levels:['Buceador principiante 🤿','Snorkel ⭐','Buceador 🐠','Pro del océano 🐬','Campeón tiburón 🦈'],
+    aufmunterungen:['¡Sigue! 🌊','¡Súper! 🐬','¡Genial! 🦈','¡Increíble! ⭐','¡Bravo! 🐠'],
+    geschichten:['🦈 ¡El tiburón está orgulloso!','🐬 ¡El delfín salta de alegría!','🐙 ¡El pulpo te da un choca!','⭐ ¡Encontraste una estrella de mar!'],
+    countQ:'¿Cuántos ves?',compareQ:'¿Qué lado tiene MÁS? 🌊',gapQ:'Rellena el hueco:',moneyQ:'¿Cuántos céntimos? 🪙',numberQ:'¿Qué número muestra la flecha? 👇',
+    correct_fb:'✅ ¡Correcto! +',points:' puntos! 🐠',wrong_fb:'❌ La respuesta era ',keep_going:'. ¡Sigue! 🌊',time_up:'⏱️ ¡Tiempo! Respuesta: ',
+    pfadStatus1:'¡Todavía ',pfadStatus2:' puntos para Campeón tiburón! 🐬',pfadDone:'🦈 ¡Eres Campeón tiburón!',
+    recNone:'El niño aún no ha jugado. ¡Por favor anímalo! 🎮',recLow:'El niño necesita más práctica. Práctica diaria recomendada. 📚',recMid:'¡Buen progreso! ¡Sigue así! ⭐',recHigh:'¡Excelente! ¡Muy buen rendimiento! 🏆',
+    pfadNamen:['Números 1-10','Contar peces','Suma','Resta','Comparar','Multiplicación','División','Campeón tiburón'],
+    pfadDescs:['Aprende números','Cuenta animales marinos','Sumar números','Restar números','¿Mayor o menor?','Multiplicar','Dividir','¡Todo dominado!'],
+  },
+  it:{
+    greeting:'Ciao',splash:'🌊 Tuffati nel mondo dei numeri!',
+    navStart:'Inizio',navLearn:'Imparare',navPath:'Percorso',navGames:'Giochi',navProfile:'Profilo',navParents:'Genitori',
+    profile:'🐠 Il tuo Profilo:',saveBtn:'🌊 Tuffati!',gamesTitle:'🎮 Giochi:',
+    game1:'Contare',game2:'Calcolare',game3:'Confrontare',game4:'Completare',game5:'Denaro',game6:'Retta numerica',
+    learnTitle:'📚 Imparare',
+    plusTitle:'🐠 Addizione – Sommare',plusText:'Hai 3 pesci 🐠 e ne nuotano 2 in più. Ora sono 5!',
+    minusTitle:'🐙 Sottrazione – Togliere',minusText:'Hai 5 conchiglie 🐚 e ne dai 2. Ne rimangono 3!',
+    malTitle:'🐬 Moltiplicazione – Sommare più volte',malText:'3 volte il numero 4: 4+4+4=12. 3 delfini × 4 pesci = 12!',
+    divTitle:'🦈 Divisione – Dividere',divText:'Dividere 12 pesci tra 3 squali = 4 per squalo!',
+    pathTitle:'🗺️ Percorso di apprendimento',allGames:'🎮 Tutti i giochi',
+    task:'Compito',backBtn:'⬅️',wellDone:'🎉 Ben fatto!',playAgain:'🔄 Ancora!',otherGames:'🎮 Altri giochi',
+    statsTitle:'📊 Statistiche',correct:'✅ Corretto',wrong:'❌ Sbagliato',best:'🏆 Migliore',badgesTitle:'🏅 Distintivi',
+    parentsTitle:'👨‍👩‍👧 Area Genitori',pinLabel:'🔐 Inserire PIN:',progressLabel:'📊 Progressi di',
+    recTitle:'💡 Raccomandazione:',logoutBtn:'🔒 Uscire',langChange:'Cambia lingua',
+    klasse:'Classe:',
+    levels:['Sub principiante 🤿','Snorkelista ⭐','Sub 🐠','Pro dell\'oceano 🐬','Campione squalo 🦈'],
+    aufmunterungen:['Continua! 🌊','Super! 🐬','Ottimo! 🦈','Fantastico! ⭐','Bravo! 🐠'],
+    geschichten:['🦈 Lo squalo è orgoglioso!','🐬 Il delfino salta di gioia!','🐙 Il polpo ti dà il cinque!','⭐ Hai trovato una stella marina!'],
+    countQ:'Quanti ne vedi?',compareQ:'Quale lato ha DI PIÙ? 🌊',gapQ:'Completa lo spazio:',moneyQ:'Quanti centesimi? 🪙',numberQ:'Quale numero indica la freccia? 👇',
+    correct_fb:'✅ Corretto! +',points:' punti! 🐠',wrong_fb:'❌ La risposta era ',keep_going:'. Continua! 🌊',time_up:'⏱️ Tempo! Risposta: ',
+    pfadStatus1:'Ancora ',pfadStatus2:' punti per Campione squalo! 🐬',pfadDone:'🦈 Sei un Campione squalo!',
+    recNone:'Il bambino non ha ancora giocato. Per favore incoraggialo! 🎮',recLow:'Il bambino ha bisogno di più pratica. Pratica quotidiana consigliata. 📚',recMid:'Buoni progressi! Continua così! ⭐',recHigh:'Eccellente! Ottima performance! 🏆',
+    pfadNamen:['Numeri 1-10','Contare pesci','Addizione','Sottrazione','Confrontare','Moltiplicazione','Divisione','Campione squalo'],
+    pfadDescs:['Impara i numeri','Conta animali marini','Sommare numeri','Sottrarre numeri','Maggiore o minore?','Moltiplicare','Dividere','Tutto padroneggiato!'],
+  },
+  el:{
+    greeting:'Γεια σου',splash:'🌊 Βούτα στον κόσμο των αριθμών!',
+    navStart:'Αρχή',navLearn:'Μάθηση',navPath:'Μονοπάτι',navGames:'Παιχνίδια',navProfile:'Προφίλ',navParents:'Γονείς',
+    profile:'🐠 Το Προφίλ σου:',saveBtn:'🌊 Βουτιά!',gamesTitle:'🎮 Παιχνίδια:',
+    game1:'Μέτρηση',game2:'Υπολογισμός',game3:'Σύγκριση',game4:'Κενά',game5:'Χρήματα',game6:'Αριθμογραμμή',
+    learnTitle:'📚 Μάθηση',
+    plusTitle:'🐠 Πρόσθεση – Προσθέτω',plusText:'Έχεις 3 ψάρια 🐠 και 2 ακόμα κολυμπάνε κοντά. Τώρα είναι 5!',
+    minusTitle:'🐙 Αφαίρεση – Αφαιρώ',minusText:'Έχεις 5 κοχύλια 🐚 και δίνεις 2. Μένουν 3!',
+    malTitle:'🐬 Πολλαπλασιασμός – Προσθέτω πολλές φορές',malText:'3 φορές τον αριθμό 4: 4+4+4=12. 3 δελφίνια × 4 ψάρια = 12!',
+    divTitle:'🦈 Διαίρεση – Μοιράζω',divText:'Μοίρασε 12 ψάρια σε 3 καρχαρίες = 4 ψάρια ο καθένας!',
+    pathTitle:'🗺️ Μονοπάτι Μάθησης',allGames:'🎮 Όλα τα παιχνίδια',
+    task:'Άσκηση',backBtn:'⬅️',wellDone:'🎉 Μπράβο!',playAgain:'🔄 Πάλι!',otherGames:'🎮 Άλλα παιχνίδια',
+    statsTitle:'📊 Στατιστικά',correct:'✅ Σωστό',wrong:'❌ Λάθος',best:'🏆 Καλύτερο',badgesTitle:'🏅 Διακρίσεις',
+    parentsTitle:'👨‍👩‍👧 Χώρος Γονέων',pinLabel:'🔐 Εισάγετε PIN:',progressLabel:'📊 Πρόοδος του',
+    recTitle:'💡 Σύσταση:',logoutBtn:'🔒 Έξοδος',langChange:'Αλλαγή γλώσσας',
+    klasse:'Τάξη:',
+    levels:['Αρχάριος δύτης 🤿','Σνόρκελ ⭐','Δύτης 🐠','Επαγγελματίας 🐬','Πρωταθλητής καρχαρίας 🦈'],
+    aufmunterungen:['Συνέχεια! 🌊','Σούπερ! 🐬','Τέλεια! 🦈','Μπράβο! ⭐','Εξαιρετικά! 🐠'],
+    geschichten:['🦈 Ο καρχαρίας είναι περήφανος!','🐬 Το δελφίνι πηδά από χαρά!','🐙 Το χταπόδι σου δίνει τα πέντε!','⭐ Βρήκες έναν αστερία!'],
+    countQ:'Πόσα βλέπεις;',compareQ:'Ποια πλευρά έχει ΠΕΡΙΣΣΟΤΕΡΑ; 🌊',gapQ:'Συμπλήρωσε το κενό:',moneyQ:'Πόσα λεπτά; 🪙',numberQ:'Ποιον αριθμό δείχνει το βέλος; 👇',
+    correct_fb:'✅ Σωστό! +',points:' πόντοι! 🐠',wrong_fb:'❌ Η απάντηση ήταν ',keep_going:'. Συνέχεια! 🌊',time_up:'⏱️ Χρόνος! Απάντηση: ',
+    pfadStatus1:'Ακόμα ',pfadStatus2:' πόντοι για Πρωταθλητή! 🐬',pfadDone:'🦈 Είσαι Πρωταθλητής καρχαρίας!',
+    recNone:'Το παιδί δεν έχει παίξει ακόμα. Παρακαλώ ενθαρρύντε το! 🎮',recLow:'Το παιδί χρειάζεται περισσότερη εξάσκηση. 📚',recMid:'Καλή πρόοδος! Συνεχίστε! ⭐',recHigh:'Εξαιρετικό! Πολύ καλή απόδοση! 🏆',
+    pfadNamen:['Αριθμοί 1-10','Μέτρηση ψαριών','Πρόσθεση','Αφαίρεση','Σύγκριση','Πολλαπλασιασμός','Διαίρεση','Πρωταθλητής'],
+    pfadDescs:['Μάθε αριθμούς','Μέτρα θαλάσσια ζώα','Πρόσθεση αριθμών','Αφαίρεση αριθμών','Μεγαλύτερο ή μικρότερο;','Πολλαπλασιασμός','Διαίρεση','Τα κατάφερες όλα!'],
+  }
+};
 
 const meeresEmojis=['🐠','🐟','🐡','🐙','🦑','🦀','🐚','⭐','🪸','🐬','🦈','🐋'];
-const aufmunterungen=['Weiter tauchen! 🌊','Super Taucher! 🐬','Toll! 🦈','Klasse! ⭐','Bravo! 🐠'];
-const geschichten=['🦈 Der Hai ist stolz auf dich!','🐬 Der Delfin springt vor Freude!','🐙 Der Krake gibt dir einen High-Five mit allen 8 Armen!','⭐ Du hast einen Seestern gefunden!','🌊 Die Wellen applaudieren dir!'];
+const levels=[{min:0},{min:50},{min:150},{min:300},{min:500}];
 
-const levels=[
-  {min:0,name:'Anfänger-Taucher 🤿'},
-  {min:50,name:'Schnorchler ⭐'},
-  {min:150,name:'Taucher 🐠'},
-  {min:300,name:'Meeres-Profi 🐬'},
-  {min:500,name:'Haifisch-Champion 🦈'}
-];
-
-function getLevel(){let l=levels[0].name;for(let i of levels)if(punkte>=i.min)l=i.name;return l;}
+function getLevel(){let i=0;for(let l of levels)if(punkte>=l.min)i++;return texte[sprache].levels[Math.min(i-1,4)];}
 function rnd(n){return Math.floor(Math.random()*n)+1}
 function rndEmoji(){return meeresEmojis[Math.floor(Math.random()*meeresEmojis.length)]}
+function t(key){return texte[sprache][key]||''}
 
-// SPLASH BLASEN
-function erstelleSplashBlasen(){
-  let c=document.getElementById('splash-blasen');
+function waehleSpache(s){
+  sprache=s;
+  document.getElementById('sprachauswahl').style.opacity='0';
+  setTimeout(()=>{
+    document.getElementById('sprachauswahl').style.display='none';
+    document.getElementById('splash').style.display='flex';
+    updateSprache();
+    erstelleBlasen();
+    let ladeTexte={
+      de:['Fische zählen... 🐠','Muscheln sammeln... 🐚','Wellen reiten... 🌊','Kraken fragen... 🐙','Bereit! 🦈'],
+      en:['Counting fish... 🐠','Collecting shells... 🐚','Riding waves... 🌊','Asking octopus... 🐙','Ready! 🦈'],
+      es:['Contando peces... 🐠','Recogiendo conchas... 🐚','Surfeando olas... 🌊','Preguntando pulpo... 🐙','¡Listo! 🦈'],
+      it:['Contando pesci... 🐠','Raccogliendo conchiglie... 🐚','Cavalcando onde... 🌊','Chiedendo polpo... 🐙','Pronto! 🦈'],
+      el:['Μετράω ψάρια... 🐠','Μαζεύω κοχύλια... 🐚','Κάνω σέρφινγκ... 🌊','Ρωτάω χταπόδι... 🐙','Έτοιμος! 🦈']
+    };
+    document.getElementById('splash-sub').textContent=t('splash');
+    let txts=ladeTexte[s]||ladeTexte.de;
+    let i=0;
+    let iv=setInterval(()=>{
+      if(i<txts.length)document.getElementById('lade-text').textContent=txts[i++];
+    },500);
+    setTimeout(()=>{
+      clearInterval(iv);
+      let sp=document.getElementById('splash');
+      sp.style.opacity='0';
+      setTimeout(()=>{sp.style.display='none';document.getElementById('nav').style.display='flex';updateProfil();},1000);
+    },2800);
+  },500);
+}
+
+function zeigeSprachwahl(){
+  document.getElementById('sprachauswahl').style.display='flex';
+  document.getElementById('sprachauswahl').style.opacity='1';
+}
+
+function erstelleBlasen(){
+  let c=document.getElementById('splash-blasen');c.innerHTML='';
   for(let i=0;i<20;i++){
-    let b=document.createElement('div');
-    b.className='blase';
-    let s=Math.random()*30+10;
-    b.style.cssText=`width:${s}px;height:${s}px;left:${Math.random()*100}%;bottom:${Math.random()*50}%;animation-duration:${Math.random()*3+2}s;animation-delay:${Math.random()*3}s`;
+    let b=document.createElement('div');b.className='blase';
+    let sz=Math.random()*30+10;
+    b.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;bottom:${Math.random()*50}%;animation-duration:${Math.random()*3+2}s;animation-delay:${Math.random()*3}s`;
     c.appendChild(b);
   }
 }
-erstelleSplashBlasen();
 
-// LADETEXT
-let ladeTexte=['Fische zählen... 🐠','Muscheln sammeln... 🐚','Wellen reiten... 🌊','Kraken fragen... 🐙','Bereit! 🦈'];
-let ladeIdx=0;
-let ladeInterval=setInterval(()=>{
-  if(ladeIdx<ladeTexte.length){
-    document.getElementById('lade-text').textContent=ladeTexte[ladeIdx++];
-  }
-},500);
-
-setTimeout(()=>{
-  clearInterval(ladeInterval);
-  let s=document.getElementById('splash');
-  s.style.opacity='0';
-  setTimeout(()=>{
-    s.style.display='none';
-    document.getElementById('nav').style.display='flex';
-  },1000);
-},2800);
+function updateSprache(){
+  let tx=texte[sprache];
+  document.getElementById('nav-start-label').textContent=tx.navStart;
+  document.getElementById('nav-learn-label').textContent=tx.navLearn;
+  document.getElementById('nav-path-label').textContent=tx.navPath;
+  document.getElementById('nav-games-label').textContent=tx.navGames;
+  document.getElementById('nav-profile-label').textContent=tx.navProfile;
+  document.getElementById('nav-parents-label').textContent=tx.navParents;
+  document.getElementById('profile-label').textContent=tx.profile;
+  document.getElementById('save-btn').textContent=tx.saveBtn;
+  document.getElementById('games-title').textContent=tx.gamesTitle;
+  document.getElementById('lang-change-btn').textContent=tx.langChange;
+  ['game1','game2','game3','game4','game5','game6'].forEach((g,i)=>{
+    let el=document.getElementById(g+'-name');
+    let el2=document.getElementById(g+'b-name');
+    if(el)el.textContent=tx['game'+(i+1)];
+    if(el2)el2.textContent=tx['game'+(i+1)];
+  });
+  document.getElementById('learn-title').textContent=tx.learnTitle;
+  document.getElementById('lern-plus-titel').textContent=tx.plusTitle;
+  document.getElementById('lern-plus-text').textContent=tx.plusText;
+  document.getElementById('lern-minus-titel').textContent=tx.minusTitle;
+  document.getElementById('lern-minus-text').textContent=tx.minusText;
+  document.getElementById('lern-mal-titel').textContent=tx.malTitle;
+  document.getElementById('lern-mal-text').textContent=tx.malText;
+  document.getElementById('lern-div-titel').textContent=tx.divTitle;
+  document.getElementById('lern-div-text').textContent=tx.divText;
+  document.getElementById('path-title').textContent=tx.pathTitle;
+  document.getElementById('all-games-title').textContent=tx.allGames;
+  document.getElementById('task-label').textContent=tx.task;
+  document.getElementById('back-btn').textContent=tx.backBtn;
+  document.getElementById('well-done-text').textContent=tx.wellDone;
+  document.getElementById('play-again-btn').textContent=tx.playAgain;
+  document.getElementById('other-games-btn').textContent=tx.otherGames;
+  document.getElementById('stats-title').textContent=tx.statsTitle;
+  document.getElementById('correct-label').textContent=tx.correct;
+  document.getElementById('wrong-label').textContent=tx.wrong;
+  document.getElementById('best-label').textContent=tx.best;
+  document.getElementById('badges-title').textContent=tx.badgesTitle;
+  document.getElementById('parents-title').textContent=tx.parentsTitle;
+  document.getElementById('pin-label').textContent=tx.pinLabel;
+  document.getElementById('rec-title').textContent=tx.recTitle;
+  document.getElementById('logout-btn').textContent=tx.logoutBtn;
+  document.getElementById('el-correct').textContent=tx.correct;
+  document.getElementById('el-games').textContent=tx.navGames;
+  document.getElementById('el-best').textContent=tx.best;
+  document.getElementById('homeNameInput').placeholder=name!='Taucher'?name:'...';
+  document.getElementById('klasseText').textContent=tx.klasse+' '+klasse;
+}
 
 function spieleSound(typ){
   try{
@@ -550,9 +730,7 @@ function spieleSound(typ){
     o.connect(g);g.connect(ctx.destination);
     if(typ==='richtig'){
       o.type='sine';
-      o.frequency.setValueAtTime(440,ctx.currentTime);
-      o.frequency.setValueAtTime(554,ctx.currentTime+0.1);
-      o.frequency.setValueAtTime(659,ctx.currentTime+0.2);
+      [440,554,659].forEach((f,i)=>o.frequency.setValueAtTime(f,ctx.currentTime+i*0.1));
       g.gain.setValueAtTime(0.3,ctx.currentTime);
       g.gain.exponentialRampToValueAtTime(0.01,ctx.currentTime+0.5);
       o.start();o.stop(ctx.currentTime+0.5);
@@ -569,8 +747,7 @@ function spieleSound(typ){
 
 function speicherProfil(){
   name=document.getElementById('homeNameInput').value||'Taucher';
-  updateProfil();spieleSound('richtig');
-  zeigSeite('spiele');
+  updateProfil();spieleSound('richtig');zeigSeite('spiele');
 }
 
 function waehleAvatar(a,el){
@@ -580,11 +757,16 @@ function waehleAvatar(a,el){
   updateProfil();
 }
 
-function setKlasse(k){klasse=k;document.getElementById('klasseText').textContent='Klasse: '+k}
+function setKlasse(k){
+  klasse=k;
+  document.getElementById('klasseText').textContent=t('klasse')+' '+k;
+}
 
 function updateProfil(){
+  updateSprache();
   document.getElementById('home-avatar').textContent=avatar;
   document.getElementById('home-name').textContent=name;
+  document.getElementById('home-greeting').textContent=t('greeting');
   document.getElementById('home-level').textContent=getLevel();
   document.getElementById('home-punkte').textContent=punkte;
   document.getElementById('home-streak').textContent=streak;
@@ -601,54 +783,40 @@ function updateProfil(){
   document.getElementById('stat-punkte').textContent=punkte;
 
   let abzDaten=[
-    {e:'🎮',n:'1. Spiel',ok:spiele>=1},
-    {e:'✅',n:'10 Richtig',ok:gesamtRichtig>=10},
-    {e:'🏆',n:'Perfekt',ok:bestErgebnis===10},
-    {e:'💯',n:'100 Punkte',ok:punkte>=100},
-    {e:'🔥',n:'3 Tage',ok:streak>=3},
-    {e:'🦈',n:'Haifisch',ok:punkte>=500},
-    {e:'⚡',n:'50 Richtig',ok:gesamtRichtig>=50},
-    {e:'👑',n:'Meister',ok:punkte>=1000}
+    {e:'🎮',n:'1',ok:spiele>=1},{e:'✅',n:'10',ok:gesamtRichtig>=10},
+    {e:'🏆',n:'Perfect',ok:bestErgebnis===10},{e:'💯',n:'100',ok:punkte>=100},
+    {e:'🔥',n:'3d',ok:streak>=3},{e:'🦈',n:'500',ok:punkte>=500},
+    {e:'⚡',n:'50',ok:gesamtRichtig>=50},{e:'👑',n:'1000',ok:punkte>=1000}
   ];
-  let g=document.getElementById('abz-grid');
-  g.innerHTML='';
-  abzDaten.forEach(a=>{
-    g.innerHTML+='<div class="abz-item'+(a.ok?'':' gesperrt')+'"><div class="abz-emoji">'+a.e+'</div><div>'+a.n+'</div></div>';
-  });
+  let g=document.getElementById('abz-grid');g.innerHTML='';
+  abzDaten.forEach(a=>{g.innerHTML+='<div class="abz-item'+(a.ok?'':' gesperrt')+'"><div class="abz-emoji">'+a.e+'</div><div>'+a.n+'</div></div>';});
 
   let gOk=punkte>=50,zOk=punkte>=100;
-  ['geld-lock','geld-lock2'].forEach(id=>{if(document.getElementById(id))document.getElementById(id).textContent=gOk?'▶':'🔒';});
-  ['zahl-lock','zahl-lock2'].forEach(id=>{if(document.getElementById(id))document.getElementById(id).textContent=zOk?'▶':'🔒';});
+  ['geld-lock','geld-lock2'].forEach(id=>{let e=document.getElementById(id);if(e)e.textContent=gOk?'▶':'🔒';});
+  ['zahl-lock','zahl-lock2'].forEach(id=>{let e=document.getElementById(id);if(e)e.textContent=zOk?'▶':'🔒';});
   ['karte-geld','karte-geld2'].forEach(id=>{let e=document.getElementById(id);if(e)gOk?e.classList.remove('gesperrt'):e.classList.add('gesperrt');});
   ['karte-zahlen','karte-zahlen2'].forEach(id=>{let e=document.getElementById(id);if(e)zOk?e.classList.remove('gesperrt'):e.classList.add('gesperrt');});
-
   updatePfad();
 }
 
 function updatePfad(){
+  let tx=texte[sprache];
   let pfadDaten=[
-    {e:'🔢',n:'Zahlen 1-10',d:'Lerne Zahlen kennen',p:0,t:'zaehlen'},
-    {e:'🐠',n:'Fische zählen',d:'Zähle Meerestiere',p:20,t:'zaehlen'},
-    {e:'➕',n:'Addition',d:'Zahlen zusammenzählen',p:40,t:'rechnen'},
-    {e:'➖',n:'Subtraktion',d:'Zahlen wegnehmen',p:80,t:'rechnen'},
-    {e:'⚖️',n:'Vergleichen',d:'Größer oder kleiner?',p:120,t:'vergleich'},
-    {e:'✖️',n:'Multiplikation',d:'Mehrmals addieren',p:200,t:'rechnen'},
-    {e:'➗',n:'Division',d:'Zahlen aufteilen',p:320,t:'rechnen'},
-    {e:'🦈',n:'Hai-Champion',d:'Alles gemeistert!',p:500,t:'zaehlen'}
+    {e:'🔢',p:0,t:'zaehlen'},{e:'🐠',p:20,t:'zaehlen'},{e:'➕',p:40,t:'rechnen'},
+    {e:'➖',p:80,t:'rechnen'},{e:'⚖️',p:120,t:'vergleich'},{e:'✖️',p:200,t:'rechnen'},
+    {e:'➗',p:320,t:'rechnen'},{e:'🦈',p:500,t:'zaehlen'}
   ];
   let liste=document.getElementById('pfad-liste');liste.innerHTML='';
   pfadDaten.forEach((s,i)=>{
-    let fertig=punkte>=s.p;
-    let aktuell=fertig&&(i===pfadDaten.length-1||punkte<pfadDaten[i+1].p);
+    let fertig=punkte>=s.p,aktuell=fertig&&(i===pfadDaten.length-1||punkte<pfadDaten[i+1].p);
     let div=document.createElement('div');
     div.className='pfad-stufe'+(fertig?' abgeschlossen':'  gesperrt')+(aktuell?' aktuell':'');
-    div.innerHTML=`<div class="pfad-icon">${s.e}</div><div class="pfad-info"><div class="pfad-name">${s.n}</div><div class="pfad-desc">${s.d}</div></div><div class="pfad-badge ${fertig?'ok':''}">${fertig?'✅':s.p+'P'}</div>`;
+    div.innerHTML=`<div class="pfad-icon">${s.e}</div><div class="pfad-info"><div class="pfad-name">${tx.pfadNamen[i]}</div><div class="pfad-desc">${tx.pfadDescs[i]}</div></div><div class="pfad-badge ${fertig?'ok':''}">${fertig?'✅':s.p+'P'}</div>`;
     if(fertig)div.onclick=()=>startSpiel(s.t);
     liste.appendChild(div);
   });
   document.getElementById('pfad-status').textContent=
-    punkte>=500?'🦈 Du bist ein Hai-Champion! Alles freigeschaltet!':
-    'Noch '+(500-punkte)+' Punkte bis zum Hai-Champion! 🐬';
+    punkte>=500?tx.pfadDone:tx.pfadStatus1+(500-punkte)+tx.pfadStatus2;
 }
 
 function zeigSeite(s){
@@ -660,10 +828,8 @@ function zeigSeite(s){
 }
 
 function toggleLern(typ){
-  let el=document.getElementById('lern-'+typ);
-  let arr=document.getElementById('arr-'+typ);
-  el.classList.toggle('offen');
-  arr.textContent=el.classList.contains('offen')?'▲':'▼';
+  let el=document.getElementById('lern-'+typ),arr=document.getElementById('arr-'+typ);
+  el.classList.toggle('offen');arr.textContent=el.classList.contains('offen')?'▲':'▼';
 }
 
 function startTimer(){
@@ -671,15 +837,14 @@ function startTimer(){
   let ring=document.getElementById('timer-ring');
   timerInterval=setInterval(()=>{
     timerSek--;
-    let pct=timerSek/10*100;
-    let col=timerSek>5?'#00ff88':timerSek>3?'#FFD700':'#ff4444';
+    let pct=timerSek/10*100,col=timerSek>5?'#00ff88':timerSek>3?'#FFD700':'#ff4444';
     ring.style.background=`conic-gradient(${col} ${pct}%,rgba(255,255,255,0.2) ${pct}%)`;
     ring.textContent=timerSek;
     if(timerSek<=0){
       clearInterval(timerInterval);
       if(!beantwortet){
         beantwortet=true;gesamtFalsch++;
-        zeigFeedback(false,'⏱️ Zeit! Antwort: '+aktFrage.antwort);
+        zeigFeedback(false,t('time_up')+aktFrage.antwort);
         spieleSound('falsch');spielIndex++;
         setTimeout(()=>naechsteAufgabe(letzteSpiel),1800);
       }
@@ -688,9 +853,7 @@ function startTimer(){
 }
 
 function startSpiel(typ){
-  if((typ==='geld'&&punkte<50)||(typ==='zahlenstrahl'&&punkte<100)){
-    alert('🔒 Noch nicht freigeschaltet! Sammle mehr Punkte!');return;
-  }
+  if((typ==='geld'&&punkte<50)||(typ==='zahlenstrahl'&&punkte<100)){alert('🔒');return;}
   letzteSpiel=typ;spielIndex=0;spielRichtig=0;spielPunkteLauf=0;
   document.getElementById('spiel-auswahl').classList.add('hidden');
   document.getElementById('spiel-ende').classList.add('hidden');
@@ -706,7 +869,8 @@ function naechsteAufgabe(typ){
   document.getElementById('spiel-bar').style.width=(spielIndex/10*100)+'%';
   document.getElementById('spiel-objekte').innerHTML='';
   document.getElementById('spiel-antworten').innerHTML='';
-  document.getElementById('spiel-aufmunt').textContent=aufmunterungen[Math.floor(Math.random()*aufmunterungen.length)];
+  let auf=t('aufmunterungen');
+  document.getElementById('spiel-aufmunt').textContent=auf[Math.floor(Math.random()*auf.length)];
   let fb=document.getElementById('spiel-feedback');fb.style.display='none';fb.className='feedback';
   if(typ==='zaehlen')aufgabeZaehlen();
   else if(typ==='rechnen')aufgabeRechnen();
@@ -719,23 +883,20 @@ function naechsteAufgabe(typ){
 
 function aufgabeZaehlen(){
   let n=klasse<=2?rnd(10):rnd(20),e=rndEmoji();aktFrage={antwort:n};
-  document.getElementById('spiel-frage').textContent='Wie viele '+e+' siehst du?';
+  document.getElementById('spiel-frage').textContent=t('countQ');
   let o='';for(let i=0;i<n;i++)o+='<span class="objekt">'+e+'</span>';
   document.getElementById('spiel-objekte').innerHTML=o;
   zeigAntwortButtons(genOpts(n,4,1,25),n);
 }
 
 function aufgabeRechnen(){
-  let e=rndEmoji();
-  let ops=klasse<=2?['+','-']:['+','-','*'];
-  let op=ops[Math.floor(Math.random()*ops.length)];
+  let e=rndEmoji(),ops=klasse<=2?['+','-']:['+','-','*'],op=ops[Math.floor(Math.random()*ops.length)];
   let a,b,ans;
   if(op==='+'){a=rnd(klasse<=2?10:20);b=rnd(klasse<=2?10:20);ans=a+b;}
   else if(op==='-'){a=rnd(15)+5;b=rnd(a);ans=a-b;}
   else{a=rnd(5);b=rnd(5);ans=a*b;}
   aktFrage={antwort:ans};
-  let sym=op==='*'?'×':op;
-  document.getElementById('spiel-frage').textContent=a+' '+sym+' '+b+' = ?';
+  document.getElementById('spiel-frage').textContent=a+' '+(op==='*'?'×':op)+' '+b+' = ?';
   let o='';for(let i=0;i<Math.min(a,12);i++)o+='<span class="objekt">'+e+'</span>';
   document.getElementById('spiel-objekte').innerHTML=o;
   zeigAntwortButtons(genOpts(ans,4,0,60),ans);
@@ -748,20 +909,19 @@ function aufgabeVergleich(){
   let o1='',o2='';
   for(let i=0;i<Math.min(a,10);i++)o1+='<span class="objekt">'+e1+'</span>';
   for(let i=0;i<Math.min(b,10);i++)o2+='<span class="objekt">'+e2+'</span>';
-  document.getElementById('spiel-frage').textContent='Welche Seite hat MEHR? 🌊';
+  document.getElementById('spiel-frage').textContent=t('compareQ');
   document.getElementById('spiel-objekte').innerHTML=
     '<div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">'+
     '<div style="background:rgba(0,100,150,0.3);padding:10px;border-radius:15px;border:2px solid rgba(0,200,255,0.4)">'+o1+'<br><b style="color:white;font-size:1.3em">'+a+'</b></div>'+
     '<div style="font-size:2em;padding-top:15px">⚖️</div>'+
     '<div style="background:rgba(0,100,150,0.3);padding:10px;border-radius:15px;border:2px solid rgba(0,200,255,0.4)">'+o2+'<br><b style="color:white;font-size:1.3em">'+b+'</b></div></div>';
   document.getElementById('spiel-antworten').innerHTML=
-    '<button class="antwort-btn" onclick="pruefeAntwort(\'links\',this)">⬅️ Links<br><b>'+a+'</b></button>'+
-    '<button class="antwort-btn" onclick="pruefeAntwort(\'rechts\',this)">Rechts ➡️<br><b>'+b+'</b></button>';
+    '<button class="antwort-btn" onclick="pruefeAntwort(\'links\',this)">⬅️<br><b>'+a+'</b></button>'+
+    '<button class="antwort-btn" onclick="pruefeAntwort(\'rechts\',this)">➡️<br><b>'+b+'</b></button>';
 }
 
 function aufgabeLuecke(){
-  let ops=klasse<=2?['+','-']:['+','-','*','/'];
-  let op=ops[Math.floor(Math.random()*ops.length)];
+  let ops=klasse<=2?['+','-']:['+','-','*','/'],op=ops[Math.floor(Math.random()*ops.length)];
   let a,b,ans;
   if(op==='+'){a=rnd(10);b=rnd(10);ans=a+b;}
   else if(op==='-'){a=rnd(10)+5;b=rnd(a);ans=a-b;}
@@ -775,24 +935,22 @@ function aufgabeLuecke(){
 }
 
 function aufgabeGeld(){
-  let m=[1,2,5,10,20,50];
-  let n=rnd(4)+1,s=0,g=[];
+  let m=[1,2,5,10,20,50],n=rnd(4)+1,s=0,g=[];
   for(let i=0;i<n;i++){let c=m[Math.floor(Math.random()*m.length)];g.push(c);s+=c;}
   aktFrage={antwort:s};
-  document.getElementById('spiel-frage').textContent='Wie viel Cent ist das? 🪙';
+  document.getElementById('spiel-frage').textContent=t('moneyQ');
   let o='';g.forEach(c=>o+='<span class="objekt" style="background:rgba(255,200,0,0.3);border:2px solid #FFD700;border-radius:50%;padding:6px;font-size:0.8em;font-weight:bold;color:#FFD700">'+c+'¢</span> ');
   document.getElementById('spiel-objekte').innerHTML=o;
   zeigAntwortButtons(genOpts(s,4,1,200),s);
 }
 
 function aufgabeZahlenstrahl(){
-  let max=klasse<=2?20:100;
-  let z=rnd(max);aktFrage={antwort:z};
+  let max=klasse<=2?20:100,z=rnd(max);aktFrage={antwort:z};
   let pos=Math.round(z/max*100);
-  document.getElementById('spiel-frage').textContent='Welche Zahl zeigt der Pfeil? 👇';
+  document.getElementById('spiel-frage').textContent=t('numberQ');
   document.getElementById('spiel-objekte').innerHTML=
     '<div style="position:relative;margin:35px 15px 20px">'+
-    '<div style="background:rgba(0,200,255,0.3);height:8px;border-radius:5px;border:1px solid rgba(0,200,255,0.5)">'+
+    '<div style="background:rgba(0,200,255,0.3);height:8px;border-radius:5px">'+
     '<span style="position:absolute;left:-5px;top:12px;font-size:0.8em;color:rgba(255,255,255,0.7)">0</span>'+
     '<span style="position:absolute;right:-10px;top:12px;font-size:0.8em;color:rgba(255,255,255,0.7)">'+max+'</span>'+
     '<span style="position:absolute;left:'+pos+'%;top:-30px;transform:translateX(-50%);font-size:1.8em">👇</span>'+
@@ -801,12 +959,12 @@ function aufgabeZahlenstrahl(){
 }
 
 function genOpts(r,n,min,max){
-  let s=new Set([r]);let t=0;
-  while(s.size<n&&t<100){t++;let v=r+Math.floor(Math.random()*14)-7;if(v>=min&&v<=max&&v!==r)s.add(v);}
+  let s=new Set([r]);let tries=0;
+  while(s.size<n&&tries<100){tries++;let v=r+Math.floor(Math.random()*14)-7;if(v>=min&&v<=max&&v!==r)s.add(v);}
   return[...s].sort(()=>Math.random()-0.5);
 }
 
-function zeigAntwortButtons(opts,r){
+function zeigAntwortButtons(opts){
   let div=document.getElementById('spiel-antworten');div.innerHTML='';
   opts.forEach(o=>{
     let b=document.createElement('button');b.className='antwort-btn';b.textContent=o;
@@ -826,11 +984,11 @@ function pruefeAntwort(val,el){
     spielRichtig++;gesamtRichtig++;
     let bonus=timerSek>=8?15:timerSek>=5?12:10;
     spielPunkteLauf+=bonus;punkte+=bonus;
-    zeigFeedback(true,'✅ Richtig! +'+bonus+' Punkte! 🐠');
+    zeigFeedback(true,t('correct_fb')+bonus+t('points'));
     el.classList.add('richtig');spieleSound('richtig');konfetti();
   }else{
     gesamtFalsch++;
-    zeigFeedback(false,'❌ Antwort war '+aktFrage.antwort+'. Weiter! 🌊');
+    zeigFeedback(false,t('wrong_fb')+aktFrage.antwort+t('keep_going'));
     el.classList.add('falsch');spieleSound('falsch');
   }
   document.getElementById('spiel-punkte-lauf').textContent=spielPunkteLauf;
@@ -843,11 +1001,12 @@ function endeSpiel(){
   document.getElementById('spiel-aktiv').classList.add('hidden');
   document.getElementById('spiel-ende').classList.remove('hidden');
   document.getElementById('ende-avatar').textContent=avatar;
-  let msg=spielRichtig===10?'🎉 Perfekt! Du bist ein Hai-Champion!':spielRichtig>=7?'🐬 Sehr gut! Super Taucher!':'🌊 Nicht aufgeben! Tauche nochmal!';
-  document.getElementById('ende-ergebnis').innerHTML='<b>'+name+'</b>: <b>'+spielRichtig+'/10</b> richtig!<br>'+msg;
+  let msg=spielRichtig===10?'🎉':spielRichtig>=7?'🐬 ':' 🌊';
+  document.getElementById('ende-ergebnis').innerHTML='<b>'+name+'</b>: <b>'+spielRichtig+'/10</b> '+msg;
   document.getElementById('ende-sterne').textContent='⭐'.repeat(Math.round(spielRichtig/2));
-  document.getElementById('ende-punkte').textContent='🏅 +'+spielPunkteLauf+' Punkte | Gesamt: '+punkte+' | '+getLevel();
-  document.getElementById('ende-geschichte').textContent=geschichten[Math.floor(Math.random()*geschichten.length)];
+  document.getElementById('ende-punkte').textContent='🏅 +'+spielPunkteLauf+' | '+punkte+' | '+getLevel();
+  let gesch=t('geschichten');
+  document.getElementById('ende-geschichte').textContent=gesch[Math.floor(Math.random()*gesch.length)];
   if(spielRichtig>=8)konfetti();updateProfil();
 }
 
@@ -879,13 +1038,11 @@ function pinTippe(n){
       document.getElementById('eltern-spiele').textContent=spiele;
       document.getElementById('eltern-punkte').textContent=punkte;
       document.getElementById('eltern-best').textContent=bestErgebnis;
-      let e=spiele===0?'Das Kind hat noch nicht gespielt. Bitte ermutigen Sie es! 🎮':
-        bestErgebnis<5?'Das Kind braucht mehr Übung. Täglich üben empfohlen. 📚':
-        bestErgebnis<8?'Gute Fortschritte! Weiter so! ⭐':
-        'Ausgezeichnet! Sehr gute Leistung! 🏆';
+      let tx=texte[sprache];
+      let e=spiele===0?tx.recNone:bestErgebnis<5?tx.recLow:bestErgebnis<8?tx.recMid:tx.recHigh;
       document.getElementById('eltern-empfehlung').textContent=e;
     }else{
-      alert('❌ Falsche PIN!');pinEingabe='';
+      alert('❌ '+pinEingabe);pinEingabe='';
       document.getElementById('pin-anzeige').textContent='• • • •';
     }
   }
@@ -894,18 +1051,16 @@ function pinTippe(n){
 function pinLoeschen(){
   pinEingabe=pinEingabe.slice(0,-1);
   document.getElementById('pin-anzeige').textContent=
-    '• '.repeat(pinEingabe.length)+'_ '.repeat(4-pinEingabe.length)||'• • • •';
+    pinEingabe.length>0?'• '.repeat(pinEingabe.length)+'_ '.repeat(4-pinEingabe.length):'• • • •';
 }
 
 function elternLogout(){zeigSeite('home');}
 
 function konfetti(){
   let c=document.getElementById('konfetti-canvas');
-  let ctx=c.getContext('2d');
-  c.width=window.innerWidth;c.height=window.innerHeight;
-  let p=[],colors=['#00ccff','#00ff88','#FFD700','#ff6b35','#ff69b4','#00ff00'];
-  let emj=['🐠','🐟','⭐','🌊','🐚','🪸'];
-  for(let i=0;i<60;i++)p.push({x:Math.random()*c.width,y:-10,w:rnd(12)+4,h:rnd(12)+4,color:colors[Math.floor(Math.random()*colors.length)],speed:Math.random()*4+2,angle:Math.random()*360});
+  let ctx=c.getContext('2d');c.width=window.innerWidth;c.height=window.innerHeight;
+  let p=[],colors=['#00ccff','#00ff88','#FFD700','#ff6b35','#ff69b4'];
+  for(let i=0;i<80;i++)p.push({x:Math.random()*c.width,y:-10,w:rnd(12)+4,h:rnd(12)+4,color:colors[Math.floor(Math.random()*colors.length)],speed:Math.random()*4+2,angle:Math.random()*360});
   let frame=0;
   function draw(){
     ctx.clearRect(0,0,c.width,c.height);
@@ -915,8 +1070,6 @@ function konfetti(){
   }
   draw();
 }
-
-updateProfil();
 </script>
 </body>
 </html>
