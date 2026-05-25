@@ -20,6 +20,15 @@ input{font-size:1.2em;padding:10px;border-radius:10px;border:2px solid #f59e0b;w
 .erklaer-box{background:#fff9e6;border:2px solid #f59e0b;border-radius:15px;padding:15px;margin:10px auto;max-width:400px;text-align:left;font-size:1.05em;line-height:1.6}
 .seite{padding:10px;display:none}
 .seite.aktiv{display:block}
+.fortschritt{background:#eee;border-radius:10px;height:14px;margin:10px auto;max-width:300px}
+.fortschritt-bar{background:#f59e0b;height:14px;border-radius:10px;transition:width 0.3s}
+.level-badge{background:#f59e0b;color:white;border-radius:20px;padding:5px 15px;font-size:1em;display:inline-block;margin:5px}
+.streak{color:#f59e0b;font-size:1.1em;margin:5px}
+.aufmunterung{font-size:1.3em;color:#f59e0b;min-height:30px;margin:5px}
+.konfetti{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:100}
+.avatar-btn{font-size:2em;background:white;border:3px solid #eee;border-radius:15px;padding:10px;cursor:pointer;margin:5px}
+.avatar-btn.gewaehlt{border-color:#f59e0b}
+.statistik-box{background:#fff9e6;border-radius:15px;padding:15px;margin:10px;text-align:left}
 </style>
 </head>
 <body>
@@ -28,6 +37,7 @@ input{font-size:1.2em;padding:10px;border-radius:10px;border:2px solid #f59e0b;w
   <button id="nav-home" class="aktiv" onclick="zeigSeite('home')">🏠 Start</button>
   <button id="nav-lernen" onclick="zeigSeite('lernen')">📚 Lernen</button>
   <button id="nav-ueben" onclick="zeigSeite('ueben')">✏️ Üben</button>
+  <button id="nav-profil" onclick="zeigSeite('profil')">🏆 Profil</button>
 </nav>
 
 <h1>⭐ Mathe Star</h1>
@@ -35,10 +45,14 @@ input{font-size:1.2em;padding:10px;border-radius:10px;border:2px solid #f59e0b;w
 <!-- HOME -->
 <div id="seite-home" class="seite aktiv">
   <div class="box">
-    <p style="font-size:1.2em">Willkommen bei <b>Mathe Star</b>! 🌟</p>
-    <p style="margin:15px 0;color:#666">Lerne und übe Mathe – Schritt für Schritt!</p>
-    <button class="haupt" onclick="zeigSeite('lernen')">📚 Jetzt lernen</button><br>
-    <button class="haupt" onclick="zeigSeite('ueben')">✏️ Jetzt üben</button>
+    <div id="home-avatar" style="font-size:4em">🦁</div>
+    <p style="font-size:1.3em">Hallo <b id="home-name">Freund</b>! 👋</p>
+    <div class="level-badge">⭐ <span id="home-level">Level 1: Anfänger</span></div>
+    <div class="streak">🔥 Streak: <span id="home-streak">0</span> Tage</div>
+    <div class="streak">🏅 Punkte: <span id="home-punkte">0</span></div>
+    <br>
+    <button class="haupt" onclick="zeigSeite('lernen')">📚 Lernen</button>
+    <button class="haupt" onclick="zeigSeite('ueben')">✏️ Üben</button>
   </div>
 </div>
 
@@ -59,6 +73,16 @@ input{font-size:1.2em;padding:10px;border-radius:10px;border:2px solid #f59e0b;w
   <div id="ueben-start" class="box">
     <p>Wie heißt du?</p>
     <input id="nameInput" placeholder="Dein Name" /><br><br>
+    <p>Wähle deinen Avatar:</p>
+    <div>
+      <span class="avatar-btn gewaehlt" onclick="waehleAvatar('🦁',this)">🦁</span>
+      <span class="avatar-btn" onclick="waehleAvatar('🐯',this)">🐯</span>
+      <span class="avatar-btn" onclick="waehleAvatar('🦊',this)">🦊</span>
+      <span class="avatar-btn" onclick="waehleAvatar('🐸',this)">🐸</span>
+      <span class="avatar-btn" onclick="waehleAvatar('🦋',this)">🦋</span>
+      <span class="avatar-btn" onclick="waehleAvatar('🚀',this)">🚀</span>
+    </div>
+    <br>
     <p>Welche Klasse?</p>
     <button class="klein" onclick="setKlasse(1)">1</button>
     <button class="klein" onclick="setKlasse(2)">2</button>
@@ -69,52 +93,119 @@ input{font-size:1.2em;padding:10px;border-radius:10px;border:2px solid #f59e0b;w
   </div>
 
   <div id="quiz" class="box hidden">
+    <div style="font-size:2.5em" id="quiz-avatar">🦁</div>
     <p id="aufgabe"></p>
-    <div id="frage" style="font-size:2em;margin:20px"></div>
+    <div class="fortschritt"><div class="fortschritt-bar" id="fortschritt-bar" style="width:0%"></div></div>
+    <div id="frage" style="font-size:2.2em;margin:20px;font-weight:bold"></div>
+    <div class="aufmunterung" id="aufmunterung"></div>
     <input type="number" id="antwort" placeholder="?" /><br><br>
     <button class="haupt" onclick="pruefen()">Antworten ✓</button>
     <button class="klein" onclick="hilfe()">Hilfe 💡</button>
     <button class="grau" onclick="zurueck()">⬅️ Abbrechen</button>
-    <p id="tipp" style="display:none;color:#666;margin-top:10px"></p>
-    <p id="feedback" style="font-size:1.3em;margin-top:10px"></p>
+    <p id="tipp" style="display:none;color:#666;margin-top:10px;font-size:1em"></p>
+    <p id="feedback" style="font-size:1.4em;margin-top:10px;font-weight:bold"></p>
   </div>
 
   <div id="belohnung" class="box hidden">
+    <div style="font-size:3em" id="belon-avatar">🦁</div>
     <h2>🏆 Geschafft!</h2>
-    <p id="ergebnis" style="margin:15px 0"></p>
+    <p id="ergebnis" style="margin:15px 0;font-size:1.1em"></p>
     <div id="sterne" style="font-size:2em;margin:10px"></div>
+    <p id="punkte-gewonnen" style="color:#f59e0b;font-size:1.2em;font-weight:bold"></p>
     <button class="haupt" onclick="nochmal()">Nochmal 🔄</button>
-    <button class="grau" onclick="zurueck()">⬅️ Zurück zum Menü</button>
+    <button class="grau" onclick="zurueck()">⬅️ Zurück</button>
   </div>
 </div>
 
+<!-- PROFIL -->
+<div id="seite-profil" class="seite">
+  <div class="box">
+    <div id="profil-avatar" style="font-size:4em">🦁</div>
+    <p style="font-size:1.3em"><b id="profil-name">Freund</b></p>
+    <div class="level-badge">⭐ <span id="profil-level">Level 1: Anfänger</span></div>
+    <div class="streak" style="margin:10px">🔥 Streak: <span id="profil-streak">0</span> Tage</div>
+    <div class="streak">🏅 Gesamtpunkte: <span id="profil-punkte">0</span></div>
+  </div>
+  <div class="box statistik-box">
+    <b>📊 Meine Statistik:</b><br><br>
+    <p>✅ Richtige Antworten: <b id="stat-richtig">0</b></p>
+    <p>❌ Falsche Antworten: <b id="stat-falsch">0</b></p>
+    <p>🎮 Spiele gespielt: <b id="stat-spiele">0</b></p>
+    <p>🏆 Bestes Ergebnis: <b id="stat-best">0</b>/10</p>
+  </div>
+  <div class="box">
+    <b>🏅 Abzeichen:</b><br><br>
+    <div id="abzeichen" style="font-size:2em"></div>
+  </div>
+</div>
+
+<canvas id="konfetti-canvas" class="konfetti"></canvas>
+
 <script>
-let name='',klasse=1,index=0,richtig=0,aktFrage=null;
+let name='',klasse=1,index=0,richtig=0,aktFrage=null,avatar='🦁';
+let punkte=0,streak=0,gesamtRichtig=0,gesamtFalsch=0,spiele=0,bestErgebnis=0;
+
+const aufmunterungen=['Du schaffst das! 💪','Super gemacht! 🌟','Weiter so! 🚀','Toll! 😊','Fantastisch! 🎉','Klasse! ⭐','Bravo! 👏'];
+const level=[
+  {min:0,name:'Anfänger'},
+  {min:50,name:'Lernender'},
+  {min:150,name:'Rechenkünstler'},
+  {min:300,name:'Mathe-Profi'},
+  {min:500,name:'Mathe-Star ⭐'}
+];
+
+function getLevel(){
+  let l='Anfänger';
+  for(let i=0;i<level.length;i++){if(punkte>=level[i].min)l=level[i].name;}
+  return l;
+}
+
+function updateProfil(){
+  let n=name||'Freund';
+  let lv='Level: '+getLevel();
+  document.getElementById('home-name').textContent=n;
+  document.getElementById('home-level').textContent=lv;
+  document.getElementById('home-streak').textContent=streak;
+  document.getElementById('home-punkte').textContent=punkte;
+  document.getElementById('home-avatar').textContent=avatar;
+  document.getElementById('profil-name').textContent=n;
+  document.getElementById('profil-level').textContent=lv;
+  document.getElementById('profil-streak').textContent=streak;
+  document.getElementById('profil-punkte').textContent=punkte;
+  document.getElementById('profil-avatar').textContent=avatar;
+  document.getElementById('stat-richtig').textContent=gesamtRichtig;
+  document.getElementById('stat-falsch').textContent=gesamtFalsch;
+  document.getElementById('stat-spiele').textContent=spiele;
+  document.getElementById('stat-best').textContent=bestErgebnis;
+  let abz='';
+  if(spiele>=1)abz+='🎮';
+  if(gesamtRichtig>=10)abz+='✅';
+  if(bestErgebnis===10)abz+='🏆';
+  if(punkte>=100)abz+='💯';
+  if(streak>=3)abz+='🔥';
+  if(punkte>=500)abz+='⭐';
+  document.getElementById('abzeichen').textContent=abz||'Noch keine – fang an zu üben!';
+}
 
 function zeigSeite(s){
   document.querySelectorAll('.seite').forEach(el=>el.classList.remove('aktiv'));
   document.querySelectorAll('nav button').forEach(el=>el.classList.remove('aktiv'));
   document.getElementById('seite-'+s).classList.add('aktiv');
   document.getElementById('nav-'+s).classList.add('aktiv');
+  updateProfil();
+}
+
+function waehleAvatar(a,el){
+  avatar=a;
+  document.querySelectorAll('.avatar-btn').forEach(b=>b.classList.remove('gewaehlt'));
+  el.classList.add('gewaehlt');
 }
 
 const erklaerungen={
-  plus:{
-    titel:'➕ Addition – Zusammenzählen',
-    text:'Bei der Addition zählst du zwei Zahlen zusammen.<br><br>🍎🍎🍎 + 🍎🍎 = 🍎🍎🍎🍎🍎<br><b>3 + 2 = 5</b><br><br>Stell dir vor: Du hast 3 Äpfel und bekommst noch 2 dazu. Jetzt hast du 5 Äpfel!<br><br>📝 Weitere Beispiele:<br>4 + 3 = 7<br>10 + 5 = 15'
-  },
-  minus:{
-    titel:'➖ Subtraktion – Wegnehmen',
-    text:'Bei der Subtraktion nimmst du eine Zahl von einer anderen weg.<br><br>🍎🍎🍎🍎🍎 – 🍎🍎 = 🍎🍎🍎<br><b>5 – 2 = 3</b><br><br>Stell dir vor: Du hast 5 Bonbons und isst 2. Es bleiben 3 übrig!<br><br>📝 Weitere Beispiele:<br>8 – 3 = 5<br>10 – 4 = 6'
-  },
-  mal:{
-    titel:'✖️ Multiplikation – Mehrmals addieren',
-    text:'Bei der Multiplikation addierst du eine Zahl mehrmals.<br><br><b>3 × 4</b> bedeutet: 3 mal die 4 addieren<br>4 + 4 + 4 = 12<br><b>3 × 4 = 12</b><br><br>Stell dir vor: 3 Kinder haben je 4 Bonbons. Zusammen haben sie 12!<br><br>📝 Weitere Beispiele:<br>2 × 5 = 10<br>3 × 3 = 9'
-  },
-  geteilt:{
-    titel:'➗ Division – Aufteilen',
-    text:'Bei der Division teilst du eine Zahl in gleiche Gruppen auf.<br><br><b>12 ÷ 3</b> bedeutet: 12 auf 3 Gruppen aufteilen<br>🍬🍬🍬🍬 | 🍬🍬🍬🍬 | 🍬🍬🍬🍬<br><b>12 ÷ 3 = 4</b><br><br>Stell dir vor: 12 Bonbons für 3 Kinder – jedes Kind bekommt 4!<br><br>📝 Weitere Beispiele:<br>10 ÷ 2 = 5<br>9 ÷ 3 = 3'
-  }
+  plus:{titel:'➕ Addition – Zusammenzählen',text:'Bei der Addition zählst du zwei Zahlen zusammen.<br><br>🍎🍎🍎 + 🍎🍎 = 🍎🍎🍎🍎🍎<br><b>3 + 2 = 5</b><br><br>Stell dir vor: Du hast 3 Äpfel und bekommst noch 2 dazu. Jetzt hast du 5 Äpfel!<br><br>📝 Beispiele:<br>4 + 3 = 7<br>10 + 5 = 15'},
+  minus:{titel:'➖ Subtraktion – Wegnehmen',text:'Bei der Subtraktion nimmst du eine Zahl weg.<br><br>🍎🍎🍎🍎🍎 – 🍎🍎 = 🍎🍎🍎<br><b>5 – 2 = 3</b><br><br>Du hast 5 Bonbons und isst 2. Es bleiben 3 übrig!<br><br>📝 Beispiele:<br>8 – 3 = 5<br>10 – 4 = 6'},
+  mal:{titel:'✖️ Multiplikation – Mehrmals addieren',text:'Bei der Multiplikation addierst du eine Zahl mehrmals.<br><br><b>3 × 4</b> = 4 + 4 + 4 = 12<br><br>3 Kinder haben je 4 Bonbons = 12 Bonbons!<br><br>📝 Beispiele:<br>2 × 5 = 10<br>3 × 3 = 9'},
+  geteilt:{titel:'➗ Division – Aufteilen',text:'Bei der Division teilst du in gleiche Gruppen.<br><br><b>12 ÷ 3 = 4</b><br>🍬🍬🍬🍬 | 🍬🍬🍬🍬 | 🍬🍬🍬🍬<br><br>12 Bonbons für 3 Kinder – jedes bekommt 4!<br><br>📝 Beispiele:<br>10 ÷ 2 = 5<br>9 ÷ 3 = 3'}
 };
 
 function zeigErklaerung(typ){
@@ -131,15 +222,19 @@ function startQuiz(){
   index=0;richtig=0;
   document.getElementById('ueben-start').classList.add('hidden');
   document.getElementById('quiz').classList.remove('hidden');
+  document.getElementById('quiz-avatar').textContent=avatar;
   naechste();
 }
 
 function naechste(){
   if(index>=10){zeigeBelohnung();return}
-  document.getElementById('aufgabe').textContent='Hallo '+name+'! Aufgabe '+(index+1)+' von 10 💪';
+  let pct=((index)/10*100)+'%';
+  document.getElementById('fortschritt-bar').style.width=pct;
+  document.getElementById('aufgabe').textContent='Aufgabe '+(index+1)+' von 10';
   document.getElementById('antwort').value='';
   document.getElementById('feedback').textContent='';
   document.getElementById('tipp').style.display='none';
+  document.getElementById('aufmunterung').textContent=aufmunterungen[Math.floor(Math.random()*aufmunterungen.length)];
   aktFrage=genFrage();
   let op=aktFrage.op==='*'?'×':aktFrage.op==='/'?'÷':aktFrage.op;
   document.getElementById('frage').textContent=aktFrage.a+' '+op+' '+aktFrage.b+' = ?';
@@ -162,8 +257,16 @@ function rnd(n){return Math.floor(Math.random()*n)+1}
 function pruefen(){
   let val=parseInt(document.getElementById('antwort').value);
   if(isNaN(val))return;
-  if(val===aktFrage.answer){richtig++;document.getElementById('feedback').textContent='✅ Richtig! Super!';}
-  else{document.getElementById('feedback').textContent='❌ Die Antwort war '+aktFrage.answer+'. Nicht aufgeben!';}
+  if(val===aktFrage.answer){
+    richtig++;
+    gesamtRichtig++;
+    punkte+=10;
+    document.getElementById('feedback').textContent='✅ Richtig! +10 Punkte!';
+    konfetti();
+  } else {
+    gesamtFalsch++;
+    document.getElementById('feedback').textContent='❌ Antwort war '+aktFrage.answer+'. Nicht aufgeben!';
+  }
   index++;
   setTimeout(naechste,1500);
 }
@@ -180,11 +283,19 @@ function hilfe(){
 }
 
 function zeigeBelohnung(){
+  spiele++;
+  streak++;
+  if(richtig>bestErgebnis)bestErgebnis=richtig;
+  document.getElementById('fortschritt-bar').style.width='100%';
   document.getElementById('quiz').classList.add('hidden');
   document.getElementById('belohnung').classList.remove('hidden');
+  document.getElementById('belon-avatar').textContent=avatar;
   let msg=richtig===10?'🎉 Perfekt! Du bist ein echter Mathe-Star!':richtig>=7?'😊 Sehr gut! Weiter so!':'💪 Nicht aufgeben! Du schaffst das!';
   document.getElementById('ergebnis').innerHTML='<b>'+name+'</b> hat <b>'+richtig+' von 10</b> richtig!<br><br>'+msg;
   document.getElementById('sterne').textContent='⭐'.repeat(Math.round(richtig/2));
+  document.getElementById('punkte-gewonnen').textContent='🏅 Gesamtpunkte: '+punkte+' | Level: '+getLevel();
+  if(richtig===10)konfetti();
+  updateProfil();
 }
 
 function zurueck(){
@@ -199,6 +310,35 @@ function nochmal(){
   document.getElementById('ueben-start').classList.remove('hidden');
   index=0;richtig=0;
 }
+
+function konfetti(){
+  let canvas=document.getElementById('konfetti-canvas');
+  let ctx=canvas.getContext('2d');
+  canvas.width=window.innerWidth;
+  canvas.height=window.innerHeight;
+  let particles=[];
+  let colors=['#f59e0b','#ef4444','#3b82f6','#10b981','#8b5cf6'];
+  for(let i=0;i<80;i++){
+    particles.push({x:Math.random()*canvas.width,y:-10,w:Math.random()*10+5,h:Math.random()*10+5,color:colors[Math.floor(Math.random()*colors.length)],speed:Math.random()*3+2,angle:Math.random()*360});
+  }
+  let frame=0;
+  function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    particles.forEach(p=>{
+      ctx.fillStyle=p.color;
+      ctx.fillRect(p.x,p.y,p.w,p.h);
+      p.y+=p.speed;
+      p.x+=Math.sin(p.angle)*2;
+      p.angle+=0.1;
+    });
+    frame++;
+    if(frame<80)requestAnimationFrame(draw);
+    else ctx.clearRect(0,0,canvas.width,canvas.height);
+  }
+  draw();
+}
+
+updateProfil();
 </script>
 </body>
 </html>
