@@ -7,18 +7,19 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:sans-serif;background:#fffbe6;text-align:center}
-nav{background:#f59e0b;padding:15px;display:flex;justify-content:space-around;position:sticky;top:0;z-index:10}
-nav button{background:transparent;color:white;border:2px solid white;padding:8px 14px;border-radius:10px;font-size:1em;cursor:pointer}
+nav{background:#f59e0b;padding:12px;display:flex;justify-content:space-around;position:sticky;top:0;z-index:10}
+nav button{background:transparent;color:white;border:2px solid white;padding:8px 12px;border-radius:10px;font-size:0.9em;cursor:pointer}
 nav button.aktiv{background:white;color:#f59e0b}
-h1{color:#f59e0b;font-size:2em;padding:20px}
-button.haupt{background:#f59e0b;color:white;border:none;padding:12px 24px;border-radius:12px;font-size:1.1em;cursor:pointer;margin:5px}
+h1{color:#f59e0b;font-size:2em;padding:15px}
+button.haupt{background:#f59e0b;color:white;border:none;padding:12px 24px;border-radius:12px;font-size:1.1em;cursor:pointer;margin:5px;transition:transform 0.1s}
+button.haupt:active{transform:scale(0.95)}
 button.klein{background:white;color:#f59e0b;border:2px solid #f59e0b;padding:8px 16px;border-radius:10px;font-size:1em;cursor:pointer;margin:5px}
 button.grau{background:#ddd;color:#555;border:none;padding:8px 16px;border-radius:10px;font-size:0.9em;cursor:pointer;margin:5px}
-button.antwort-btn{background:white;border:3px solid #f59e0b;border-radius:15px;padding:15px;font-size:1.5em;cursor:pointer;margin:8px;width:120px;transition:all 0.2s}
-button.antwort-btn:hover{background:#fff9e6;transform:scale(1.05)}
+button.antwort-btn{background:white;border:3px solid #f59e0b;border-radius:15px;padding:15px;font-size:1.5em;cursor:pointer;margin:8px;width:110px;transition:all 0.2s}
+button.antwort-btn:active{transform:scale(0.95)}
 button.antwort-btn.richtig{background:#d1fae5;border-color:#10b981}
 button.antwort-btn.falsch{background:#fee2e2;border-color:#ef4444}
-.box{background:white;padding:20px;border-radius:20px;margin:20px auto;max-width:420px;box-shadow:0 4px 15px #f59e0b33}
+.box{background:white;padding:20px;border-radius:20px;margin:15px auto;max-width:420px;box-shadow:0 4px 15px #f59e0b33}
 .hidden{display:none}
 .seite{padding:10px;display:none}
 .seite.aktiv{display:block}
@@ -26,19 +27,29 @@ button.antwort-btn.falsch{background:#fee2e2;border-color:#ef4444}
 .fortschritt-bar{background:#f59e0b;height:14px;border-radius:10px;transition:width 0.4s}
 .level-badge{background:#f59e0b;color:white;border-radius:20px;padding:5px 15px;font-size:1em;display:inline-block;margin:5px}
 .spiel-box{background:white;border-radius:20px;margin:10px auto;max-width:420px;padding:20px;box-shadow:0 4px 15px #f59e0b33}
-.objekte{display:flex;flex-wrap:wrap;justify-content:center;font-size:2.5em;margin:15px 0;min-height:60px;gap:5px}
+.objekte{display:flex;flex-wrap:wrap;justify-content:center;font-size:2.2em;margin:10px 0;min-height:50px;gap:4px}
 .objekt{display:inline-block;animation:pop 0.3s ease}
 @keyframes pop{0%{transform:scale(0)}100%{transform:scale(1)}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-10px)}75%{transform:translateX(10px)}}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
 .frage-text{font-size:1.5em;font-weight:bold;color:#333;margin:10px 0}
-.feedback-gross{font-size:2em;margin:10px 0;min-height:50px}
+.feedback-gross{font-size:1.8em;margin:10px 0;min-height:45px}
 .erklaer-box{background:#fff9e6;border:2px solid #f59e0b;border-radius:15px;padding:15px;margin:10px auto;max-width:400px;text-align:left;font-size:1.05em;line-height:1.8}
-.statistik-box{background:#fff9e6;border-radius:15px;padding:15px;margin:10px}
-.avatar-btn{font-size:2em;background:white;border:3px solid #eee;border-radius:15px;padding:10px;cursor:pointer;margin:5px;display:inline-block}
-.avatar-btn.gewaehlt{border-color:#f59e0b}
-.spiel-karte{background:white;border:3px solid #f59e0b;border-radius:20px;padding:20px;margin:10px;cursor:pointer;transition:all 0.2s;display:inline-block;width:150px;vertical-align:top}
+.avatar-btn{font-size:2em;background:white;border:3px solid #eee;border-radius:15px;padding:10px;cursor:pointer;margin:5px;display:inline-block;transition:all 0.2s}
+.avatar-btn.gewaehlt{border-color:#f59e0b;background:#fff9e6}
+.spiel-karte{background:white;border:3px solid #f59e0b;border-radius:20px;padding:15px;margin:8px;cursor:pointer;transition:all 0.2s;display:inline-block;width:140px;vertical-align:top}
 .spiel-karte:hover{transform:scale(1.05);background:#fff9e6}
-.spiel-karte .icon{font-size:3em}
-.spiel-karte .titel{font-size:1em;font-weight:bold;margin-top:8px}
+.spiel-karte.gesperrt{opacity:0.4;cursor:not-allowed;border-color:#ccc}
+.spiel-karte .icon{font-size:2.5em}
+.spiel-karte .titel{font-size:0.95em;font-weight:bold;margin-top:6px}
+.spiel-karte .punkte-req{font-size:0.8em;color:#999;margin-top:4px}
+.timer-ring{width:60px;height:60px;border-radius:50%;background:conic-gradient(#f59e0b 0%,#eee 0%);display:inline-flex;align-items:center;justify-content:center;font-size:1.3em;font-weight:bold;margin:5px;transition:background 0.5s}
+.geschichte-box{background:linear-gradient(135deg,#fff9e6,#ffe4b5);border:2px solid #f59e0b;border-radius:20px;padding:20px;margin:10px auto;max-width:420px}
+.geschichte-char{font-size:5em;animation:bounce 2s infinite}
+.pfad-stufe{display:inline-block;background:#f59e0b;color:white;border-radius:50%;width:50px;height:50px;line-height:50px;font-size:1.2em;margin:5px;cursor:pointer;transition:all 0.2s}
+.pfad-stufe.gesperrt{background:#ccc;cursor:not-allowed}
+.pfad-stufe.abgeschlossen{background:#10b981}
+.eltern-pin{font-size:2em;letter-spacing:10px;margin:10px}
 canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:100}
 </style>
 </head>
@@ -47,27 +58,27 @@ canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-
 <nav>
   <button id="nav-home" class="aktiv" onclick="zeigSeite('home')">🏠</button>
   <button id="nav-lernen" onclick="zeigSeite('lernen')">📚</button>
+  <button id="nav-pfad" onclick="zeigSeite('pfad')">🗺️</button>
   <button id="nav-spiele" onclick="zeigSeite('spiele')">🎮</button>
   <button id="nav-profil" onclick="zeigSeite('profil')">🏆</button>
+  <button id="nav-eltern" onclick="zeigeElternPin()">👨‍👩‍👧</button>
 </nav>
-
-<h1>⭐ Mathe Star</h1>
 
 <!-- HOME -->
 <div id="seite-home" class="seite aktiv">
-  <div class="box">
-    <div id="home-avatar" style="font-size:5em">🦁</div>
-    <p style="font-size:1.4em">Hallo <b id="home-name">Freund</b>! 👋</p>
+  <h1>⭐ Mathe Star</h1>
+  <div class="geschichte-box">
+    <div class="geschichte-char" id="home-char">🦁</div>
+    <p style="font-size:1.3em;margin:10px 0">Hallo <b id="home-name">Freund</b>! 👋</p>
+    <p id="geschichte-text" style="color:#666;font-size:1em;margin:8px 0">Ich bin Leo der Löwe! Lass uns zusammen Mathe lernen! 🌟</p>
     <div class="level-badge">⭐ <span id="home-level">Anfänger</span></div>
-    <p style="margin:10px;color:#f59e0b">🏅 <b id="home-punkte">0</b> Punkte &nbsp; 🔥 <b id="home-streak">0</b> Tage</p>
-    <br>
-    <button class="haupt" onclick="zeigSeite('spiele')">🎮 Spielen!</button>
-    <button class="haupt" onclick="zeigSeite('lernen')">📚 Lernen</button>
+    <p style="margin:10px;color:#f59e0b;font-size:1.1em">🏅 <b id="home-punkte">0</b> &nbsp; 🔥 <b id="home-streak">0</b> Tage</p>
   </div>
-  <div class="box" style="font-size:0.95em;color:#666">
-    <b>Gib deinen Namen ein:</b><br><br>
+  <button class="haupt" onclick="zeigSeite('pfad')">🗺️ Lernpfad</button>
+  <button class="haupt" onclick="zeigSeite('spiele')">🎮 Spielen</button>
+  <div class="box" style="margin-top:15px">
+    <b>Dein Profil:</b><br><br>
     <input id="homeNameInput" placeholder="Dein Name" style="font-size:1.1em;padding:8px;border-radius:10px;border:2px solid #f59e0b;width:70%;text-align:center"/><br><br>
-    <p>Wähle deinen Avatar:</p><br>
     <span class="avatar-btn gewaehlt" onclick="waehleAvatar('🦁',this)">🦁</span>
     <span class="avatar-btn" onclick="waehleAvatar('🐯',this)">🐯</span>
     <span class="avatar-btn" onclick="waehleAvatar('🦊',this)">🦊</span>
@@ -75,11 +86,10 @@ canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-
     <span class="avatar-btn" onclick="waehleAvatar('🦋',this)">🦋</span>
     <span class="avatar-btn" onclick="waehleAvatar('🚀',this)">🚀</span>
     <br><br>
-    <p>Klasse:</p><br>
-    <button class="klein" onclick="setKlasse(1)">1</button>
-    <button class="klein" onclick="setKlasse(2)">2</button>
-    <button class="klein" onclick="setKlasse(3)">3</button>
-    <button class="klein" onclick="setKlasse(4)">4</button>
+    <button class="klein" onclick="setKlasse(1)">Kl.1</button>
+    <button class="klein" onclick="setKlasse(2)">Kl.2</button>
+    <button class="klein" onclick="setKlasse(3)">Kl.3</button>
+    <button class="klein" onclick="setKlasse(4)">Kl.4</button>
     <p id="klasseText" style="margin:8px;color:#f59e0b">Klasse: 1</p>
     <button class="haupt" onclick="speicherProfil()">💾 Speichern</button>
   </div>
@@ -87,6 +97,7 @@ canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-
 
 <!-- LERNEN -->
 <div id="seite-lernen" class="seite">
+  <h1>📚 Lernen</h1>
   <div class="box">
     <p><b>Was möchtest du lernen?</b></p><br>
     <button class="klein" onclick="zeigErklaerung('plus')">➕ Addition</button>
@@ -97,25 +108,45 @@ canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-
   <div id="erklaerung" class="hidden erklaer-box"></div>
 </div>
 
+<!-- LERNPFAD -->
+<div id="seite-pfad" class="seite">
+  <h1>🗺️ Lernpfad</h1>
+  <div class="geschichte-box">
+    <div style="font-size:3em" id="pfad-char">🦁</div>
+    <p id="pfad-geschichte" style="font-size:1em;color:#666;margin:10px">Hilf mir alle Stufen zu meistern! 🌟</p>
+  </div>
+  <div class="box" id="pfad-stufen"></div>
+</div>
+
 <!-- SPIELE -->
 <div id="seite-spiele" class="seite">
+  <h1>🎮 Spiele</h1>
   <div id="spiel-auswahl">
-    <p style="padding:10px;font-size:1.1em"><b>Wähle ein Spiel:</b></p>
     <div class="spiel-karte" onclick="startSpiel('zaehlen')">
       <div class="icon">🍎</div>
-      <div class="titel">Zählen & Tippen</div>
+      <div class="titel">Zählen</div>
     </div>
     <div class="spiel-karte" onclick="startSpiel('rechnen')">
       <div class="icon">🔢</div>
-      <div class="titel">Rechnen mit Bildern</div>
+      <div class="titel">Rechnen</div>
     </div>
     <div class="spiel-karte" onclick="startSpiel('vergleich')">
       <div class="icon">⚖️</div>
-      <div class="titel">Größer oder Kleiner?</div>
+      <div class="titel">Vergleichen</div>
     </div>
     <div class="spiel-karte" onclick="startSpiel('luecke')">
       <div class="icon">❓</div>
-      <div class="titel">Lücken füllen</div>
+      <div class="titel">Lücken</div>
+    </div>
+    <div class="spiel-karte" id="karte-geld" onclick="startSpiel('geld')">
+      <div class="icon">💰</div>
+      <div class="titel">Geld zählen</div>
+      <div class="punkte-req" id="req-geld">🔒 50 Punkte</div>
+    </div>
+    <div class="spiel-karte" id="karte-zahlenstrahl" onclick="startSpiel('zahlenstrahl')">
+      <div class="icon">📏</div>
+      <div class="titel">Zahlenstrahl</div>
+      <div class="punkte-req" id="req-zahlenstrahl">🔒 100 Punkte</div>
     </div>
   </div>
 
@@ -124,13 +155,14 @@ canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
         <button class="grau" onclick="beendeSpiel()">⬅️</button>
         <span style="color:#f59e0b;font-weight:bold">Aufgabe <span id="spiel-nr">1</span>/10</span>
-        <span style="color:#f59e0b;font-weight:bold">🏅 <span id="spiel-punkte-lauf">0</span></span>
+        <div class="timer-ring" id="timer-ring">⏱</div>
       </div>
       <div class="fortschritt"><div class="fortschritt-bar" id="spiel-bar" style="width:0%"></div></div>
       <div class="frage-text" id="spiel-frage"></div>
       <div class="objekte" id="spiel-objekte"></div>
       <div id="spiel-antworten"></div>
       <div class="feedback-gross" id="spiel-feedback"></div>
+      <p style="color:#f59e0b;font-weight:bold">🏅 +<span id="spiel-punkte-lauf">0</span></p>
     </div>
   </div>
 
@@ -140,7 +172,8 @@ canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-
       <h2>🏆 Super gemacht!</h2>
       <p id="ende-ergebnis" style="font-size:1.1em;margin:15px 0"></p>
       <div id="ende-sterne" style="font-size:2em;margin:10px"></div>
-      <p id="ende-punkte" style="color:#f59e0b;font-weight:bold;font-size:1.1em"></p>
+      <p id="ende-punkte" style="color:#f59e0b;font-weight:bold"></p>
+      <p id="ende-geschichte" style="color:#666;margin:10px;font-style:italic"></p>
       <button class="haupt" onclick="startSpiel(letzteSpiel)">Nochmal 🔄</button>
       <button class="klein" onclick="beendeSpiel()">Andere Spiele 🎮</button>
     </div>
@@ -149,22 +182,63 @@ canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-
 
 <!-- PROFIL -->
 <div id="seite-profil" class="seite">
+  <h1>🏆 Profil</h1>
   <div class="box">
     <div id="profil-avatar" style="font-size:5em">🦁</div>
     <p style="font-size:1.3em"><b id="profil-name">Freund</b></p>
     <div class="level-badge">⭐ <span id="profil-level">Anfänger</span></div>
-    <p style="margin:10px;color:#f59e0b">🏅 <b id="profil-punkte">0</b> Punkte &nbsp; 🔥 <b id="profil-streak">0</b> Tage</p>
+    <p style="margin:10px;color:#f59e0b">🏅 <b id="profil-punkte">0</b> &nbsp; 🔥 <b id="profil-streak">0</b> Tage</p>
   </div>
-  <div class="statistik-box box">
+  <div class="box">
     <b>📊 Statistik:</b><br><br>
     <p>✅ Richtig: <b id="stat-richtig">0</b></p>
     <p>❌ Falsch: <b id="stat-falsch">0</b></p>
     <p>🎮 Spiele: <b id="stat-spiele">0</b></p>
     <p>🏆 Bestes Ergebnis: <b id="stat-best">0</b>/10</p>
+    <p>📅 Heute gespielt: <b id="stat-heute">Nein</b></p>
   </div>
   <div class="box">
     <b>🏅 Abzeichen:</b><br><br>
-    <div id="abzeichen" style="font-size:2.5em;line-height:1.5"></div>
+    <div id="abzeichen" style="font-size:2.5em;line-height:1.8"></div>
+  </div>
+</div>
+
+<!-- ELTERN -->
+<div id="seite-eltern" class="seite">
+  <h1>👨‍👩‍👧 Eltern-Bereich</h1>
+  <div id="eltern-pin-eingabe" class="box">
+    <p>Bitte gib die PIN ein:</p>
+    <div class="eltern-pin" id="pin-anzeige">_ _ _ _</div>
+    <div>
+      <button class="klein" onclick="pinTippe(1)">1</button>
+      <button class="klein" onclick="pinTippe(2)">2</button>
+      <button class="klein" onclick="pinTippe(3)">3</button><br>
+      <button class="klein" onclick="pinTippe(4)">4</button>
+      <button class="klein" onclick="pinTippe(5)">5</button>
+      <button class="klein" onclick="pinTippe(6)">6</button><br>
+      <button class="klein" onclick="pinTippe(7)">7</button>
+      <button class="klein" onclick="pinTippe(8)">8</button>
+      <button class="klein" onclick="pinTippe(9)">9</button><br>
+      <button class="klein" onclick="pinTippe(0)">0</button>
+      <button class="grau" onclick="pinLoeschen()">⌫</button>
+    </div>
+    <p style="color:#999;font-size:0.9em;margin-top:10px">Standard-PIN: 1234</p>
+  </div>
+  <div id="eltern-inhalt" class="hidden">
+    <div class="box">
+      <b>📊 Fortschritt von <span id="eltern-name">Kind</span>:</b><br><br>
+      <p>✅ Richtige Antworten: <b id="eltern-richtig">0</b></p>
+      <p>🎮 Spiele gespielt: <b id="eltern-spiele">0</b></p>
+      <p>🏆 Bestes Ergebnis: <b id="eltern-best">0</b>/10</p>
+      <p>🏅 Punkte: <b id="eltern-punkte">0</b></p>
+      <p>⭐ Level: <b id="eltern-level">Anfänger</b></p>
+      <p>🔥 Streak: <b id="eltern-streak">0</b> Tage</p>
+    </div>
+    <div class="box">
+      <b>📅 Empfehlungen:</b><br><br>
+      <p id="eltern-empfehlung" style="color:#666;line-height:1.6"></p>
+    </div>
+    <button class="grau" onclick="elternLogout()">🔒 Bereich verlassen</button>
   </div>
 </div>
 
@@ -174,20 +248,44 @@ canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-
 let name='Freund',klasse=1,avatar='🦁';
 let punkte=0,streak=0,gesamtRichtig=0,gesamtFalsch=0,spiele=0,bestErgebnis=0;
 let spielIndex=0,spielRichtig=0,spielPunkteLauf=0,aktFrage=null,letzteSpiel='zaehlen';
-let beantwortet=false;
+let beantwortet=false,timerInterval=null,timerSek=10;
+let pinEingabe='',elternPin='1234';
+let pfadStufe=0;
 
-const emojis={
-  essen:['🍎','🍊','🍋','🍇','🍓','🍒','🍕','🍔','🌮','🍩'],
-  tiere:['🐱','🐶','🐰','🐻','🦁','🐯','🐸','🐧','🦊','🐮'],
-  objekte:['⭐','🌸','🎈','🎯','🏆','💎','🚀','🌈','🎵','🎨']
-};
+const geschichten=[
+  'Leo braucht deine Hilfe beim Zählen! 🦁',
+  'Toll! Leo ist stolz auf dich! ⭐',
+  'Weiter so! Leo tanzt vor Freude! 🎉',
+  'Leo sagt: Du bist super! 🌟',
+  'Fantastisch! Leo gibt dir einen High-Five! 🐾',
+  'Leo hat heute viel gelernt dank dir! 📚',
+  'Du bist Leos bester Freund! ❤️'
+];
 
-function zufallEmoji(){
-  let alle=[...emojis.essen,...emojis.tiere,...emojis.objekte];
-  return alle[Math.floor(Math.random()*alle.length)];
+const aufmunterungen=['Super! 🌟','Toll! 🎉','Weiter! 💪','Klasse! ⭐','Bravo! 👏','Wow! 😊'];
+
+function spieleSound(typ){
+  try{
+    let ctx=new(window.AudioContext||window.webkitAudioContext)();
+    let o=ctx.createOscillator();
+    let g=ctx.createGain();
+    o.connect(g);g.connect(ctx.destination);
+    if(typ==='richtig'){
+      o.frequency.setValueAtTime(523,ctx.currentTime);
+      o.frequency.setValueAtTime(659,ctx.currentTime+0.1);
+      o.frequency.setValueAtTime(784,ctx.currentTime+0.2);
+      g.gain.setValueAtTime(0.3,ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.01,ctx.currentTime+0.5);
+      o.start(ctx.currentTime);o.stop(ctx.currentTime+0.5);
+    } else {
+      o.frequency.setValueAtTime(300,ctx.currentTime);
+      o.frequency.setValueAtTime(200,ctx.currentTime+0.2);
+      g.gain.setValueAtTime(0.2,ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.01,ctx.currentTime+0.4);
+      o.start(ctx.currentTime);o.stop(ctx.currentTime+0.4);
+    }
+  } catch(e){}
 }
-
-function rnd(n){return Math.floor(Math.random()*n)+1}
 
 const levels=[
   {min:0,name:'Anfänger'},
@@ -206,7 +304,8 @@ function getLevel(){
 function speicherProfil(){
   name=document.getElementById('homeNameInput').value||'Freund';
   updateProfil();
-  alert('Gespeichert! Viel Spaß '+name+'! 🌟');
+  document.getElementById('geschichte-text').textContent='Toll '+name+'! Lass uns loslegen! 🚀';
+  spieleSound('richtig');
 }
 
 function waehleAvatar(a,el){
@@ -226,7 +325,8 @@ function updateProfil(){
   document.getElementById('home-level').textContent=getLevel();
   document.getElementById('home-streak').textContent=streak;
   document.getElementById('home-punkte').textContent=punkte;
-  document.getElementById('home-avatar').textContent=avatar;
+  document.getElementById('home-char').textContent=avatar;
+  document.getElementById('pfad-char').textContent=avatar;
   document.getElementById('profil-name').textContent=name;
   document.getElementById('profil-level').textContent=getLevel();
   document.getElementById('profil-streak').textContent=streak;
@@ -236,6 +336,7 @@ function updateProfil(){
   document.getElementById('stat-falsch').textContent=gesamtFalsch;
   document.getElementById('stat-spiele').textContent=spiele;
   document.getElementById('stat-best').textContent=bestErgebnis;
+  document.getElementById('stat-heute').textContent=spiele>0?'Ja ✅':'Nein';
   let abz='';
   if(spiele>=1)abz+='🎮 ';
   if(gesamtRichtig>=10)abz+='✅ ';
@@ -243,22 +344,68 @@ function updateProfil(){
   if(punkte>=100)abz+='💯 ';
   if(streak>=3)abz+='🔥 ';
   if(punkte>=500)abz+='🌟 ';
+  if(gesamtFalsch===0&&spiele>0)abz+='😇 ';
   document.getElementById('abzeichen').textContent=abz||'Noch keine – fang an!';
+  updateSpielKarten();
+  updatePfad();
+}
+
+function updateSpielKarten(){
+  let geld=document.getElementById('karte-geld');
+  let zahl=document.getElementById('karte-zahlenstrahl');
+  if(punkte>=50){geld.classList.remove('gesperrt');document.getElementById('req-geld').textContent='✅ Freigeschaltet';}
+  else{geld.classList.add('gesperrt');document.getElementById('req-geld').textContent='🔒 50 Punkte';}
+  if(punkte>=100){zahl.classList.remove('gesperrt');document.getElementById('req-zahlenstrahl').textContent='✅ Freigeschaltet';}
+  else{zahl.classList.add('gesperrt');document.getElementById('req-zahlenstrahl').textContent='🔒 100 Punkte';}
+}
+
+function updatePfad(){
+  let div=document.getElementById('pfad-stufen');
+  div.innerHTML='<p style="margin-bottom:15px"><b>Dein Lernpfad:</b></p>';
+  let stufen=[
+    {name:'Zahlen 1-10',punkte:0,emoji:'🔢'},
+    {name:'Addition',punkte:20,emoji:'➕'},
+    {name:'Subtraktion',punkte:50,emoji:'➖'},
+    {name:'Vergleichen',punkte:80,emoji:'⚖️'},
+    {name:'Multiplikation',punkte:150,emoji:'✖️'},
+    {name:'Division',punkte:250,emoji:'➗'},
+    {name:'Mathe-Star',punkte:500,emoji:'🌟'}
+  ];
+  stufen.forEach((s,i)=>{
+    let div2=document.createElement('span');
+    div2.className='pfad-stufe'+(punkte<s.punkte?' gesperrt':' abgeschlossen');
+    div2.textContent=s.emoji;
+    div2.title=s.name+(punkte<s.punkte?' ('+s.punkte+' Punkte)':'');
+    div2.onclick=()=>{
+      if(punkte>=s.punkte){
+        document.getElementById('pfad-geschichte').textContent='Stufe: '+s.name+' ✅ Freigeschaltet!';
+      } else {
+        document.getElementById('pfad-geschichte').textContent='🔒 Noch '+( s.punkte-punkte)+' Punkte bis zu: '+s.name;
+      }
+    };
+    div.appendChild(div2);
+    if(i<stufen.length-1){
+      let arrow=document.createElement('span');
+      arrow.textContent=' → ';
+      arrow.style.color='#f59e0b';
+      div.appendChild(arrow);
+    }
+  });
 }
 
 function zeigSeite(s){
   document.querySelectorAll('.seite').forEach(el=>el.classList.remove('aktiv'));
   document.querySelectorAll('nav button').forEach(el=>el.classList.remove('aktiv'));
   document.getElementById('seite-'+s).classList.add('aktiv');
-  document.getElementById('nav-'+s).classList.add('aktiv');
+  if(document.getElementById('nav-'+s))document.getElementById('nav-'+s).classList.add('aktiv');
   updateProfil();
 }
 
 const erklaerungen={
-  plus:{titel:'➕ Addition – Zusammenzählen',text:'🍎🍎🍎 + 🍎🍎 = 🍎🍎🍎🍎🍎<br><b>3 + 2 = 5</b><br><br>Du hast 3 Äpfel und bekommst 2 dazu = 5 Äpfel!<br><br>📝 Beispiele:<br>4 + 3 = 7 &nbsp; 10 + 5 = 15'},
-  minus:{titel:'➖ Subtraktion – Wegnehmen',text:'🍎🍎🍎🍎🍎 – 🍎🍎 = 🍎🍎🍎<br><b>5 – 2 = 3</b><br><br>Du hast 5 Bonbons und isst 2 = 3 übrig!<br><br>📝 Beispiele:<br>8 – 3 = 5 &nbsp; 10 – 4 = 6'},
-  mal:{titel:'✖️ Multiplikation – Mehrmals addieren',text:'<b>3 × 4</b> = 4 + 4 + 4 = 12<br><br>3 Kinder × 4 Bonbons = 12 Bonbons!<br><br>📝 Beispiele:<br>2 × 5 = 10 &nbsp; 3 × 3 = 9'},
-  geteilt:{titel:'➗ Division – Aufteilen',text:'<b>12 ÷ 3 = 4</b><br>🍬🍬🍬🍬|🍬🍬🍬🍬|🍬🍬🍬🍬<br><br>12 Bonbons ÷ 3 Kinder = 4 pro Kind!<br><br>📝 Beispiele:<br>10 ÷ 2 = 5 &nbsp; 9 ÷ 3 = 3'}
+  plus:{titel:'➕ Addition – Zusammenzählen',text:'🍎🍎🍎 + 🍎🍎 = 🍎🍎🍎🍎🍎<br><b>3 + 2 = 5</b><br><br>Du hast 3 Äpfel und bekommst 2 dazu = 5 Äpfel!<br><br>📝 Beispiele:<br>4 + 3 = 7<br>10 + 5 = 15<br>8 + 7 = 15'},
+  minus:{titel:'➖ Subtraktion – Wegnehmen',text:'🍎🍎🍎🍎🍎 – 🍎🍎 = 🍎🍎🍎<br><b>5 – 2 = 3</b><br><br>Du hast 5 Bonbons und isst 2 = 3 übrig!<br><br>📝 Beispiele:<br>8 – 3 = 5<br>10 – 4 = 6'},
+  mal:{titel:'✖️ Multiplikation – Mehrmals addieren',text:'<b>3 × 4</b> = 4 + 4 + 4 = 12<br><br>3 Kinder × 4 Bonbons = 12 Bonbons! 🍬<br><br>📝 Beispiele:<br>2 × 5 = 10<br>3 × 3 = 9<br>4 × 4 = 16'},
+  geteilt:{titel:'➗ Division – Aufteilen',text:'<b>12 ÷ 3 = 4</b><br>🍬🍬🍬🍬 | 🍬🍬🍬🍬 | 🍬🍬🍬🍬<br><br>12 Bonbons ÷ 3 Kinder = 4 pro Kind!<br><br>📝 Beispiele:<br>10 ÷ 2 = 5<br>9 ÷ 3 = 3'}
 };
 
 function zeigErklaerung(typ){
@@ -268,8 +415,35 @@ function zeigErklaerung(typ){
   div.classList.remove('hidden');
 }
 
+// TIMER
+function startTimer(){
+  timerSek=10;
+  clearInterval(timerInterval);
+  let ring=document.getElementById('timer-ring');
+  timerInterval=setInterval(()=>{
+    timerSek--;
+    let pct=timerSek/10*100;
+    ring.style.background='conic-gradient(#f59e0b '+pct+'%,#eee '+pct+'%)';
+    ring.textContent=timerSek;
+    if(timerSek<=0){
+      clearInterval(timerInterval);
+      if(!beantwortet){
+        beantwortet=true;
+        gesamtFalsch++;
+        document.getElementById('spiel-feedback').textContent='⏱️ Zeit abgelaufen! Antwort: '+aktFrage.antwort;
+        spieleSound('falsch');
+        spielIndex++;
+        setTimeout(()=>naechsteAufgabe(letzteSpiel),1800);
+      }
+    }
+  },1000);
+}
+
 // SPIELE
 function startSpiel(typ){
+  if((typ==='geld'&&punkte<50)||(typ==='zahlenstrahl'&&punkte<100)){
+    alert('🔒 Noch nicht freigeschaltet! Sammle mehr Punkte!');return;
+  }
   letzteSpiel=typ;
   spielIndex=0;spielRichtig=0;spielPunkteLauf=0;
   document.getElementById('spiel-auswahl').classList.add('hidden');
@@ -284,30 +458,36 @@ function naechsteAufgabe(typ){
   beantwortet=false;
   document.getElementById('spiel-nr').textContent=spielIndex+1;
   document.getElementById('spiel-bar').style.width=(spielIndex/10*100)+'%';
-  document.getElementById('spiel-feedback').textContent='';
+  document.getElementById('spiel-feedback').textContent=aufmunterungen[Math.floor(Math.random()*aufmunterungen.length)];
   document.getElementById('spiel-objekte').innerHTML='';
   document.getElementById('spiel-antworten').innerHTML='';
-
-  if(typ==='zaehlen') aufgabeZaehlen();
-  else if(typ==='rechnen') aufgabeRechnen();
-  else if(typ==='vergleich') aufgabeVergleich();
-  else if(typ==='luecke') aufgabeLuecke();
+  if(typ==='zaehlen')aufgabeZaehlen();
+  else if(typ==='rechnen')aufgabeRechnen();
+  else if(typ==='vergleich')aufgabeVergleich();
+  else if(typ==='luecke')aufgabeLuecke();
+  else if(typ==='geld')aufgabeGeld();
+  else if(typ==='zahlenstrahl')aufgabeZahlenstrahl();
+  startTimer();
 }
+
+const alleEmojis=['🍎','🍊','🍋','🍇','🍓','🐱','🐶','🐰','⭐','🌸','🎈','🎯','🍕','🍔','🌮'];
+
+function rndEmoji(){return alleEmojis[Math.floor(Math.random()*alleEmojis.length)]}
+function rnd(n){return Math.floor(Math.random()*n)+1}
 
 function aufgabeZaehlen(){
   let anzahl=klasse<=2?rnd(10):rnd(20);
-  let emoji=zufallEmoji();
+  let emoji=rndEmoji();
   aktFrage={antwort:anzahl};
   document.getElementById('spiel-frage').textContent='Wie viele '+emoji+' siehst du?';
   let obj='';
-  for(let i=0;i<anzahl;i++){obj+='<span class="objekt">'+emoji+'</span> ';}
+  for(let i=0;i<anzahl;i++)obj+='<span class="objekt">'+emoji+'</span>';
   document.getElementById('spiel-objekte').innerHTML=obj;
-  let optionen=genOptionen(anzahl,4,1,20);
-  zeigAntwortButtons(optionen,anzahl);
+  zeigAntwortButtons(genOptionen(anzahl,4,1,20),anzahl);
 }
 
 function aufgabeRechnen(){
-  let emoji=zufallEmoji();
+  let emoji=rndEmoji();
   let ops=klasse<=2?['+','-']:['+','-','*'];
   let op=ops[Math.floor(Math.random()*ops.length)];
   let a,b,antwort;
@@ -317,38 +497,29 @@ function aufgabeRechnen(){
   aktFrage={antwort};
   let opSym=op==='*'?'×':op;
   document.getElementById('spiel-frage').textContent=a+' '+opSym+' '+b+' = ?';
-  let obj1='',obj2='';
-  for(let i=0;i<Math.min(a,10);i++)obj1+='<span class="objekt">'+emoji+'</span>';
-  if(op==='+'){
-    let emoji2=zufallEmoji();
-    for(let i=0;i<Math.min(b,10);i++)obj2+='<span class="objekt">'+emoji2+'</span>';
-    document.getElementById('spiel-objekte').innerHTML=obj1+'<span style="font-size:1.5em"> + </span>'+obj2;
-  } else {
-    document.getElementById('spiel-objekte').innerHTML=obj1;
-  }
-  let optionen=genOptionen(antwort,4,0,50);
-  zeigAntwortButtons(optionen,antwort);
+  let obj='';
+  for(let i=0;i<Math.min(a,10);i++)obj+='<span class="objekt">'+emoji+'</span>';
+  document.getElementById('spiel-objekte').innerHTML=obj;
+  zeigAntwortButtons(genOptionen(antwort,4,0,50),antwort);
 }
 
 function aufgabeVergleich(){
   let a=rnd(20),b=rnd(20);
-  while(a===b){b=rnd(20);}
-  let emoji1=zufallEmoji(),emoji2=zufallEmoji();
+  while(a===b)b=rnd(20);
+  let e1=rndEmoji(),e2=rndEmoji();
   aktFrage={antwort:a>b?'links':'rechts'};
-  let obj1='',obj2='';
-  for(let i=0;i<Math.min(a,10);i++)obj1+='<span class="objekt">'+emoji1+'</span>';
-  for(let i=0;i<Math.min(b,10);i++)obj2+='<span class="objekt">'+emoji2+'</span>';
+  let o1='',o2='';
+  for(let i=0;i<Math.min(a,10);i++)o1+='<span class="objekt">'+e1+'</span>';
+  for(let i=0;i<Math.min(b,10);i++)o2+='<span class="objekt">'+e2+'</span>';
   document.getElementById('spiel-frage').textContent='Welche Seite hat MEHR?';
   document.getElementById('spiel-objekte').innerHTML=
-    '<div style="display:flex;gap:20px;justify-content:center">'+
-    '<div style="background:#fff9e6;padding:10px;border-radius:15px;border:2px solid #f59e0b">'+obj1+'<br><b>'+a+'</b></div>'+
-    '<div style="font-size:2em;padding-top:20px">⚖️</div>'+
-    '<div style="background:#fff9e6;padding:10px;border-radius:15px;border:2px solid #f59e0b">'+obj2+'<br><b>'+b+'</b></div>'+
-    '</div>';
-  let btns=document.getElementById('spiel-antworten');
-  btns.innerHTML=
-    '<button class="antwort-btn" onclick="pruefeAntwort(\'links\',this)" style="width:140px">⬅️ Links<br>('+a+')</button>'+
-    '<button class="antwort-btn" onclick="pruefeAntwort(\'rechts\',this)" style="width:140px">Rechts ➡<br>('+b+')</button>';
+    '<div style="display:flex;gap:15px;justify-content:center">'+
+    '<div style="background:#fff9e6;padding:10px;border-radius:15px;border:2px solid #f59e0b">'+o1+'<br><b>'+a+'</b></div>'+
+    '<div style="font-size:1.5em;padding-top:20px">⚖️</div>'+
+    '<div style="background:#fff9e6;padding:10px;border-radius:15px;border:2px solid #f59e0b">'+o2+'<br><b>'+b+'</b></div></div>';
+  document.getElementById('spiel-antworten').innerHTML=
+    '<button class="antwort-btn" onclick="pruefeAntwort(\'links\',this)" style="width:130px">⬅️ Links<br><b>'+a+'</b></button>'+
+    '<button class="antwort-btn" onclick="pruefeAntwort(\'rechts\',this)" style="width:130px">Rechts ➡️<br><b>'+b+'</b></button>';
 }
 
 function aufgabeLuecke(){
@@ -363,14 +534,47 @@ function aufgabeLuecke(){
   let opSym=op==='*'?'×':op==='/'?'÷':op;
   document.getElementById('spiel-frage').textContent=a+' '+opSym+' '+b+' = ___';
   document.getElementById('spiel-objekte').innerHTML='<span style="font-size:3em">🤔</span>';
-  let optionen=genOptionen(antwort,4,0,50);
-  zeigAntwortButtons(optionen,antwort);
+  zeigAntwortButtons(genOptionen(antwort,4,0,50),antwort);
+}
+
+function aufgabeGeld(){
+  let muenzen=[1,2,5,10,20,50];
+  let anz=rnd(5)+1;
+  let gewaehlt=[];
+  let summe=0;
+  for(let i=0;i<anz;i++){
+    let m=muenzen[Math.floor(Math.random()*muenzen.length)];
+    gewaehlt.push(m);summe+=m;
+  }
+  aktFrage={antwort:summe};
+  document.getElementById('spiel-frage').textContent='Wie viel Cent ist das zusammen?';
+  let obj='';
+  gewaehlt.forEach(m=>{obj+='<span class="objekt" style="background:#gold;border:2px solid #f59e0b;border-radius:50%;padding:5px;font-size:0.8em">'+m+'¢</span> ';});
+  document.getElementById('spiel-objekte').innerHTML=obj;
+  zeigAntwortButtons(genOptionen(summe,4,1,200),summe);
+}
+
+function aufgabeZahlenstrahl(){
+  let max=klasse<=2?20:100;
+  let zahl=rnd(max);
+  aktFrage={antwort:zahl};
+  let pos=Math.round(zahl/max*10)*10;
+  document.getElementById('spiel-frage').textContent='Welche Zahl zeigt der Pfeil?';
+  let strahl='<div style="position:relative;background:#f59e0b;height:8px;width:280px;margin:30px auto;border-radius:5px">';
+  strahl+='<span style="position:absolute;left:-10px;top:-20px;font-size:0.8em">0</span>';
+  strahl+='<span style="position:absolute;right:-15px;top:-20px;font-size:0.8em">'+max+'</span>';
+  strahl+='<span style="position:absolute;left:'+pos+'%;top:-35px;font-size:1.5em">👇</span>';
+  strahl+='</div>';
+  document.getElementById('spiel-objekte').innerHTML=strahl;
+  zeigAntwortButtons(genOptionen(zahl,4,0,max),zahl);
 }
 
 function genOptionen(richtig,anz,min,max){
   let opts=new Set([richtig]);
-  while(opts.size<anz){
-    let v=richtig+Math.floor(Math.random()*10)-5;
+  let versuche=0;
+  while(opts.size<anz&&versuche<50){
+    versuche++;
+    let v=richtig+Math.floor(Math.random()*12)-6;
     if(v>=min&&v<=max&&v!==richtig)opts.add(v);
   }
   return [...opts].sort(()=>Math.random()-0.5);
@@ -391,16 +595,23 @@ function zeigAntwortButtons(optionen,richtig){
 function pruefeAntwort(val,el){
   if(beantwortet)return;
   beantwortet=true;
-  let richtig=val===aktFrage.antwort||val==aktFrage.antwort;
+  clearInterval(timerInterval);
+  let richtig=val==aktFrage.antwort;
   if(richtig){
-    spielRichtig++;gesamtRichtig++;spielPunkteLauf+=10;punkte+=10;
-    document.getElementById('spiel-feedback').textContent='✅ Richtig! Super! 🎉';
+    spielRichtig++;gesamtRichtig++;
+    let bonus=timerSek>=8?15:timerSek>=5?12:10;
+    spielPunkteLauf+=bonus;punkte+=bonus;
+    document.getElementById('spiel-feedback').textContent='✅ Richtig! +'+bonus+' Punkte! 🎉';
     el.classList.add('richtig');
+    el.style.animation='bounce 0.5s';
+    spieleSound('richtig');
     konfetti();
   } else {
     gesamtFalsch++;
-    document.getElementById('spiel-feedback').textContent='❌ Fast! Die Antwort war '+aktFrage.antwort;
+    document.getElementById('spiel-feedback').textContent='❌ Antwort war '+aktFrage.antwort+'. Weiter! 💪';
     el.classList.add('falsch');
+    el.style.animation='shake 0.5s';
+    spieleSound('falsch');
   }
   document.getElementById('spiel-punkte-lauf').textContent=spielPunkteLauf;
   spielIndex++;
@@ -410,21 +621,73 @@ function pruefeAntwort(val,el){
 function endeSpiel(){
   spiele++;streak++;
   if(spielRichtig>bestErgebnis)bestErgebnis=spielRichtig;
+  clearInterval(timerInterval);
   document.getElementById('spiel-aktiv').classList.add('hidden');
   document.getElementById('spiel-ende').classList.remove('hidden');
   document.getElementById('ende-avatar').textContent=avatar;
-  let msg=spielRichtig===10?'🎉 Perfekt! Du bist ein Mathe-Star!':spielRichtig>=7?'😊 Sehr gut!':'💪 Weiter üben!';
+  let msg=spielRichtig===10?'🎉 Perfekt! Du bist ein Mathe-Star!':spielRichtig>=7?'😊 Sehr gut! Weiter so!':'💪 Nicht aufgeben!';
   document.getElementById('ende-ergebnis').innerHTML='<b>'+name+'</b>: <b>'+spielRichtig+'/10</b> richtig!<br>'+msg;
   document.getElementById('ende-sterne').textContent='⭐'.repeat(Math.round(spielRichtig/2));
-  document.getElementById('ende-punkte').textContent='🏅 Punkte: +'+spielPunkteLauf+' | Gesamt: '+punkte;
+  document.getElementById('ende-punkte').textContent='🏅 +'+spielPunkteLauf+' Punkte | Gesamt: '+punkte;
+  document.getElementById('ende-geschichte').textContent=geschichten[Math.floor(Math.random()*geschichten.length)];
   if(spielRichtig>=8)konfetti();
   updateProfil();
 }
 
 function beendeSpiel(){
+  clearInterval(timerInterval);
   document.getElementById('spiel-aktiv').classList.add('hidden');
   document.getElementById('spiel-ende').classList.add('hidden');
   document.getElementById('spiel-auswahl').classList.remove('hidden');
+}
+
+// ELTERN PIN
+function zeigeElternPin(){
+  pinEingabe='';
+  document.getElementById('pin-anzeige').textContent='_ _ _ _';
+  document.getElementById('eltern-pin-eingabe').classList.remove('hidden');
+  document.getElementById('eltern-inhalt').classList.add('hidden');
+  zeigSeite('eltern');
+}
+
+function pinTippe(n){
+  if(pinEingabe.length>=4)return;
+  pinEingabe+=n;
+  let anzeige=pinEingabe.split('').join(' ')+'_ _ _ _'.slice(pinEingabe.length*2);
+  document.getElementById('pin-anzeige').textContent=anzeige;
+  if(pinEingabe.length===4){
+    if(pinEingabe===elternPin){
+      document.getElementById('eltern-pin-eingabe').classList.add('hidden');
+      document.getElementById('eltern-inhalt').classList.remove('hidden');
+      document.getElementById('eltern-name').textContent=name;
+      document.getElementById('eltern-richtig').textContent=gesamtRichtig;
+      document.getElementById('eltern-spiele').textContent=spiele;
+      document.getElementById('eltern-best').textContent=bestErgebnis;
+      document.getElementById('eltern-punkte').textContent=punkte;
+      document.getElementById('eltern-level').textContent=getLevel();
+      document.getElementById('eltern-streak').textContent=streak;
+      let emp='';
+      if(spiele===0)emp='Das Kind hat noch nicht gespielt. Ermutigen Sie es, heute anzufangen! 🎮';
+      else if(bestErgebnis<5)emp='Das Kind braucht mehr Übung. Empfehlung: täglich 10 Aufgaben. 📚';
+      else if(bestErgebnis<8)emp='Gute Fortschritte! Weiter üben für bessere Ergebnisse. ⭐';
+      else emp='Ausgezeichnet! Das Kind lernt sehr gut! 🏆 Schwierigere Klasse versuchen?';
+      document.getElementById('eltern-empfehlung').textContent=emp;
+    } else {
+      alert('Falsche PIN!');
+      pinEingabe='';
+      document.getElementById('pin-anzeige').textContent='_ _ _ _';
+    }
+  }
+}
+
+function pinLoeschen(){
+  pinEingabe=pinEingabe.slice(0,-1);
+  let anzeige=pinEingabe.length>0?pinEingabe.split('').join(' ')+' ':'';
+  document.getElementById('pin-anzeige').textContent=anzeige+'_ _ _ _'.slice(pinEingabe.length>0?pinEingabe.length*2:0)||'_ _ _ _';
+}
+
+function elternLogout(){
+  zeigSeite('home');
 }
 
 function konfetti(){
@@ -433,8 +696,8 @@ function konfetti(){
   canvas.width=window.innerWidth;canvas.height=window.innerHeight;
   let particles=[];
   let colors=['#f59e0b','#ef4444','#3b82f6','#10b981','#8b5cf6','#ec4899'];
-  for(let i=0;i<100;i++){
-    particles.push({x:Math.random()*canvas.width,y:-10,w:Math.random()*12+4,h:Math.random()*12+4,color:colors[Math.floor(Math.random()*colors.length)],speed:Math.random()*4+2,angle:Math.random()*360});
+  for(let i=0;i<80;i++){
+    particles.push({x:Math.random()*canvas.width,y:-10,w:rnd(10)+3,h:rnd(10)+3,color:colors[Math.floor(Math.random()*colors.length)],speed:Math.random()*4+2,angle:Math.random()*360});
   }
   let frame=0;
   function draw(){
