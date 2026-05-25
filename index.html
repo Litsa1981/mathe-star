@@ -1,2 +1,102 @@
-import { defineConfig } from 'vite'
-export default defineConfig({})
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mathe Star</title>
+<style>
+body{font-family:sans-serif;background:#fffbe6;text-align:center;padding:20px}
+h1{color:#f59e0b;font-size:2em}
+button{background:#f59e0b;color:white;border:none;padding:12px 24px;border-radius:12px;font-size:1.1em;cursor:pointer;margin:5px}
+input{font-size:1.2em;padding:10px;border-radius:10px;border:2px solid #f59e0b;width:60%;text-align:center}
+.box{background:white;padding:20px;border-radius:20px;margin:20px auto;max-width:400px;box-shadow:0 4px 10px #f59e0b44}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<h1>⭐ Mathe Star</h1>
+<div id="start" class="box">
+  <p>Wie heißt du?</p>
+  <input id="nameInput" placeholder="Dein Name" /><br><br>
+  <p>Welche Klasse?</p>
+  <button onclick="setKlasse(1)">1</button>
+  <button onclick="setKlasse(2)">2</button>
+  <button onclick="setKlasse(3)">3</button>
+  <button onclick="setKlasse(4)">4</button>
+  <p id="klasseText">Klasse: 1</p>
+  <button onclick="startQuiz()">Los geht's! 🚀</button>
+</div>
+<div id="quiz" class="box hidden">
+  <p id="aufgabe"></p>
+  <div id="frage" style="font-size:2em;margin:20px"></div>
+  <input type="number" id="antwort" placeholder="?" /><br><br>
+  <button onclick="pruefen()">Antworten</button>
+  <button onclick="hilfe()" style="background:white;color:#f59e0b;border:2px solid #f59e0b">Hilfe 💡</button>
+  <p id="tipp" style="display:none;color:#666"></p>
+  <p id="feedback" style="font-size:1.3em"></p>
+</div>
+<div id="belohnung" class="box hidden">
+  <h2>🏆 Geschafft!</h2>
+  <p id="ergebnis"></p>
+  <div id="sterne" style="font-size:2em"></div>
+  <button onclick="nochmal()">Nochmal 🔄</button>
+</div>
+<script>
+let name='',klasse=1,fragen=[],index=0,richtig=0,aktFrage=null;
+function setKlasse(k){klasse=k;document.getElementById('klasseText').textContent='Klasse: '+k}
+function startQuiz(){
+  name=document.getElementById('nameInput').value||'Freund';
+  fragen=[];index=0;richtig=0;
+  document.getElementById('start').classList.add('hidden');
+  document.getElementById('quiz').classList.remove('hidden');
+  naechste();
+}
+function naechste(){
+  if(index>=10){zeigeBelohnung();return}
+  document.getElementById('aufgabe').textContent='Hallo '+name+'! Aufgabe '+(index+1)+' von 10';
+  document.getElementById('antwort').value='';
+  document.getElementById('feedback').textContent='';
+  document.getElementById('tipp').style.display='none';
+  aktFrage=genFrage();
+  let op=aktFrage.op==='*'?'×':aktFrage.op==='/'?'÷':aktFrage.op;
+  document.getElementById('frage').textContent=aktFrage.a+' '+op+' '+aktFrage.b+' = ?';
+}
+function genFrage(){
+  let ops=klasse<=2?['+','-']:['+','-','*','/'];
+  let op=ops[Math.floor(Math.random()*ops.length)];
+  let a,b;
+  if(op==='+'){a=rnd(20);b=rnd(20)}
+  if(op==='-'){a=rnd(20)+1;b=rnd(a)}
+  if(op==='*'){a=rnd(10);b=rnd(10)}
+  if(op==='/'){b=rnd(10)+1;a=b*(rnd(10)+1)}
+  let ans=op==='+'?a+b:op==='-'?a-b:op==='*'?a*b:a/b;
+  return{a,b,op,answer:ans};
+}
+function rnd(n){return Math.floor(Math.random()*n)+1}
+function pruefen(){
+  let val=parseInt(document.getElementById('antwort').value);
+  if(isNaN(val))return;
+  if(val===aktFrage.answer){richtig++;document.getElementById('feedback').textContent='✅ Richtig!';}
+  else{document.getElementById('feedback').textContent='❌ Antwort war '+aktFrage.answer;}
+  index++;
+  setTimeout(naechste,1500);
+}
+function hilfe(){
+  let t=document.getElementById('tipp');
+  let{a,b,op}=aktFrage;
+  let txt=op==='+'?a+' + '+b+' = zusammenzählen':op==='-'?a+' - '+b+' = wegnehmen':op==='*'?a+' × '+b+' = '+a+' mal '+b+' addieren':a+' ÷ '+b+' = in '+b+' gleiche Teile';
+  t.textContent=txt;t.style.display='block';
+}
+function zeigeBelohnung(){
+  document.getElementById('quiz').classList.add('hidden');
+  document.getElementById('belohnung').classList.remove('hidden');
+  document.getElementById('ergebnis').textContent=name+' hat '+richtig+' von 10 richtig! '+(richtig===10?'🎉 Perfekt!':richtig>=7?'😊 Sehr gut!':'💪 Weiter üben!');
+  document.getElementById('sterne').textContent='⭐'.repeat(Math.round(richtig/2));
+}
+function nochmal(){
+  document.getElementById('belohnung').classList.add('hidden');
+  document.getElementById('start').classList.remove('hidden');
+}
+</script>
+</body>
+</html>
